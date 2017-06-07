@@ -13,7 +13,11 @@
 	.settings/
 	.loadpath
 	.recommenders
-	
+	RemoteSystemsTempFiles 
+	Servers 
+	target 
+	test 
+
 	# External tool builders
 	.externalToolBuilders/
 	
