@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gigabox</groupId>
-	<artifactId>controller</artifactId>
-	<name>gigabox</name>
+	<groupId>com.spring</groupId>
+	<artifactId>board</artifactId>
+	<name>BoardProject</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -13,12 +13,14 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
+	<!-- oracle -->
 	<repositories>
 		<repository>
 			<id>codelds</id>
 			<url>https://code.lds.org/nexus/content/groups/main-repo</url>
 		</repository>
 	</repositories>
+	
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -113,16 +115,8 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
-		<!-- Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>     
-	  
-	    <!-- OJDBC -->
+		
+		<!-- OJDBC -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
@@ -156,65 +150,73 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-	  
-	    <!-- log4jdbc-remix -->
-        <dependency>
-           <groupId>org.lazyluke</groupId>
-           <artifactId>log4jdbc-remix</artifactId>
-           <version>0.2.7</version>
-        </dependency>  
-      
-        <!-- log4jdbc -->
-        <dependency>
-        	<groupId>org.bgee.log4jdbc-log4j2</groupId>
-        	<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
-      	  <version>1.16</version>
-        </dependency>
-      
-        <!-- DBCP -->
-        <dependency>
-      	  <groupId>commons-dbcp</groupId>
-      	  <artifactId>commons-dbcp</artifactId>
-      	  <version>1.4</version>
-        </dependency>
-	      
-        <!-- POI -->
-        <dependency>
-      	  <groupId>org.apache.poi</groupId>
-      	  <artifactId>poi</artifactId>
-      	  <version>3.9</version>
-        </dependency>
-        <dependency>
-      	  <groupId>org.apache.poi</groupId>
-      	  <artifactId>poi-ooxml</artifactId>
-      	  <version>3.9</version>
-        </dependency>
-        <dependency>
-      	  <groupId>net.sf.jxls</groupId>
-      	  <artifactId>jxls-core</artifactId>
-      	  <version>1.0.2</version>
-        </dependency>
-        <dependency>
-      	  <groupId>net.sf.jxls</groupId>
-      	  <artifactId>jxls-reader</artifactId>
-      	  <version>1.0.2</version>
-        </dependency>
-	      
-        <!-- Jackson -->
-        <dependency>
-      	  <groupId>com.fasterxml.jackson.core</groupId>
-      	  <artifactId>jackson-databind</artifactId>
-      	  <version>2.6.1</version>
-        </dependency>
 		
-	    <!-- file Upload -->
-	    <dependency>
-	      <groupId>commons-fileupload</groupId>
-	  	  <artifactId>commons-fileupload</artifactId>
-	  	  <version>1.3</version>
-	    </dependency>
-	  
-	  </dependencies>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>      
+		
+		<!-- log4jdbc-remix -->
+      <dependency>
+         <groupId>org.lazyluke</groupId>
+         <artifactId>log4jdbc-remix</artifactId>
+         <version>0.2.7</version>
+      </dependency>  
+      
+      <!-- log4jdbc -->
+      <dependency>
+      	<groupId>org.bgee.log4jdbc-log4j2</groupId>
+      	<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+      	<version>1.16</version>
+      </dependency>
+      
+      <!-- DBCP -->
+      <dependency>
+      	<groupId>commons-dbcp</groupId>
+      	<artifactId>commons-dbcp</artifactId>
+      	<version>1.4</version>
+      </dependency>
+      
+      <!-- POI -->
+      <dependency>
+      	<groupId>org.apache.poi</groupId>
+      	<artifactId>poi</artifactId>
+      	<version>3.9</version>
+      </dependency>
+      <dependency>
+      	<groupId>org.apache.poi</groupId>
+      	<artifactId>poi-ooxml</artifactId>
+      	<version>3.9</version>
+      </dependency>
+      <dependency>
+      	<groupId>net.sf.jxls</groupId>
+      	<artifactId>jxls-core</artifactId>
+      	<version>1.0.2</version>
+      </dependency>
+      <dependency>
+      	<groupId>net.sf.jxls</groupId>
+      	<artifactId>jxls-reader</artifactId>
+      	<version>1.0.2</version>
+      </dependency>
+      
+      <!-- Jackson -->
+      <dependency>
+      	<groupId>com.fasterxml.jackson.core</groupId>
+      	<artifactId>jackson-databind</artifactId>
+      	<version>2.6.1</version>
+      </dependency>
+	
+	  <!-- file Upload -->
+	  <dependency>
+	  	<groupId>commons-fileupload</groupId>
+	  	<artifactId>commons-fileupload</artifactId>
+	  	<version>1.3</version>
+	  </dependency>
+	</dependencies>
+	
     <build>
         <plugins>
             <plugin>
