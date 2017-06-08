@@ -132,7 +132,12 @@
 			<div class="col-lg-12">
 				<div class="panel-group" id="accordion">
 				<c:forEach items="${faqList}" var="faqItem">
+					<c:if test="${faqItem.faqType == 'P'}">
+					<div class="panel panel-primary">
+					</c:if>
+					<c:if test="${faqItem.faqType == 'N'}">
 					<div class="panel panel-default">
+					</c:if>
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#${faqItem.faqNumber}">${faqItem.faqTitle}</a>
