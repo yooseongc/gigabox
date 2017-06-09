@@ -22,7 +22,7 @@ public class FaqController {
 	private FaqService faqService;
 	
 	@RequestMapping(value="/faqList", method=RequestMethod.GET)
-	public String qnaListGET(Model model) throws Exception {
+	public String faqListGET(Model model) throws Exception {
 		logger.info("faqList.jsp 페이지에 데이터를 출력!");
 		model.addAttribute("faqList", faqService.faqList());
 		return "/faq/faqList";
