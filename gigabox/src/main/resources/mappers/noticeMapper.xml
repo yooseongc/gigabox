@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.NOTICEMapper">
+	<resultMap type="faqResultMap" id="notice">
+		<result property="noticeNumber" column="NOTICE_NUMBER" />
+		<result property="adminNumber" column="ADMIN_NUMBER" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="noticeContent" column="NOTICE_TYPE" />
+		<result property="noticeRegisterdate" column="NOTICE_REGISTERDATE" />
+		<result property="noticeBranchname" column="NOTICE_BRANCHNAME" />
+	</resultMap>
+
+	<select id="noticeList" resultType="notice" resultMap="noticeResultMap">
+		<![CDATA[
+		SELECT *
+		FROM TBL_NOTICE
+		]]>
+	</select>
+	<select id="noticeRead" resultType="" resultMap="">
+	</select>
+</mapper>
