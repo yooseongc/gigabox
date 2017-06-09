@@ -1,0 +1,23 @@
+package com.gigabox.faq.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.gigabox.faq.dao.FaqDao;
+import com.gigabox.faq.vo.FaqVO;
+
+@Service
+public class FaqServiceImpl implements FaqService{
+	
+	@Inject
+	private FaqDao faqDao;
+
+	@Override
+	public List<FaqVO> faqList() throws Exception {
+		// TODO Auto-generated method stub
+		return faqDao.faqList();
+	}
+}
