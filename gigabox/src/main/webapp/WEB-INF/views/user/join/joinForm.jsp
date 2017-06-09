@@ -314,7 +314,7 @@
 		         
 		        $.ajax({
 		            type: "POST",
-		            url: "/test/validateRecaptcha",
+		            url: "/user/validateRecaptcha",
 		            async: false,
 		            data: {
 		                host: host,
@@ -341,7 +341,7 @@
                 e.preventDefault();
                  
                 $.ajax({
-                    url: '<c:url value="/test/zipcode/list"/>',
+                    url: '<c:url value="/user/zipcode/list"/>',
                     data: $('#addrSearchForm').serialize(),
                     type: 'POST',
                     dataType: 'json',
