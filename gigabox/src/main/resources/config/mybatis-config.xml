@@ -6,6 +6,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.gigabox.faq.vo.FaqVO" alias="faq"/>
+		<typeAlias type="com.gigabox.user.vo.UserVO" alias="join"/>
 	</typeAliases>
 	
 </configuration>

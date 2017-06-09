@@ -29,9 +29,9 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class JoinController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 	
 	public static final String ZIPCODE_API_KEY = "e515c666f2ef27ff51496904073254";
     public static final String ZIPCODE_API_URL = "https://biz.epost.go.kr/KpostPortal/openapi"; // 요청 URL
