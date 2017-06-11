@@ -34,8 +34,8 @@
 			);
 	</insert>
 	
-	<select id="idDuplicationCheckSelect" parameterType="string">
-		SELECT USER_NUMBER
+	<select id="idDuplicationCheckSelect" parameterType="string" resultType="int">
+		SELECT COUNT(*) 
 		FROM TBL_USER 
 		WHERE USER_ID = #{0} 
 	</select>

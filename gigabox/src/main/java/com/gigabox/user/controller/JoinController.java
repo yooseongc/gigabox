@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,12 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gigabox.user.service.JoinService;
 import com.gigabox.user.util.ZipcodeSearchTO;
 import com.gigabox.user.util.ZipcodeVO;
 import com.google.gson.Gson;
@@ -31,6 +35,9 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 @RequestMapping("/user")
 public class JoinController {
 	
+	@Inject
+	private JoinService service;
+	
 	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 	
 	public static final String ZIPCODE_API_KEY = "e515c666f2ef27ff51496904073254";
@@ -38,12 +45,24 @@ public class JoinController {
 	
 	@RequestMapping(value="/joinForm", method=RequestMethod.GET)
 	public String joinFormGET() {
+		logger.info("JOINFORM PAGE LOADING...");
 		return "/user/join/joinForm";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String joinFormPOST(RedirectAttributes rttr) {
-		return "redirect:/test/join/joinAcceptted";
+		return "redirect:/user/join/joinAcceptted";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/idduplicationcheck", method=RequestMethod.POST)
+	public String idDuplicationCheck(@RequestBody String userid) {
+		logger.info("ID DUPLICATION CHECK PROCESS START...");
+		
+		int result = service.idDuplicationCheck(userid);
+		// 0이면 중복아님, 1이면 중복!
+		logger.info("ID DUPLICATION CHECK RESULT=" + result);
+		return result + "";
 	}
 	
 	/**
@@ -51,7 +70,7 @@ public class JoinController {
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/validateRecaptcha", method = RequestMethod.POST)
+	@RequestMapping(value = "/validateRecaptcha", method=RequestMethod.POST)
 	public String validateRecaptcha(@RequestParam Map<String, String> paramMap) {
 	    
 		logger.info("RECAPCHA VALIDATION PROCESS START...");
@@ -153,5 +172,7 @@ public class JoinController {
          
         return (new Gson()).toJson(paramMap);
     }
+	
+	
 	
 }

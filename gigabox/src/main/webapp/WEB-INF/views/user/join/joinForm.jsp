@@ -113,9 +113,19 @@
 					<form class="form-horizontal">
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userID">아이디</label>
+							
 							<div class="col-sm-6">
-								<input class="form-control" id="userID" type="text"
+								<div class="input-group">
+									<input class="form-control" id="userID" type="text"
 									name="userID" placeholder="아이디">
+									<span class="input-group-btn">
+                                         <button class="btn btn-default" id="userIDCheckBtn" >
+											<i class="fa fa-check spaceLeft"></i> &nbsp;&nbsp;중복체크
+										</button>
+                                    </span>
+								</div>
+								<p class="help-block">영문, 숫자 8자 이상</p>
+								<p class="help-block" id="userIDCheckErrorMsg">중복 여부를 확인하세요.</p>
 							</div>
 						</div>
 
@@ -124,7 +134,7 @@
 							<div class="col-sm-6">
 								<input class="form-control" id="userPassword"
 									name="userPassword" type="password" placeholder="비밀번호">
-								<p class="help-block">숫자, 특수문자 포함 8자 이상</p>
+								<p class="help-block">영문, 숫자 8자 이상</p>
 							</div>
 						</div>
 
@@ -237,12 +247,12 @@
 	<!-- /.container -->
 	
 	 <!-- Modal -->
-     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalLabel" aria-hidden="true">
          <div class="modal-dialog">
              <div class="modal-content">
                  <div class="modal-header">
                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title" id="myModalLabel">우편번호 검색</h4>
+                     <h4 class="modal-title" id="addrModalLabel">우편번호 검색</h4>
                  </div>
                  <div class="modal-body">
                       <form id="addrSearchForm" onsubmit="return false;">
@@ -289,6 +299,39 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			// 아이디 중복 체크 
+			$("#userIDCheckBtn").click(function(e) {
+				e.preventDefault();
+				if ($("#userID").val() != '') {
+					$.ajax({
+						url: "/user/idduplicationcheck",
+						type: "POST",
+						dataType: "text",
+						headers: {
+							"Content-Type": "application/json",
+							"X-HTTP-Method-Override": "POST"
+						},
+						data: JSON.stringify({
+							userid: $("#userID").val(),
+						}),
+						error: function() {
+							alert("시스템 오류입니다. 관리자에게 문의하세요.");
+						},
+						success: function(result) {
+							if (result == 0) {
+								$("#userIDCheckErrorMsg").css("color", "green").text("사용하실 수 있는 아이디 입니다.");
+							} 
+							if (result == 1) {
+								$("#userIDCheckErrorMsg").css("color", "red").text("이미 사용 중인 입니다.");
+							}
+							
+						}
+					});
+				} else {
+					alert("아이디를 입력한 후 중복체크를 해 주세요.");
+				}
+			});
 			
 			// 주소 검색 모달 창 띄우기
 			$('#userAddressSearchModalBtn').click(function(e) {
@@ -396,8 +439,6 @@
 		    
 		 	// 모달에서 테이블 행 클릭시
 		    $('#zipcodeList').on("click", "tr",function(event) {
-		    	console.log($(this).children("td:eq(0)").text());
-		    	console.log($("#noList").length == 0);
 	           	if ($("#noList").length == 0) {
 	           		$("#userAddressNumber").val($(this).children("td:eq(0)").text());
 	           		$("#userAddressBasic").val($(this).children("td:eq(1)").text());
