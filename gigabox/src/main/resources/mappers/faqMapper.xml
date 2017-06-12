@@ -3,6 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gigabox.mapper.FAQMapper">
+<<<<<<< HEAD
 	
 	<resultMap id="faqResultMap" type="faq" >
 		<result property="faqNumber" column="FAQ_NUMBER" />
@@ -19,4 +20,19 @@
 		]]>
 	</select>
 
+=======
+	<resultMap type="faq" id="faqResultMap">
+		<result property="faqNumber" column="FAQ_NUMBER"/>
+		<result property="adminNumber" column="ADMIN_NUMBER"/>
+		<result property="faqTitle" column="FAQ_TITLE"/>
+		<result property="faqContent" column="FAQ_CONTENT"/>
+		<result property="faqType" column="FAQ_TYPE"/>
+	</resultMap>
+	
+	<select id="faqList" resultMap="faqResultMap" resultType="faq">
+		<![CDATA[
+		select * from tbl_faq
+		]]>
+	</select>
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 </mapper>

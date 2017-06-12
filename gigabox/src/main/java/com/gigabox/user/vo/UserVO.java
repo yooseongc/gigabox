@@ -3,7 +3,10 @@ package com.gigabox.user.vo;
 import java.sql.Date;
 
 public class UserVO {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 	private int userNumber;
 	private String userId;
 	private String userPw;
@@ -16,7 +19,10 @@ public class UserVO {
 	private Date userReg;
 	private String userAgree;
 	private int userMileage;
+<<<<<<< HEAD
 	private String userJoinAuth;
+=======
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 
 	public int getUserNumber() {
 		return userNumber;
@@ -113,6 +119,7 @@ public class UserVO {
 	public void setUserMileage(int userMileage) {
 		this.userMileage = userMileage;
 	}
+<<<<<<< HEAD
 	
 	public String getUserJoinAuth() {
 		return userJoinAuth;
@@ -121,13 +128,19 @@ public class UserVO {
 	public void setUserJoinAuth(String userJoinAuth) {
 		this.userJoinAuth = userJoinAuth;
 	}
+=======
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 
 	@Override
 	public String toString() {
 		return "JoinVO [userNumber=" + userNumber + ", userId=" + userId + ", userPw=" + userPw + ", userName="
 				+ userName + ", userGender=" + userGender + ", userBirthday=" + userBirthday + ", userEmail="
 				+ userEmail + ", userTel=" + userTel + ", userAddr=" + userAddr + ", userReg=" + userReg
+<<<<<<< HEAD
 				+ ", userAgree=" + userAgree + ", userMileage=" + userMileage + ", userJoinAuth=" + userJoinAuth + "]";
+=======
+				+ ", userAgree=" + userAgree + ", userMileage=" + userMileage + "]";
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 	}
 
 }

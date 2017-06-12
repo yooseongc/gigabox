@@ -29,7 +29,11 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 	<!-- 한글 처리 필터 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -43,6 +47,7 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+<<<<<<< HEAD
 	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
@@ -60,4 +65,6 @@
 		<url-pattern>/</url-pattern>
 	</filter-mapping>
 	
+=======
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 </web-app>

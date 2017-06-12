@@ -31,6 +31,10 @@ import com.google.gson.Gson;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 @Controller
 @RequestMapping("/user")
 public class JoinController {

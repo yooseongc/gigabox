@@ -28,4 +28,8 @@ public class FaqController {
 		return "/faq/faqList";
 	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3

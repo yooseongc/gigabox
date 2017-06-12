@@ -12,9 +12,12 @@
 
 	<!-- Application Loggers -->
 	<logger name="com.gigabox.**">
+<<<<<<< HEAD
 		<level value="info" />
 	</logger>
 	<logger name="com.gigabox.user">
+=======
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
 		<level value="info" />
 	</logger>
 

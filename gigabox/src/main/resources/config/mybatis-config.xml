@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+<<<<<<< HEAD
 	
 	<typeAliases>
 		<typeAlias type="com.gigabox.faq.vo.FaqVO" alias="faq"/>
@@ -10,3 +11,11 @@
 	</typeAliases>
 	
 </configuration>
+=======
+	<typeAliases>
+		<typeAlias type="com.gigabox.faq.vo.FaqVO" alias="faq"/>
+		<typeAlias type="com.gigabox.user.vo.JoinVO" alias="join"/>
+	</typeAliases>
+</configuration>
+
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3

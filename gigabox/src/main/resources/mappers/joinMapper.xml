@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<<<<<<< HEAD
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
@@ -43,3 +44,35 @@
 		
 	
 	</mapper>
+=======
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.JoinMapper">
+
+	<resultMap type="join" id="joinResultMap">
+		<result property="userNumber" column="USER_NUMBER" />
+		<result property="userId" column="USER_ID" />
+		<result property="userPw" column="USER_PW" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userGender" column="USER_GENDER" />
+		<result property="userBirthday" column="USER_BIRTHDAY" />
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userTel" column="USER_TEL" />
+		<result property="userAddr" column="USER_ADDR" />
+		<result property="userReg" column="USER_REGISTERDATE" />
+		<result property="userAgree" column="USER_AGREE" />
+		<result property="userMileage" column="USER_MILEAGE" />
+	</resultMap>
+
+<insert id="joinInsert" parameterType="join">
+		INSERT INTO TBL_USER (userNumber, userId, userPw, userName, userGender, userBirthday, userEmail,
+		userTel, userAddr, userReg, userAgree, userMileage) 
+		VALUES (seq_user.nextval, 'kjh8551', '123', '김진환', 'M', '19880925', 'kjh8551@naver.com', '010-123-123', '서울시 은평구', sysdate, 
+    'Y', 120);
+	</insert>
+
+	
+
+</mapper>
+>>>>>>> 940a3cfdef42d0d9865f290c8bd3f3209f5ecca3
