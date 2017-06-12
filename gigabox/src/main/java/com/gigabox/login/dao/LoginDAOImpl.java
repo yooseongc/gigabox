@@ -1,15 +1,13 @@
-package com.gigabox.user.dao;
+package com.gigabox.login.dao;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.stereotype.Repository;
 
 import com.gigabox.user.dto.LoginDTO;
 import com.gigabox.user.vo.UserVO;
 
-@Repository
-public class UserDAOImpl implements UserDAO{
+public class LoginDAOImpl implements LoginDAO{
 
 	@Inject
 	private SqlSession session;
@@ -22,4 +20,5 @@ public class UserDAOImpl implements UserDAO{
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".login", dto);
 	}
+
 }

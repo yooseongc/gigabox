@@ -1,31 +1,37 @@
 package com.gigabox.user.dto;
 
 public class LoginDTO {
-	private String user_id;
-	private String user_pw;
+	private String userId;
+	private String userPw;
 	private boolean useCookie;
-	
-	public String getUser_id() {
-		return user_id;
+
+	public String getUserId() {
+		return userId;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getUser_pw() {
-		return user_pw;
+
+	public String getUserPw() {
+		return userPw;
 	}
-	public void setUser_pw(String user_pw) {
-		this.user_pw = user_pw;
+
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
+
 	public boolean isUseCookie() {
 		return useCookie;
 	}
+
 	public void setUseCookie(boolean useCookie) {
 		this.useCookie = useCookie;
 	}
+
 	@Override
 	public String toString() {
-		return "LoginDTO [user_id=" + user_id + ", user_pw=" + user_pw + ", useCookie=" + useCookie + "]";
+		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", useCookie=" + useCookie + "]";
 	}
-	
+
 }
