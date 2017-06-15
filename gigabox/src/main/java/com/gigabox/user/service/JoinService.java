@@ -10,4 +10,6 @@ public interface JoinService {
 	
 	public int userJoinAuthConfirm(UserVO userVO);
 	
+	public int pwEncryptionExec(UserVO userVO);
+	
 }

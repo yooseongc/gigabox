@@ -40,4 +40,10 @@ public class JoinDAOImpl implements JoinDAO {
 		return 0;
 	}
 
+	@Override
+	public int pwEncryptionExec(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + ".pwEncryptionExec", userVO);
+	}
+
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.LoginMapper">
+
+		<resultMap type="login" id="loginResultMap">
+			<result property="userId" column="USER_ID" />
+			<result property="userPw" column="USER_PW" />
+		</resultMap>
+
+	<select id="idCheck" parameterType="login" resultType="int">
+		SELECT COUNT(*) 
+		FROM TBL_USER 
+		WHERE USER_ID = #{userId}  
+	</select>
+	
+	<select id="login" resultType="login" resultMap="loginResultMap">
+		SELECT
+		USER_ID, USER_PW 
+		FROM TBL_USER
+		WHERE USER_ID = #{userId} 
+	</select>
+
+	
+
+</mapper>

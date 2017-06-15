@@ -31,7 +31,7 @@
 			  #{userName}, #{userGender}, #{userBirthday}, 
 			  #{userEmail}, #{userTel}, 
 			  #{userAddr}, 'Y'
-			);
+			)
 	</insert>
 	
 	<select id="idDuplicationCheckSelect" parameterType="string" resultType="int">
@@ -40,6 +40,11 @@
 		WHERE USER_ID = #{0} 
 	</select>
 	
+	<update id="pwEncryptionExec" parameterType="string">
+		UPDATE TBL_USER 
+		SET USER_PW = #{userPw} 
+		WHERE USER_ID = #{userId} 
+	</update>
 		
 	
 	</mapper>

@@ -93,11 +93,11 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					회원 서비스 <small>회원 가입</small>
+					회원 서비스 <small>개인정보 수정</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#">회원 서비스</a></li>
-					<li class="active">회원 가입</li>
+					<li class="active">개인정보 수정</li>
 				</ol>
 			</div>
 		</div>
@@ -108,9 +108,9 @@
 			<article>
 				<div class="col-md-12">
 					<div class="page-header">
-						<h1>GigaBox 회원 가입</h1>
+						<h1>개인정보 수정 <small>회원님의 정보를 정확히 입력해주세요.</small></h1>
 					</div>
-					<form class="form-horizontal" id="joinForm">
+					<form class="form-horizontal" id="modifyForm">
 						<fieldset>
 						
 							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
@@ -118,17 +118,8 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
 							<div class="col-sm-6">
-								<div class="input-group">
 									<input class="form-control" id="userId" type="text"
 									name="userId" placeholder="아이디" maxlength="20">
-									<span class="input-group-btn">
-                                         <button class="btn btn-default" id="userIDCheckBtn" >
-											<i class="fa fa-check spaceLeft"></i> &nbsp;&nbsp;중복체크
-										</button>
-                                    </span>
-								</div>
-								<p class="help-block">영문 소문자,숫자 6 ~ 20자</p>
-								<p class="help-block" id="userIDCheckErrorMsg">중복 여부를 확인하세요.</p>
 							</div>
 						</div>
 
@@ -137,17 +128,6 @@
 							<div class="col-sm-6">
 								<input class="form-control" id="userPw"
 									name="userPw" type="password" placeholder="비밀번호" maxlength="12">
-								<p class="help-block">영문소문자, 숫자 8자 이상</p>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="userPasswordCheck">비밀번호
-								확인</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="userPasswordCheck"
-									name="userPasswordCheck" type="password" placeholder="비밀번호 확인" maxlength="12">
-								<p class="help-block">비밀번호를 한번 더 입력해주세요.</p>
 							</div>
 						</div>
 
@@ -173,15 +153,7 @@
 									name="userBirthday" placeholder="생년월일">
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="userGender">성별</label>
-								<div class="col-sm-6">
-								<label class="radio-inline">
-									<input type="radio" name="userGender" value="M">남자</label>
-								<label class="radio-inline">
-									<input type="radio" name="userGender" value="F">여자</label>
-								</div>
-						</div>
+						
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userTel">휴대폰번호</label>
 							<div class="col-sm-6">
@@ -226,20 +198,12 @@
 						<input type="hidden" name="userAddr" id="userAddr">
 						
 						<div class="form-group">
-							<div class="col-md-6 col-md-offset-3">
-								<div id="message"></div>
-								<div id="recaptcha" style="margin: 0 auto;"></div>
-								<input id="recaptchaCheck" class="btn btn-default" type="button" value="Check">
-							</div>
-						</div>
-						
-						<div class="form-group">
 							<div class="col-sm-12 text-center">
 								<button id="joinSubmitBtn" class="btn btn-primary" type="submit">
-									회원가입<i class="fa fa-check spaceLeft"></i>
+									수정완료<i class="fa fa-check spaceLeft"></i>
 								</button>
-								<button class="btn btn-danger" type="submit">
-									가입취소<i class="fa fa-times spaceLeft"></i>
+								<button class="btn btn-danger" type="reset">
+									다시작성<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>
 						</div>
@@ -334,48 +298,6 @@
 		$(document).ready(function() {
 			$("#errorMessage").hide();
 			
-			// 아이디 중복 체크 
-			$("#userIDCheckBtn").click(function(e) {
-				e.preventDefault();
-				var idReg=/^[a-z]+[a-z0-9]{5,19}$/g;
-		        if(!idReg.test($("input[name=userId]").val())){
-		            alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
-		            return
-		        }
-				if ($("#userId").val() != '') {
-					$.ajax({
-						url: "/user/idduplicationcheck",
-						type: "POST",
-						dataType: "text",
-						headers: {
-							"Content-Type": "application/json",
-							"X-HTTP-Method-Override": "POST"
-						},
-						data: JSON.stringify({
-							userId: $("#userId").val(),
-						}),
-						error: function() {
-							alert("시스템 오류입니다. 관리자에게 문의하세요.");
-						},
-						success: function(result) {
-							if (result == 0) {
-								$("#userIDCheckErrorMsg").css("color", "green").text("사용하실 수 있는 아이디 입니다.");
-							} 
-							if (result == 1) {
-								$("#userIDCheckErrorMsg").css("color", "red").text("이미 사용 중인 입니다.");
-							}
-							
-						}
-					});
-				} /* else {
-					alert("아이디를 입력한 후 중복체크를 해 주세요.");
-				} */
-				
-				else {
-					console.log(!formCheck($("#userId"), "아이디중복을", $("#errorMessage")));
-				}
-			});
-			
 			// 주소 검색 모달 창 띄우기
 			$('#userAddressSearchModalBtn').click(function(e) {
 			    e.preventDefault();
@@ -386,41 +308,6 @@
 			     });
 			});
 			
-			
-			// RECAPCHAR 사용
-			var siteKey = "6Lf3xCQUAAAAAJZT2saza0khBpZCn4bEx4RLWzbe";
-		    var div = "recaptcha";
-		    Recaptcha.create(siteKey, div, {theme: "white"});
-		         
-		    $("#recaptchaCheck").click(function(){
-		         
-		        var challenge = Recaptcha.get_challenge();
-		        var response = Recaptcha.get_response();
-		        var host = $(location).attr('host');
-		         
-		        $.ajax({
-		            type: "POST",
-		            url: "/user/validateRecaptcha",
-		            async: false,
-		            data: {
-		                host: host,
-		                challenge: challenge,
-		                response: response
-		            },
-		            success: function(data) {
-		                if(data == "Y") {
-		                    document.getElementById("message").innerHTML = "성공하셨습니다!";
-		                    $("#message").css('color', 'green');
-		                }else{
-		                    document.getElementById("message").innerHTML = "실패하셨습니다! 다시 시도해 주세요!";
-		                    $("#message").css('color', 'red');
-		                    Recaptcha.reload();
-		                }
-		            }
-		        });
-		         
-		    });
-		    
 		    
 		    // 모달에서 주소 검색 버튼 클릭
 		    $('#addrSearchBtn').click(function(e){

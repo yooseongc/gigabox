@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gigabox.user.enc.utils.BCrypt;
+import com.gigabox.user.enc.utils.SHA256;
 import com.gigabox.user.service.JoinService;
 import com.gigabox.user.util.ZipcodeSearchTO;
 import com.gigabox.user.util.ZipcodeVO;
+import com.gigabox.user.vo.UserVO;
 import com.google.gson.Gson;
 
 import net.tanesha.recaptcha.ReCaptchaImpl;
@@ -43,23 +45,74 @@ public class JoinController {
 	public static final String ZIPCODE_API_KEY = "e515c666f2ef27ff51496904073254";
     public static final String ZIPCODE_API_URL = "https://biz.epost.go.kr/KpostPortal/openapi"; // 요청 URL
 	
-	@RequestMapping(value="/joinForm", method=RequestMethod.GET)
-	public String joinFormGET() {
+    //약관동의 폼 출력하기
+  	@RequestMapping(value = "/joinAgreeForm", method = RequestMethod.GET)
+  	public String joinAgreeGET(){
+  		logger.info("JOINAGREEFORM PAGE LOADING...");
+  		return "/user/joinAgreeForm";
+  	}
+  	
+    //약관동의 확인시 회원가입 폼으로 이동
+  	@RequestMapping(value = "/joinFormLoad", method = RequestMethod.GET)
+  	public String joinFormLoadPOST(){
+  		logger.info("JOIN FORM LOADING... Redirect to /user/joinForm");
+  		return "forward:/user/joinForm";
+  	}
+    
+	//가입 폼 출력하기
+    @RequestMapping(value="/joinForm", method=RequestMethod.GET)
+	public String joinFormGET(@RequestParam(value="join_user_agree", required=false, defaultValue="0") int user, 
+			@RequestParam(value="join_priv_agree", required=false, defaultValue="0") int priv) {
 		logger.info("JOINFORM PAGE LOADING...");
+		logger.info("user agree= " + user + ". priv_agree= " + priv);
+		if (!(user == 1 && priv == 1)) {
+			return "redirect:/user/joinAgreeForm";
+		}
 		return "/user/join/joinForm";
 	}
 	
-	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String joinFormPOST(RedirectAttributes rttr) {
-		return "redirect:/user/join/joinAcceptted";
+	//가입 구현하기
+	@RequestMapping(value="/joinForm", method=RequestMethod.POST)
+	public String userJoinInsert(@ModelAttribute UserVO uvo){
+		logger.info("userJoinInsert 호출 성공");
+		logger.info(uvo.toString());
+		
+		int pwEncryptionResult =0;
+		// 암호화 적용
+		String orgPass = uvo.getUserPw(); 
+		
+		String shaPass = "";
+		try {
+			SHA256 sha = SHA256.getInsatnce();
+			shaPass = sha.getSha256(orgPass.getBytes());
+			String bcPass = BCrypt.hashpw(shaPass, BCrypt.gensalt());
+			uvo.setUserPw(bcPass);
+			pwEncryptionResult = service.pwEncryptionExec(uvo);
+			
+			logger.info("PW ENCRYPTION RESULT= " + pwEncryptionResult);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int result = 0;
+		String url = "";
+
+		result = service.userJoin(uvo);
+		if(result ==1){
+			url = "/user/login.do";
+		}
+		return "redirect:" + url;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/idduplicationcheck", method=RequestMethod.POST)
-	public String idDuplicationCheck(@RequestBody String userid) {
+	public String idDuplicationCheck(@RequestBody UserVO vo) {
 		logger.info("ID DUPLICATION CHECK PROCESS START...");
+		logger.info("PARSED USERID= " + vo.getUserId());
 		
-		int result = service.idDuplicationCheck(userid);
+		int result = service.idDuplicationCheck(vo.getUserId());
+		
 		// 0이면 중복아님, 1이면 중복!
 		logger.info("ID DUPLICATION CHECK RESULT=" + result);
 		return result + "";

@@ -14,7 +14,7 @@
 	<logger name="com.gigabox.**">
 		<level value="info" />
 	</logger>
-	<logger name="com.gigabox.user">
+	<logger name="com.gigabox.user.controller">
 		<level value="info" />
 	</logger>
 

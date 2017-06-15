@@ -28,4 +28,10 @@ public class JoinServiceImpl implements JoinService {
 		return joinDAO.userJoinAuthConfirm(userVO);
 	}
 
+	@Override
+	public int pwEncryptionExec(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return joinDAO.pwEncryptionExec(userVO);
+	}
+
 }
