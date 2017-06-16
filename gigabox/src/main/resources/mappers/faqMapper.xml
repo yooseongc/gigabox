@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.FAQMapper">
+	
+	<resultMap id="faqResultMap" type="faq" >
+		<result property="faqNumber" column="FAQ_NUMBER" />
+		<result property="adminNumber" column="ADMIN_NUMBER" />
+		<result property="faqTitle" column="FAQ_TITLE" />
+		<result property="faqContent" column="FAQ_CONTENT" />
+		<result property="faqType" column="FAQ_TYPE" />
+	</resultMap>
+	
+	<select id="faqList" resultType="faq" resultMap="faqResultMap">
+		<![CDATA[
+		SELECT * 
+		FROM TBL_FAQ 
+		]]>
+	</select>
+
+</mapper>
