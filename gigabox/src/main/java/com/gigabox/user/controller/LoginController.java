@@ -108,10 +108,15 @@ public class LoginController {
 		model.addAttribute("userVO", userVO);
 	}
 	
+	//로그아웃
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		logger.info("LOGOUT PROCESS - Remove Session and Cookie");
 		session.removeAttribute("login");
-		return "redirect:/user/login";
+		session.invalidate();
+		return "redirect:/";
 	}
+	
+	//회원정보 수정
+	
 }

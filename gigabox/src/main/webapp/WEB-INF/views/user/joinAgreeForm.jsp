@@ -117,7 +117,7 @@ p.error { /* 에러메시지 */
 		<!-- Content Row -->
 		<div class="row">
 			<article>
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-md-12">
 					<div class="page-header">
 						<h1>이용약관 동의</h1>
 					</div>
@@ -131,8 +131,9 @@ p.error { /* 에러메시지 */
 								<div class="form-group pull-left">
 									<label class="control-label"> 회원가입 약관 </label>
 									<div class="col-xs-12">
-										<textarea class="form-control" readonly rows="10" cols="100">서비스약관
-</textarea>
+										<textarea id="auth1" class="form-control" readonly rows="15" cols="100" style="resize: none;">서비스약관
+											
+										</textarea>
 									</div>
 									<div class="col-xs-12">
 										<div class="checkbox pull-right">
@@ -146,7 +147,7 @@ p.error { /* 에러메시지 */
 								<div class="form-group pull-left">
 									<label class="control-label"> 개인정보 처리방침 안내 </label>
 									<div class="col-xs-12">
-										<textarea class="form-control" readonly rows="10" cols="100">개인정보수집
+										<textarea id="auth2" class="form-control" readonly rows="15" cols="100" style="resize: none;">개인정보수집
 
 
 </textarea>
@@ -220,6 +221,14 @@ p.error { /* 에러메시지 */
 			errorClass: "error",
 			errorElement: "p"
 		});
+		
+		$.get("/resources/auth1.txt", function(data) {
+			$("#auth1").html(data);
+		});
+		$.get("/resources/auth2.txt", function(data) {
+			$("#auth2").html(data);
+		});
+		
 	});
 	</script>
 	

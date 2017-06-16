@@ -48,6 +48,8 @@
 			<exclude-mapping path="/user/logout.do"/>
 			<exclude-mapping path="/user/loginSession"/>
 			<exclude-mapping path="/user/loginSession.do"/>
+			<exclude-mapping path="/user/joinAgreeForm"/>
+			<exclude-mapping path="/user/joinAreeForm.do"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

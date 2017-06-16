@@ -35,6 +35,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		logger.info("LOGIN INTERCEPTOR PREHANDLER ENTERED");
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute(LOGIN) != null) {
