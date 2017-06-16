@@ -17,9 +17,18 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 	private static final String namespace = "com.gigabox.mapper.NOTICEMapper";
 
+	// 글 목록 구현
 	@Override
 	public List<NoticeVO> noticeList() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + ".noticeList");
 	}
+
+	// 글 상세 구현
+	@Override
+	public NoticeVO noticeRead(NoticeVO nvo) {
+		return sqlSession.selectOne(namespace + ".noticeRead", nvo);
+	}
+
+
 }

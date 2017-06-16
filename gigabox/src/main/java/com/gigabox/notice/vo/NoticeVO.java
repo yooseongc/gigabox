@@ -2,7 +2,9 @@ package com.gigabox.notice.vo;
 
 import java.util.Date;
 
-public class NoticeVO {
+import com.gigabox.notice.page.PagingVO;
+
+public class NoticeVO extends PagingVO{
 	private int noticeNumber; // 글번호
 	private int adminNumber; // 관리자번호
 	private String noticeTitle; // 제목
@@ -57,7 +59,7 @@ public class NoticeVO {
 	public void setNoticeBranchname(String noticeBranchname) {
 		this.noticeBranchname = noticeBranchname;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "NoticeVO [noticeNumber=" + noticeNumber + ", adminNumber=" + adminNumber + ", noticeTitle="

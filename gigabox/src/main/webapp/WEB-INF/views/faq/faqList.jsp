@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,14 +87,39 @@
 				<h1 class="page-header">
 					고객 센터 <small>자주 묻는 질문</small>
 				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li class="active">자주 묻는 질문</li>
-				</ol>
+				<ul class="nav nav-tabs" role="tablist">
+					<li><a href="#" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+					<li><a href="#" class="" title="공지사항 바로가기">공지사항</a></li>
+					<li><a href="#" class="" title="1:1문의 바로가기">1:1문의</a></li>
+				</ul>
 			</div>
 		</div>
 		<!-- /.row -->
+		<br>
+		<!-- 검색 시작 -->
+		<div class="pull-right">
 
+
+
+			<form class="form-inline" action="/action_page.php">
+				<div class="form-group">
+					<select class="btn-primary form-control" title="질문 유형">
+						<option value="0">영화/영화관</option>
+						<option value="1">예매</option>
+						<option value="2">홈페이지</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" title="검색어 입력"
+						placeholder="검색어를 입력하세요" maxlength="20">
+				</div>
+				<button class="btn btn-default" type="submit">
+					<i class="glyphicon glyphicon-search"></i>
+				</button>
+			</form>
+		</div>
+		<!-- 검색 종료 -->
+		<br>
 		<!-- Content Row -->
 		<div class="row">
 			<div class="col-lg-12">
@@ -110,7 +136,7 @@
 								<div class="panel-body">${faqItem.faqContent}</div>
 							</div>
 						</div>
-						<!-- /.panel -->
+						<!-- /.panel default-->
 					</c:forEach>
 				</div>
 				<!-- /.panel-group -->
@@ -118,9 +144,7 @@
 			<!-- /.col-lg-12 -->
 		</div>
 		<!-- /.row -->
-
 		<hr>
-
 		<!-- Footer -->
 		<footer>
 			<div class="row">

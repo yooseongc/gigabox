@@ -5,5 +5,11 @@ import java.util.List;
 import com.gigabox.notice.vo.NoticeVO;
 
 public interface NoticeService {
+
 	public List<NoticeVO> noticeList() throws Exception;
+
+	public NoticeVO noticeRead(NoticeVO read);
+
+
+
 }

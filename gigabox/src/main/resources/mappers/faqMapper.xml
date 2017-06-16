@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gigabox.mapper.FAQMapper">
-	<resultMap type="faqResultMap" id="faq">
+	<resultMap id="faqResultMap" type="faq">
 		<result property="faqNumber" column="FAQ_NUMBER" />
 		<result property="adminNumber" column="ADMIN_NUMBER" />
 		<result property="faqTitle" column="FAQ_TITLE" />
@@ -16,7 +16,5 @@
 		FROM TBL_FAQ
 		]]>
 	</select>
-
-
 </mapper>
 

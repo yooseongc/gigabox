@@ -14,6 +14,9 @@
 	<logger name="com.gigabox.controller">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.notice.controller">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

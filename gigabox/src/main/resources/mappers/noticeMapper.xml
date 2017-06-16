@@ -3,21 +3,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gigabox.mapper.NOTICEMapper">
-	<resultMap type="faqResultMap" id="notice">
+	<resultMap id="noticeResultMap" type="notice">
 		<result property="noticeNumber" column="NOTICE_NUMBER" />
 		<result property="adminNumber" column="ADMIN_NUMBER" />
 		<result property="noticeTitle" column="NOTICE_TITLE" />
-		<result property="noticeContent" column="NOTICE_TYPE" />
+		<result property="noticeContent" column="NOTICE_CONTENT" />
 		<result property="noticeRegisterdate" column="NOTICE_REGISTERDATE" />
 		<result property="noticeBranchname" column="NOTICE_BRANCHNAME" />
 	</resultMap>
 
+	<!-- 게시물 기본 조회 -->
 	<select id="noticeList" resultType="notice" resultMap="noticeResultMap">
 		<![CDATA[
 		SELECT *
 		FROM TBL_NOTICE
 		]]>
 	</select>
-	<select id="noticeRead" resultType="" resultMap="">
+
+	<!-- 게시판 글 상세조회 -->
+	<select id="noticeRead" parameterType="notice" resultType="notice"
+		resultMap="noticeResultMap">
+		<!--NoticeRead -->
+	<![CDATA[
+	 SELECT NOTICE_TITLE
+	,NOTICE_BRANCHNAME
+	,NOTICE_REGISTERDATE
+	,NOTICE_CONTENT 
+	FROM TBL_NOTICE 
+	WHERE NOTICE_NUMBER = #{noticeNumber}  
+	]]>
+	</select>
+
+	<select id="noticePage" resultType="notice" resultMap="noticeResultMap">
+	<![CDATA[
+	SELECT *
+	FROM(SELECT ROWNUM NOTICE_NUMBER,NOTICE_TITLE,NOTICE_REGISTERDATE,NOTICE_BRANCHNAME
+	FROM TBL_NOTICE)
+	WHERE NOTICE_NUMBER BETWEEN #{start_row} AND #{end_row};
+	]]>
 	</select>
 </mapper>
