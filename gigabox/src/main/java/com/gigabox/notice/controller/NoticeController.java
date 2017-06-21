@@ -25,15 +25,11 @@ public class NoticeController {
 	@Inject
 	private NoticeService noticeService;
 
-	
-	
-
 	/* 글 목록 구현 */
 	@RequestMapping(value = "/noticeList", method = RequestMethod.GET)
 	public String noticeListGET(Model model) throws Exception{
 		logger.info("noticeList.jsp 나오기");
 		
-
 		List<NoticeVO> noticeList = noticeService.noticeList(); //List 뽑아와서 instance 만들기
 		//log4j에서 패키지 추가 후 리스트에 있는 것을 vo명으로?? 뽑기
 		for (NoticeVO vo : noticeList) { 
@@ -42,9 +38,6 @@ public class NoticeController {
 		model.addAttribute("noticeList", noticeList); 
 		return "/notice/noticeList"; 
 	}
-	
-	
-	
 
 	/*글 상세보기 구현*/
 	@RequestMapping(value="/noticeRead", method=RequestMethod.GET)

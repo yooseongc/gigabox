@@ -6,5 +6,6 @@
 	<typeAliases>
 		<typeAlias type="com.gigabox.faq.vo.FaqVO" alias="faq" />
 		<typeAlias type="com.gigabox.notice.vo.NoticeVO" alias="notice" />
+		<typeAlias type="com.gigabox.inquiry.vo.InquiryVO" alias="inquiry" />
 	</typeAliases>
 </configuration>

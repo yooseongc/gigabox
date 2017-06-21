@@ -6,7 +6,7 @@ import com.gigabox.notice.vo.NoticeVO;
 
 public interface NoticeDAO {
 
-	public List<NoticeVO> noticeList(); // 목록조회
+	public List<NoticeVO> noticeList() throws Exception; // 목록조회
 
 	public NoticeVO noticeRead(NoticeVO read);
 

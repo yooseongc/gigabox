@@ -19,7 +19,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 	// 글 목록 구현
 	@Override
-	public List<NoticeVO> noticeList() {
+	public List<NoticeVO> noticeList() throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + ".noticeList");
 	}
@@ -29,6 +29,5 @@ public class NoticeDAOImpl implements NoticeDAO {
 	public NoticeVO noticeRead(NoticeVO nvo) {
 		return sqlSession.selectOne(namespace + ".noticeRead", nvo);
 	}
-
 
 }

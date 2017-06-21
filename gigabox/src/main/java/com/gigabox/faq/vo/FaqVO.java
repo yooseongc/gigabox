@@ -1,11 +1,11 @@
 package com.gigabox.faq.vo;
 
 public class FaqVO {
-	private int faqNumber;
-	private int adminNumber;
-	private String faqTitle;
-	private String faqContent;
-	private String faqType;
+	private int faqNumber; //공지번호
+	private int adminNumber;//관리자번호
+	private String faqTitle; //제목
+	private String faqContent; //내용
+	private String faqType; //질문 유형
 
 	public int getFaqNumber() {
 		return faqNumber;

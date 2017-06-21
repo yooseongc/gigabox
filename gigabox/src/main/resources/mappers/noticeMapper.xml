@@ -34,6 +34,7 @@
 	]]>
 	</select>
 
+	<!-- 페이징.. -->
 	<select id="noticePage" resultType="notice" resultMap="noticeResultMap">
 	<![CDATA[
 	SELECT *
@@ -42,4 +43,5 @@
 	WHERE NOTICE_NUMBER BETWEEN #{start_row} AND #{end_row};
 	]]>
 	</select>
+
 </mapper>

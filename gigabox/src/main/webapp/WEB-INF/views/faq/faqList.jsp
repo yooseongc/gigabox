@@ -88,8 +88,9 @@
 					고객 센터 <small>자주 묻는 질문</small>
 				</h1>
 				<ul class="nav nav-tabs" role="tablist">
-					<li><a href="#" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
-					<li><a href="#" class="" title="공지사항 바로가기">공지사항</a></li>
+					<li><a href="/faq/faqList" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+					<li><a href="/notice/noticeList" class="notice"
+						title="공지사항 바로가기">공지사항</a></li>
 					<li><a href="#" class="" title="1:1문의 바로가기">1:1문의</a></li>
 				</ul>
 			</div>
@@ -98,9 +99,6 @@
 		<br>
 		<!-- 검색 시작 -->
 		<div class="pull-right">
-
-
-
 			<form class="form-inline" action="/action_page.php">
 				<div class="form-group">
 					<select class="btn-primary form-control" title="질문 유형">
@@ -119,10 +117,16 @@
 			</form>
 		</div>
 		<!-- 검색 종료 -->
-		<br>
+
 		<!-- Content Row -->
 		<div class="row">
 			<div class="col-lg-12">
+				<table class="table panel panel-default">
+					<tr>
+						<td>분류</td>
+						<td>제목</td>
+					</tr>
+				</table>
 				<div class="panel-group" id="accordion">
 					<c:forEach items="${faqList}" var="faqItem">
 						<div class="panel panel-default">
@@ -145,6 +149,14 @@
 		</div>
 		<!-- /.row -->
 		<hr>
+		<!-- 페이지 네비게이션  -->
+		<div class="text-center">
+			<ul class="pagination">
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+			</ul>
+		</div>
 		<!-- Footer -->
 		<footer>
 			<div class="row">

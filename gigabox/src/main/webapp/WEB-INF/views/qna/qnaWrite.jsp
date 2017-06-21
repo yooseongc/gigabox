@@ -3,14 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GigaBox 공지사항</title>
+<title>GigaBox 1:1문의</title>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -99,9 +98,10 @@
 					공지사항 <small>GIGABOX NEWS</small>
 				</h1>
 				<ul class="nav nav-tabs" role="tablist">
-					<li><a href="/faq/faqList" class="" title="자주묻는질문 바로가기">자주묻는질문</a></li>
-					<li><a href="/notice/noticeList" class="" title="공지사항 바로가기">공지사항</a></li>
-					<li><a href="#" class="" title="1:1문의 바로가기">1:1문의</a></li>
+					<li><a href="/faq/faqList" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+					<li><a href="/notice/noticeList" class="notice"
+						title="공지사항 바로가기">공지사항</a></li>
+					<li><a href="#" class="qna" title="1:1문의 바로가기">1:1문의</a></li>
 				</ul>
 			</div>
 		</div>
@@ -119,31 +119,16 @@
 					<button type="submit" class="btn btn-default">
 						<i class="glyphicon glyphicon-search"></i>
 					</button>
+					<div class="container">
+						<form action="">
+							<table class="table">
+								<tr>
+									
+								</tr>
+							</table>
+						</form>
+					</div>
 				</div>
-				<!-- 검색 종료 -->
-				<table class="table">
-					<thead>
-						<tr>
-							<th>NO</th>
-							<th>영화관</th>
-							<th style="text-align: center;">제목</th>
-							<th>등록일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${noticeList}" var="noticeItem">
-							<tr>
-								<td>${noticeItem.noticeNumber}</td>
-								<td>${noticeItem.noticeBranchname}</td>
-								<td><a
-									href="/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
-									title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-										value="${noticeItem.noticeRegisterdate}" /></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
 				<hr>
 				<!-- 페이지 네비게이션  -->
 				<div class="text-center">
