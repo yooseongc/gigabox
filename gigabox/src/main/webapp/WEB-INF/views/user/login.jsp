@@ -35,8 +35,8 @@
 				<div class="login-box well">
 					<form accept-charset="UTF-8" role="form" method="post" action="/user/loginSession"
 						id="loginForm">
-						<legend>로그인</legend>
 						<fieldset>
+							<legend>로그인</legend>
 							<div class="alert alert-danger" id="errorMessage">
 							</div>
 							<div class="form-group">

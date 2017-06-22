@@ -28,7 +28,7 @@ import com.gigabox.user.vo.UserVO;
 @RequestMapping("/user")
 public class ModifyController {
 
-	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ModifyController.class);
 
 	@Inject
 	private ModifyService modifyService;
@@ -38,9 +38,9 @@ public class ModifyController {
 	public String modifyFormGET(Model model, HttpSession session, HttpServletRequest request,
 			@PathVariable String userId) {
 		logger.info("MODIFYFORM PAGE LOADING...");
-
+		
 		logger.info("userId= " + userId);
-
+		
 		UserVO userVO = new UserVO();
 		userVO.setUserId(userId);
 		userVO = modifyService.userDetail(userVO);
@@ -54,7 +54,8 @@ public class ModifyController {
 	@RequestMapping(value = "/modifyForm", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> modifyFormPOST(@ModelAttribute UserVO userVO, LoginDTO loginDTO) {
 		logger.info("MODIFY LOADING...");
-
+		logger.info("INPUT DATA= " + userVO.toString());
+		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		UserVO pwCheckUserVO = new UserVO();
 		pwCheckUserVO.setUserPw(userVO.getUserPw());
@@ -85,15 +86,17 @@ public class ModifyController {
 			resultMap.put("message", "ERROR");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
-		/*int result = 0;
-		String url = "";
 
-		result = modifyService.userModify(userVO);
-
-		if (result == 1) {
-			url = "/"; // 수정후 메인으로
-		}*/
-		/*return "redirect:/";*/
 	}
+	
+	//비밀번호 변경 폼 출력
+	@RequestMapping(value = "changePwForm", method = RequestMethod.GET)
+	public String changePwFormGET(){
+		logger.info("CHANGE FORM LOADING... ");
+		
+		return "/user/changePwForm";
+	}	
+		
+	//비밀번호 변경 구현
 
 }

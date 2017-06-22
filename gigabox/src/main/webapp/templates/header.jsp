@@ -1,0 +1,232 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<style type="text/css">
+ol.inline, ol.unstyled, ul.inline, ul.unstyled {
+    margin-left: 0;
+    list-style: none;
+    
+}
+.unstyled a {
+	text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
+</style>
+<header>
+	<!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                	<img src="/resources/images/logo_giga_white.png" style="height: 50px; margin-top: -10px;" alt="GIGABOX">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-center" style="text-align: center; font-size: 1.2em;">
+                    <li>
+                        <a href="/movie/movieList" style="height: 60px; width: 170px;">영화</a>
+                    </li>
+                    <li>
+                        <a href="/cinema/branchList" style="height: 60px; width: 170px;">영화관</a>
+                    </li>
+                    <li>
+                        <a href="javascript:loadReservationModal();" style="height: 60px; width: 170px;">빠른 예매</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width: 170px;">전체 메뉴 <b class="caret"></b></a>
+                        <div id="totalMenuWindow" class="dropdown-menu" style="width: 600px; height: 200px; margin-top: 10px; margin-left: -430px;">
+							<div class="well well-default" style="font-size: 1.2em;">
+								<div class="row">
+									<div class="col-md-12" style="border-bottom: 1px #555555 solid;">
+				                        <h4><i class="fa fa-fw fa-th-list"></i> 전체 메뉴</h4>
+				                        <br>
+				                    </div>
+				                </div>
+				                <div class="row">
+				                    <div class="col-md-12">
+				                         <div class="row-fluid">
+					                        <div class="col-lg-6" style="border-right: 1px #555555 solid; padding-left: 5%;">
+					                            <h4 class="title"><i class="fa fa-film"></i> 영화</h4>
+					                            <ul class="unstyled">
+					                                <li><a href="/movie/movieList?listType=boxoffice">박스 오피스</a></li>
+					                                <li><a href="/movie/movieList?listType=recent">최신 개봉작</a></li>
+					                                <li><a href="/movie/movieList?listType=tobe">상영 예정작</a></li>
+					                                <li><a href="/cinema/branchList">영화관 찾기</a></li>
+					                            </ul>
+					                            
+					                            <h4 class="title  margin-top-20"><i class="fa fa-ticket"></i> 예매</h4>
+					                            <ul class="unstyled">
+					                                <li><a href="/reservation/resvInfo">예매 안내</a></li>
+					                                <li><a href="/?pageAction=resv">빠른 예매</a></li>
+					                            </ul>
+												
+												<h4 class="title margin-top-20"><i class="fa fa-info-circle"></i> 고객센터</h4>
+					                            <ul class="unstyled">
+					                                <li><a href="/notice/noticeList">공지사항</a></li>
+					                                <li><a href="/faq/faqList">자주 묻는 질문</a></li>
+					                                <li><a href="/inquiry/inquiryList">Q&A</a></li>
+					                            </ul>  
+					                        </div>
+					                        <div class="col-lg-6" style="padding-left: 5%;">
+					                    
+					                            <h4 class="title"><i class="fa fa-users"></i> 회원 서비스</h4>
+					                            <ul class="unstyled">
+					                                <li><a href="/user/findPWForm">ID/PW 찾기</a></li>
+					                                <li><a href="/user/joinAgreeForm">회원 가입</a></li>
+					                                <li><a href="/user/modifyForm/${sessionScope.login.userId}">회원 정보 수정</a></li>
+					                                <li><a href="/user/userLeave/${sessionScope.login.userId}">회원 탈퇴</a></li>
+					                            </ul>
+					                            
+					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
+					                            <ul class="unstyled">
+					                                <li><a href="/mypage/mileachInfo/${sessionScope.login.userId}">마일리지 정보</a></li>
+					                                <li><a href="/mypage/resvInfo/${sessionScope.login.userId}">예매 확인/취소</a></li>
+					                                <li><a href="/mypage/mymovie/${sessionScope.login.userId}">마이무비</a></li>
+					                                <li><a href="/mypage/qnaInfo/${sessionScope.login.userId}">문의 내역</a></li>
+					                            </ul>
+					                        </div>
+					                    </div>
+			                    	</div>
+			                    </div>
+							</div>
+						</div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="min-width: 170px; max-height: 60px;">
+                        	<span id="loginDropdownSpan">로그인 <b class="caret"></b></span>
+                        	<span id="logoutSpan" class="hide"> 
+                        		<i class="fa fa-user fa-2x"></i>&nbsp;&nbsp; 
+                        		<span class="label label-info" style="margin-top: -10px; vertical-align: middle;">${sessionScope.login.userName} 님</span>
+                        	</span> 
+                        </a>
+                        <div id="loginWindow" class="dropdown-menu" style="width: 400px; height: 300px; margin-left: -230px;">
+							<div class="login-box well">
+								<form accept-charset="UTF-8" role="form" method="post" action="/user/loginSession"
+									id="loginForm">
+									<fieldset>
+										<legend>로그인</legend>
+										<div class="alert alert-danger" id="errorMessage">
+										</div>
+										<div class="form-group">
+											<label for="userId">아이디</label> <input
+												name="userId" value='' id="userId"
+												placeholder="ID" type="text"
+												class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="userPw">비밀번호</label> <input name="userPw"
+												id="userPw" value='' placeholder="Password" type="password"
+												class="form-control" />
+										</div>
+										<div class="form-group">
+												<!-- Change this to a button or input when using this as a form -->
+			                                <button class="btn btn-lg btn-success btn-block" id="loginButton">로그인</button>
+										</div>
+										<div class="form-group">
+											<a href="/user/findPWForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
+											<a href="/user/joinAgreeForm" class="btn btn-default col-lg-6 m-t-md"> 회원가입</a>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+						<div id="logoutWindow" class="dropdown-menu hide" style="width: 400px; height: 150px; margin-left: -230px;">
+							<div class="login-box well" style="font-size: 1.2em;">
+								${sessionScope.login.userId}님 환영합니다!<br>
+								<div class="col-md-12" style="text-align: right;">
+									현재 마일리지  <span class="label label-danger">${sessionScope.login.userMileage} point</span>
+									<br>
+								</div>
+								<hr>
+								<button class="btn btn-md btn-success btn-block" id="myMovieButton">마이무비</button>
+								<button class="btn btn-md btn-success btn-block" 
+									id="logoutButton" onclick="window.location.href='/user/logout'">로그아웃</button>
+							</div>
+						</div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+</header>
+
+<script type="text/javascript">
+		
+		function formCheck(v_item, v_name, e_item) {
+			if (v_item.val().replace(/\s/g, "") == "") {
+
+				e_item.text(v_name + " 입력해 주세요.");
+				e_item.show();
+				v_item.val("");
+				v_item.focus();
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		$(document).ready(function() {
+			
+			if ("${sessionScope.login.userId}" != "") {
+				$("#loginDropdownSpan").addClass("hide");
+				$("#logoutSpan").removeClass("hide");
+				$("#loginWindow").addClass("hide");
+				$("#logoutWindow").removeClass("hide")
+			} else {
+				$("#logoutWindow").addClass("hide");
+			}
+			
+			$("#errorMessage").hide();
+			$("#loginButton").click(function(e) {
+				e.preventDefault();
+				console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
+				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
+					return;
+				}
+				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+					return;
+				}
+				
+				 $.ajax({
+					url: "/user/login",
+					type: "POST",
+					data: $("#loginForm").serialize(),
+					error: function() {
+						$("#errorMessage").text("시스템 오류입니다.");
+						$("#errorMessage").show();
+					},
+					success: function(resultData) {
+						if (resultData.message == 'ID-MISSING') {
+							$("#errorMessage").text("해당 계정이 존재하지 않습니다.");
+							$("#errorMessage").show();
+							$("#userId").val("");
+							$("#userPw").val("");
+							$("#userId").focus();
+						} else if (resultData.message == 'PW-WRONG') {
+							$("#errorMessage").text("비밀번호가 일치하지 않습니다.");
+							$("#errorMessage").show();
+							$("#userPw").val("");
+							$("#userPw").focus();
+						} else if (resultData.message == 'LOGIN-SUCCESS') {
+							console.log("login success!!!");
+							$("#loginForm").submit();
+						} else if (resultData.message == 'ERROR') {
+							$("#errorMessage").text("시스템 오류입니다.");
+							$("#errorMessage").show();
+						}
+					} 
+					});
+				});
+			});
+	</script>

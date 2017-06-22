@@ -38,6 +38,11 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -211,6 +216,13 @@
       	  <artifactId>jackson-databind</artifactId>
       	  <version>2.6.1</version>
         </dependency>
+        
+        <!-- Json View -->
+		 <dependency>
+		     <groupId>org.codehaus.jackson</groupId>
+		     <artifactId>jackson-mapper-asl</artifactId>
+		     <version>1.9.13</version>
+		 </dependency>
 		
 	    <!-- file Upload -->
 	    <dependency>
@@ -246,6 +258,13 @@
         	<artifactId>jackson-databind</artifactId>
         	<version>2.6.1</version>
         </dependency>
+	    
+	    <!-- Java Mail API -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.3</version>
+		</dependency>
 	    
 	  </dependencies>
     <build>

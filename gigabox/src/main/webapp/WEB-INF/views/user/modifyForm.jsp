@@ -20,6 +20,11 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+	
+<!-- jQuery -->
+<script src="/resources/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/js/bootstrap.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -31,60 +36,9 @@
 
 </head>
 <body>
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">Start Bootstrap</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="about.html">About</a></li>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Portfolio <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="portfolio-1-col.html">1 Column Portfolio</a></li>
-							<li><a href="portfolio-2-col.html">2 Column Portfolio</a></li>
-							<li><a href="portfolio-3-col.html">3 Column Portfolio</a></li>
-							<li><a href="portfolio-4-col.html">4 Column Portfolio</a></li>
-							<li><a href="portfolio-item.html">Single Portfolio Item</a>
-							</li>
-						</ul></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Blog <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="blog-home-1.html">Blog Home 1</a></li>
-							<li><a href="blog-home-2.html">Blog Home 2</a></li>
-							<li><a href="blog-post.html">Blog Post</a></li>
-						</ul></li>
-					<li class="dropdown active"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">Other Pages <b
-							class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="active"><a href="full-width.html">Full Width
-									Page</a></li>
-							<li><a href="sidebar.html">Sidebar Page</a></li>
-							<li><a href="faq.html">FAQ</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="pricing.html">Pricing Table</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+	
+	<!-- header -->
+	<c:import url="/templates/header.jsp"/>
 
 	<!-- Page Content -->
 	<div class="container">
@@ -218,71 +172,62 @@
 
 		<hr>
 
-		<!-- Footer -->
-		<footer>
-			<div class="row">
-				<div class="col-lg-12">
-					<p>Copyright &copy; GigaBox 2017</p>
-				</div>
-			</div>
-		</footer>
-
 	</div>
 	<!-- /.container -->
 	
-	 <!-- Modal -->
-     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                     <h4 class="modal-title" id="addrModalLabel">우편번호 검색</h4>
-                 </div>
-                 <div class="modal-body">
-                      <form id="addrSearchForm" onsubmit="return false;">
-						   <strong>도로명, 건물명, 읍/면/동(지번), 사서함, 우편번호 등 검색하고자 하는
-							주소 검색어를 입력하세요.<br>
-							- 도로명 + 건물번호 (예) 도움5로 19<br>
-							- 건물명 (예) 우정사업본부<br>
-							- 읍/면/동/리 + 지번 (예) 어진동 307-19<br>
-							- 사서함 + 사서함번호 (예) 광화문우체국사서함 45<br>
-							</strong>
-						    <br><br>
-						    <input name="target" value="postNew" type="hidden">
-						    <input name="query" id="query" type="text">
-						    <input value="검색" id="addrSearchBtn" type="button">
-						</form>
-						<p>
-						</p>
-						<div>
-						    <table id="addrListTable" class="table table-bordered table-hover">
-						        <thead>
-						            <tr>
-						                <th>우편번호</th>
-						           		<th>내용</th>
-						            </tr>
-						        </thead>
-						        <tbody id="zipcodeList"></tbody>
-						    </table>
-						</div>
-                   </div>
-                   <div class="modal-footer">
-                       <button id="addrModalCloseBtn" type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
-                   </div>
-               </div>
-               <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+	<!-- Footer -->
+	<c:import url="/templates/footer.jsp"/>
 	
-	<!-- jQuery -->
-	<script src="/resources/js/jquery.js"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/js/bootstrap.min.js"></script>
+		 <!-- Modal -->
+	     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalLabel" aria-hidden="true">
+	         <div class="modal-dialog">
+	             <div class="modal-content">
+	                 <div class="modal-header">
+	                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                     <h4 class="modal-title" id="addrModalLabel">우편번호 검색</h4>
+	                 </div>
+	                 <div class="modal-body">
+	                      <form id="addrSearchForm" onsubmit="return false;">
+							   <strong>도로명, 건물명, 읍/면/동(지번), 사서함, 우편번호 등 검색하고자 하는
+								주소 검색어를 입력하세요.<br>
+								- 도로명 + 건물번호 (예) 도움5로 19<br>
+								- 건물명 (예) 우정사업본부<br>
+								- 읍/면/동/리 + 지번 (예) 어진동 307-19<br>
+								- 사서함 + 사서함번호 (예) 광화문우체국사서함 45<br>
+								</strong>
+							    <br><br>
+							    <input name="target" value="postNew" type="hidden">
+							    <input name="query" id="query" type="text">
+							    <input value="검색" id="addrSearchBtn" type="button">
+							</form>
+							<p>
+							</p>
+							<div>
+							    <table id="addrListTable" class="table table-bordered table-hover">
+							        <thead>
+							            <tr>
+							                <th>우편번호</th>
+							           		<th>내용</th>
+							            </tr>
+							        </thead>
+							        <tbody id="zipcodeList"></tbody>
+							    </table>
+							</div>
+	                   </div>
+	                   <div class="modal-footer">
+	                       <button id="addrModalCloseBtn" type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+	                   </div>
+	               </div>
+	               <!-- /.modal-content -->
+	      </div>
+	      <!-- /.modal-dialog -->
+	  </div>
+	  <!-- /.modal -->
+	
+	
 
 	<script type="text/javascript">
-	 function formCheck(v_item, v_name, e_item) {
+	 	function formCheck(v_item, v_name, e_item) {
 			if (v_item.val().replace(/\s/g, "") == "") {
 				
 				e_item.text(v_name + " 확인해 주세요.");
@@ -296,7 +241,8 @@
 		}
 	
 		$(document).ready(function() {
-			$("#errorMessage").hide();
+			
+			$("#errorMessage").addClass("hide");
 			
 			// 주소 검색 모달 창 띄우기
 			$('#userAddressSearchModalBtn').click(function(e) {
@@ -383,19 +329,24 @@
 		 		e.preventDefault();
 		 		console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
 				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				
 				if (!formCheck($("#userEmail"), "이메일을", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userName"), "이름을", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userTel"), "휴대폰번호를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				
@@ -413,8 +364,6 @@
 		 	});
 		    
 		});
-		
-		
 		
 	</script>
 

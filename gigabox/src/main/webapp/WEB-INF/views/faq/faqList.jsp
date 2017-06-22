@@ -14,6 +14,11 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+ <!-- jQuery -->
+<script src="/resources/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/js/bootstrap.min.js"></script>
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -23,7 +28,7 @@
 </head>
 <body>
 
- <!-- Navigation -->
+ 	<!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -132,12 +137,7 @@
 			<div class="col-lg-12">
 				<div class="panel-group" id="accordion">
 				<c:forEach items="${faqList}" var="faqItem">
-					<c:if test="${faqItem.faqType == 'P'}">
 					<div class="panel panel-primary">
-					</c:if>
-					<c:if test="${faqItem.faqType == 'N'}">
-					<div class="panel panel-default">
-					</c:if>
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#${faqItem.faqNumber}">${faqItem.faqTitle}</a>
@@ -172,10 +172,7 @@
     </div>
     <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="/resources/js/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/resources/js/bootstrap.min.js"></script>
+   
 
 </body>
 </html>

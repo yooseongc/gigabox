@@ -22,7 +22,7 @@
 	
 	<select id="login" resultType="login" resultMap="loginResultMap">
 		SELECT
-		USER_ID, USER_PW 
+		USER_ID, USER_PW, USER_NAME  
 		FROM TBL_USER
 		WHERE USER_ID = #{userId} 
 	</select>

@@ -54,7 +54,7 @@ public class JoinController {
   	
     //약관동의 확인시 회원가입 폼으로 이동
   	@RequestMapping(value = "/joinFormLoad", method = RequestMethod.GET)
-  	public String joinFormLoadPOST(){
+  	public String joinFormLoadGET(){
   		logger.info("JOIN FORM LOADING... Redirect to /user/joinForm");
   		return "forward:/user/joinForm";
   	}

@@ -3,7 +3,7 @@ package com.gigabox.user.dto;
 public class LoginDTO {
 	private String userId;
 	private String userPw;
-	private boolean useCookie;
+	private String userName;
 
 	public String getUserId() {
 		return userId;
@@ -21,17 +21,17 @@ public class LoginDTO {
 		this.userPw = userPw;
 	}
 
-	public boolean isUseCookie() {
-		return useCookie;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUseCookie(boolean useCookie) {
-		this.useCookie = useCookie;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", useCookie=" + useCookie + "]";
+		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + "]";
 	}
 
 }

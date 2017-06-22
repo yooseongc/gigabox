@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,14 +32,15 @@ public class LoginController {
 	@Inject
 	private LoginService loginService;
 
-	// 로그인 폼 출력
+	/*// 로그인 폼 출력
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGET(@ModelAttribute("dto") LoginDTO dto) {
 		logger.info("LOGIN PAGE LOADING....");
 		return "/user/login";
-	}
+	}*/
 
 	// 로그인 구현하기
+	@Transactional
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> loginPOST(LoginDTO loginDTO, HttpSession session) {
@@ -95,7 +96,6 @@ public class LoginController {
 				resultMap.put("message", "ERROR");
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 			}
-
 		}
 	}
 
@@ -103,7 +103,7 @@ public class LoginController {
 	public void loginSessionCreation(LoginDTO dto, HttpSession session, Model model) throws Exception {
 		logger.info("LOGIN PROCESS - Create Session");
 		UserVO userVO = new UserVO();
-		userVO.setUserId(dto.getUserId());
+		userVO = loginService.login(dto);
 		model.addAttribute("userVO", userVO);
 	}
 	
