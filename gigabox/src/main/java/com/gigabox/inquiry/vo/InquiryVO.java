@@ -3,7 +3,7 @@ package com.gigabox.inquiry.vo;
 public class InquiryVO {
 	private int userNumber; // 회원번호
 	private int inquiryNumber; // 문의번호
-	private int inquiryGroupNumber; // 글 그룹번호
+	private int inquiryGroupnumber; // 글 그룹번호
 	private String inquiryTitle; // 제목
 	private String inquiryCotnent; // 내용
 	private String inquiryRegisterdate; // 등록일
@@ -25,12 +25,12 @@ public class InquiryVO {
 		this.inquiryNumber = inquiryNumber;
 	}
 
-	public int getInquiryGroupNumber() {
-		return inquiryGroupNumber;
+	public int getInquiryGroupnumber() {
+		return inquiryGroupnumber;
 	}
 
-	public void setInquiryGroupNumber(int inquiryGroupNumber) {
-		this.inquiryGroupNumber = inquiryGroupNumber;
+	public void setInquiryGroupnumber(int inquiryGroupnumber) {
+		this.inquiryGroupnumber = inquiryGroupnumber;
 	}
 
 	public String getInquiryTitle() {
@@ -67,8 +67,10 @@ public class InquiryVO {
 
 	@Override
 	public String toString() {
-		return "InquiryVO [userNumber=" + userNumber + ", inquiryNumber=" + inquiryNumber + ", inquiryGroupNumber="
-				+ inquiryGroupNumber + ", inquiryTitle=" + inquiryTitle + ", inquiryCotnent=" + inquiryCotnent
+		return "InquiryVO [userNumber=" + userNumber + ", inquiryNumber=" + inquiryNumber + ", inquiryGroupnumber="
+				+ inquiryGroupnumber + ", inquiryTitle=" + inquiryTitle + ", inquiryCotnent=" + inquiryCotnent
 				+ ", inquiryRegisterdate=" + inquiryRegisterdate + ", inquiryQora=" + inquiryQora + "]";
 	}
+
+
 }

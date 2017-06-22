@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.gigabox.inquiry.vo.InquirySearchCriteria;
 import com.gigabox.inquiry.vo.InquiryVO;
 
 @Repository
@@ -17,39 +18,59 @@ public class InquiryDAOImpl implements InquiryDAO {
 
 	private static final String namespace = "com.gigabox.mapper.INQUIRYMapper";
 
-	// 글 목록 구현
 	@Override
-	public List<InquiryVO> inquiryList() throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + ".inquiryList");
+	public List<InquiryVO> inquiryList(InquirySearchCriteria isc) {
+		return sqlSession.selectList(namespace + ".inquiryList", isc);
 	}
 
-	// 글 입력
 	@Override
-	public int inquiryInsert(InquiryVO ivo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.insert(namespace + ".create", ivo);
+	public int inquiryListCount(InquirySearchCriteria isc) {
+		return sqlSession.selectOne(namespace + ".inquiryListCount", isc);
 	}
 
-	// 글 읽기???? 일단 맹글기
 	@Override
-	public InquiryVO inquiryRead(InquiryVO ivo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + ".read", ivo);
+	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO) {
+		return sqlSession.selectOne(namespace + ".inquiryDetailQ", inquiryVO);
 	}
 
-	// 글 수정
 	@Override
-	public int inquiryUpdate(InquiryVO ivo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.update(namespace + ".update", ivo);
+	public InquiryVO inquiryDetailA(InquiryVO inquiryVO) {
+		return sqlSession.selectOne(namespace + ".inquiryDetailA", inquiryVO);
 	}
 
-	// 삭제
 	@Override
-	public int inquiryDelete(Integer inquiryNumber) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.delete(namespace + ".delete", inquiryNumber);
+	public int inquiryInsertA(InquiryVO inquiryVO) {
+		return sqlSession.insert(namespace + ".inquiryInsertA", inquiryVO);
 	}
 
+	@Override
+	public int inquiryUpdateA(InquiryVO inquiryVO) {
+		return sqlSession.update(namespace + ".inquiryUpdateA", inquiryVO);
+	}
+
+	@Override
+	public int inquiryDeleteA(InquiryVO inquiryVO) {
+		return sqlSession.delete(namespace + ".inquiryDeleteA", inquiryVO);
+	}
 }
+/*
+ * @Override public List<InquiryVO> inquiryList() throws Exception { // TODO
+ * Auto-generated method stub return sqlSession.selectList(namespace +
+ * ".inquiryList"); }
+ * 
+ * @Override public int inquiryInsert(InquiryVO ivo) throws Exception { // TODO
+ * Auto-generated method stub return sqlSession.insert(namespace + ".create",
+ * ivo); }
+ * 
+ * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
+ * TODO Auto-generated method stub return sqlSession.selectOne(namespace +
+ * ".read", ivo); }
+ * 
+ * @Override public int inquiryUpdate(InquiryVO ivo) throws Exception { // TODO
+ * Auto-generated method stub return sqlSession.update(namespace + ".update",
+ * ivo); }
+ * 
+ * @Override public int inquiryDelete(Integer inquiryNumber) throws Exception {
+ * // TODO Auto-generated method stub return sqlSession.delete(namespace +
+ * ".delete", inquiryNumber); }
+ */

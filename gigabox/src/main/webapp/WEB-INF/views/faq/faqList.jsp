@@ -101,17 +101,20 @@
 		<div class="pull-right">
 			<form class="form-inline">
 				<div class="form-group">
-					<select class="btn-primary form-control" title="질문 유형">
-						<option value="0">영화/영화관</option>
-						<option value="1">예매</option>
-						<option value="2">홈페이지</option>
+					<select id="searchType" class="btn-primary form-control">
+						<option value="mileage">마일리지</option>
+						<option value="reservation">영화예매</option>
+						<option value="payment">결제</option>
+						<option value="cinema">영화관</option>
+						<option value="homepage">홈페이지</option>
+						<option value="etc">기타</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" title="검색어 입력"
-						placeholder="검색어를 입력하세요" maxlength="20">
+					<input type="text" id="searchKeyword" class="form-control"
+						title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
 				</div>
-				<button class="btn btn-default" type="submit">
+				<button class="btn btn-default" type="submit" id="faqSearchBtn">
 					<i class="glyphicon glyphicon-search"></i>
 				</button>
 			</form>
@@ -131,10 +134,13 @@
 					<c:forEach items="${faqList}" var="faqItem">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a class="accordion-toggle" data-toggle="collapse"
-										data-parent="#accordion" href="#${faqItem.faqNumber}">${faqItem.faqTitle}</a>
-								</h4>
+								<form class="form-inline">
+									<span>${faqItem.faqType}</span>
+									<div class="form-group">
+										<a class="accordion-toggle" data-toggle="collapse"
+											data-parent="#accordion" href="#${faqItem.faqNumber}">${faqItem.faqTitle}</a>
+									</div>
+								</form>
 							</div>
 							<div id="${faqItem.faqNumber}" class="panel-collapse collapse">
 								<div class="panel-body">${faqItem.faqContent}</div>
@@ -152,15 +158,29 @@
 		<!-- 페이지 네비게이션  -->
 		<div class="text-center">
 			<ul class="pagination">
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
+				<c:if test="${pageMaker.prev}">
+					<li><a
+						href="/faq/faqList${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
+				</c:if>
+
+				<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
+					var="idx">
+					<li
+						<c:out value="${pageMaker.criteria.page == idx?'class=\"active\"':''}"/>>
+						<a href="/faq/faqList${pageMaker.makeQuery(idx)}">${idx}</a>
+					</li>
+				</c:forEach>
+
+				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					<li><a
+						href="/faq/faqList${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
+				</c:if>
 			</ul>
 		</div>
 		<!-- Footer -->
 		<footer>
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="text-align: center;">
 					<p>Copyright &copy; GigaBox 2017</p>
 				</div>
 			</div>
@@ -173,6 +193,31 @@
 	<script src="/resources/js/jquery.js"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/resources/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					if ('${param.searchType}' != '') {
+						$("#searchType").val('${param.searchType}');
+					}
+					if ('${param.searchKeyword}' != '') {
+						$("#searchKeyword").val('${param.searchKeyword}');
+					}
+
+					$('#faqSearchButton').on(
+							"click",
+							function(event) {
+								event.preventDefault();
+								var queryString = "/faq/faqList"
+										+ '${pageMaker.makeQuery(1)}'
+										+ "&searchType="
+										+ $("#searchType").val()
+										+ "&searchKeyword="
+										+ $('#searchKeyword').val();
+
+								self.location = queryString;
+							});
+				});
+	</script>
 
 </body>
 </html>

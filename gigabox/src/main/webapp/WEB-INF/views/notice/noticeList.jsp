@@ -19,8 +19,6 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-
-
 </head>
 <body>
 	<!-- Navigation -->
@@ -103,9 +101,11 @@
 				<div class="pull-right">
 					<form class="form-inline">
 						<div class="form-group">
-							<select class="btn-primary form-control" title="질문 유형">
-								<option value="t">전체</option>
-								<option value="c">영화관</option>
+							<select class="btn-primary form-control">
+								<option value="t">제목</option>
+								<option value="c">내용</option>
+								<option value="tc">제목+내용</option>
+								<option value="b">지점</option>
 							</select>
 						</div>
 						<input type="text" id="searchKeyword" title="검색어 입력"
@@ -186,7 +186,7 @@
 			</div>
 		</div>
 	</footer>
-	</div>
+
 	<!-- /.container -->
 
 	<!-- jQuery -->
@@ -194,5 +194,31 @@
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/resources/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					if ('${param.searchType}' != '') {
+						$("#searchType").val('${param.searchType}');
+					}
+					if ('${param.searchKeyword}' != '') {
+						$("#searchKeyword").val('${param.searchKeyword}');
+					}
+
+					$('#noticeSearchButton').on(
+							"click",
+							function(event) {
+								event.preventDefault();
+								var queryString = "/notice/noticeList"
+										+ '${pageMaker.makeQuery(1)}'
+										+ "&searchType="
+										+ $("#searchType").val()
+										+ "&searchKeyword="
+										+ $('#searchKeyword').val();
+
+								self.location = queryString;
+							});
+				});
+	</script>
 </body>
 </html>

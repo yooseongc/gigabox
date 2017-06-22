@@ -116,7 +116,7 @@
 						</tr>
 						<tr>
 							<td colspan="4"
-								style="vertical-align: text-bottom;">${noticeRead.noticeContent}</td>
+								style=" ">${noticeRead.noticeContent}</td>
 						</tr>
 					</tbody>
 				</table>

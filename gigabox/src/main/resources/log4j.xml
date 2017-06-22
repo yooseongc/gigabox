@@ -17,7 +17,12 @@
 	<logger name="com.gigabox.notice.controller">
 		<level value="info" />
 	</logger>
-
+	<logger name="com.gigabox.faq.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.gigabox.inquiry.controller">
+		<level value="info" />
+	</logger>
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

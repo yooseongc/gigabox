@@ -7,15 +7,122 @@
 		<result property="faqNumber" column="FAQ_NUMBER" />
 		<result property="adminNumber" column="ADMIN_NUMBER" />
 		<result property="faqTitle" column="FAQ_TITLE" />
-		<result property="faqType" column="FAQ_TYPE" />
 		<result property="faqContent" column="FAQ_CONTENT" />
+		<result property="faqType" column="FAQ_TYPE" />
 	</resultMap>
 
 	<select id="faqList" resultType="faq" resultMap="faqResultMap">
-		<![CDATA[
 		SELECT *
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT FAQ_NUMBER,
+		FAQ_TITLE, FAQ_CONTENT, FAQ_TYPE
 		FROM TBL_FAQ
-		]]>
+		WHERE 1 = 1 
+		<if test="searchType == null and searchKeyword != null">
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR
+			FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'mileage'.toString()">
+			AND FAQ_TYPE = '마일리지'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		<if test="searchType == 'reservation'.toString()">
+			AND FAQ_TYPE = '영화예매'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		<if test="searchType == 'payment'.toString()">
+			AND FAQ_TYPE = '결제'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		<if test="searchType == 'cinema'.toString()">
+			AND FAQ_TYPE = '영화관'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		<if test="searchType == 'homepage'.toString()">
+			AND FAQ_TYPE = '홈페이지'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		<if test="searchType == 'etc'.toString()">
+			AND FAQ_TYPE = '기타'
+			AND ( FAQ_TITLE LIKE '%' ||
+			#{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} ||
+			'%' )
+		</if>
+		ORDER BY FAQ_NUMBER DESC
+		) LIST
+		)
+		<where>
+			RNUM BETWEEN #{pageStart} AND #{pageEnd}
+		</where>
+	</select>
+
+	<select id="faqListCount" resultType="int">
+		SELECT NVL(COUNT(1), 0)
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT FAQ_NUMBER, FAQ_TITLE, FAQ_CONTENT, FAQ_TYPE
+		FROM TBL_FAQ
+		WHERE 1 = 1
+		<if test="searchType == null and searchKeyword != null">
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'mileage'.toString()">
+			AND FAQ_TYPE = '마일리지'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'reservation'.toString()">
+			AND FAQ_TYPE = '영화예매'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'payment'.toString()">
+			AND FAQ_TYPE = '결제'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'cinema'.toString()">
+			AND FAQ_TYPE = '영화관'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'homepage'.toString()">
+			AND FAQ_TYPE = '홈페이지'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'etc'.toString()">
+			AND FAQ_TYPE = '기타'
+			AND ( FAQ_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR FAQ_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		) LIST
+		)
 	</select>
 </mapper>
 

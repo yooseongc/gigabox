@@ -15,7 +15,6 @@
 
 	<!-- 게시물 기본 조회 -->
 	<select id="noticeList" resultType="notice" resultMap="noticeResultMap">
-
 		SELECT *
 		FROM
 		(

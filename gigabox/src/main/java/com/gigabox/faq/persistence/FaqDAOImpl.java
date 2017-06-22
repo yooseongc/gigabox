@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.gigabox.faq.vo.FaqSearchCriteria;
 import com.gigabox.faq.vo.FaqVO;
 
 @Repository
@@ -17,9 +18,18 @@ public class FaqDAOImpl implements FaqDAO {
 
 	private static final String namespace = "com.gigabox.mapper.FAQMapper";
 
+	/*
+	 * @Override public List<FaqVO> faqList() { // TODO Auto-generated method
+	 * stub return sqlSession.selectList(namespace + ".faqList"); }
+	 */
+
 	@Override
-	public List<FaqVO> faqList() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + ".faqList");
+	public List<FaqVO> faqList(FaqSearchCriteria fsc) {
+		return sqlSession.selectList(namespace + ".faqList", fsc);
+	}
+
+	@Override
+	public int faqListCount(FaqSearchCriteria fsc) {
+		return sqlSession.selectOne(namespace + ".faqListCount", fsc);
 	}
 }

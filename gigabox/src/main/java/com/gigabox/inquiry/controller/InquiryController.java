@@ -1,83 +1,197 @@
 package com.gigabox.inquiry.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gigabox.inquiry.page.PageMaker;
 import com.gigabox.inquiry.service.InquiryService;
+import com.gigabox.inquiry.vo.InquirySearchCriteria;
 import com.gigabox.inquiry.vo.InquiryVO;
 
 @Controller
 @RequestMapping("/inquiry")
 public class InquiryController {
-	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
 	@Inject
 	private InquiryService inquiryService;
 
-	/* 글 목록 구현 */
-	@RequestMapping(value = "/inquiryList", method = RequestMethod.GET)
-	public String inquiryList(@ModelAttribute InquiryVO ivo, Model model) throws Exception {
-		logger.info("inquiryList 호출성공");
 
-		List<InquiryVO> inquiryList = inquiryService.inquiryList();
-		model.addAttribute("inquiryList", inquiryList);
-		return "/inquiry/inquiryList";
-	}
+	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
-	// 글 상세
-	@RequestMapping(value = "/inquiryRead", method = RequestMethod.GET)
-	public String inquiryRead(@ModelAttribute InquiryVO ivo, Model model) {
-		logger.info("inquiryRead 호출성공");
-		logger.info("서버로부터 받은 inquiryVO= " + ivo.getInquiryNumber());
+	// 본 메소드는 QNA 중 회원의 질문만을 들고오는 메소드이다.
+	@Transactional
+	@RequestMapping(value = "/qnaList", method = RequestMethod.GET)
+	public String inquiryListGET(@ModelAttribute("isc") InquirySearchCriteria isc, Model model) {
+		logger.info("=======================================================");
+		logger.info("INQUIRY MAIN PAGE LOADING...");
+		logger.info("INITIAL PAGING= " + isc.toString());
+		logger.info("PAGE START= " + isc.getPageStart());
+		logger.info("PAGE END= " + isc.getPageEnd());
 
-		return "";
+		List<InquiryVO> inquiryList = inquiryService.inquiryList(isc);
+		// logger.info("INQUIRY LIST FIRST ITEM= " +
+		// inquiryList.get(0).toString());
+		List<Map<String, Object>> inquiryMapList = new ArrayList<>();
+		for (InquiryVO eachInquiry : inquiryList) {
 
-	}
+			// 질문 정보
+			Map<String, Object> inquiryMap = new HashMap<>();
+			inquiryMap.put("inquiry", eachInquiry);
 
-	/* 글쓰기 폼 */
-	@RequestMapping(value = "/qnaWrite", method = RequestMethod.GET)
-	public String qnaWrite() {
-		logger.info("qnaWrite 호출 성공");
+			// 회원 정보
 
-		return "qna/qnaWrite";
-	}
+			// 답변 여부
+			InquiryVO answerInquiry = inquiryService.inquiryDetailA(eachInquiry);
+			if (answerInquiry == null) {
+				// 답변이 없으면 0
+				inquiryMap.put("answerExist", new Integer(0));
+			} else {
+				// 답변이 있으면 1
+				inquiryMap.put("answerExist", new Integer(1));
+			}
 
-	/* 글쓰기 구현 */
-	/*
-	 * @RequestMapping(value = "/inquiryInsert", method = RequestMethod.POST)
-	 * public String inquiryInsert(@ModelAttribute InquiryVO ivo) throws
-	 * Exception { logger.info("inquiryInsert 호출 성공");
-	 * 
-	 * int result = 0; String url = "";
-	 * 
-	 * result = inquiryService.inquiryInsert(ivo); if (result == 1) { url =
-	 * "/qna/qnaList"; } return "redirect: " + url; }
-	 */
-
-	@RequestMapping(value = "/inquiryInsert", method = RequestMethod.POST)
-	public String inquiryInsert(@ModelAttribute InquiryVO ivo, HttpServletRequest request) throws Exception {
-		logger.info("inquiry글쓰기 호출 성공");
-		logger.info("inquiryTitle: " + ivo.getInquiryTitle());
-
-		int result = 0;
-		String url = "";
-
-		result = inquiryService.inquiryInsert(ivo);
-		if (result == 1) {
-			url = "/qna/qnaList";
+			// List에 저장
+			inquiryMapList.add(inquiryMap);
 		}
-		return "redirect: " + url;
+		model.addAttribute("inquiryList", inquiryMapList);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(isc);
+		pageMaker.setTotalCount(inquiryService.inquiryListCount(isc));
+		model.addAttribute("pageMaker", pageMaker);
+
+		logger.info("pageMaker= " + pageMaker.toString());
+
+		logger.info("INQUIRY MAIN PAGE LOADING END");
+		logger.info("=======================================================");
+
+		return "/cc/qnaMain";
 	}
-	/* 수정 폼 */
-	
+
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value = "/qnaDetailQ/{inquiryNumber}", method = RequestMethod.PUT)
+	public ResponseEntity<Map<String, Object>> noticeDetailQRest(@PathVariable("inquiryNumber") int inquiryNumber) {
+
+		logger.info("=======================================================");
+		logger.info("INQUIRY DETAIL QUESTION DATA REQUESTED");
+		InquiryVO selectData = new InquiryVO();
+		selectData.setInquiryNumber(inquiryNumber);
+		InquiryVO selectedData = inquiryService.inquiryDetailQ(selectData);
+
+		// 작성자 정보 가져오기
+		
+		logger.info("InquiryVO= " + selectedData.toString());
+		
+
+		// 맵
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("inquiry", selectedData);
+		
+		ResponseEntity<Map<String, Object>> selectedInquiryEntity = new ResponseEntity<>(resultMap, HttpStatus.OK);
+
+		logger.info("INQUIRY DETAIL QUESTION DATA SENT TO JSON");
+		logger.info("=======================================================");
+		return selectedInquiryEntity;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/qnaDetailA/{inquiryGroupnumber}", method = RequestMethod.PUT)
+	public ResponseEntity<InquiryVO> noticeDetailARest(@PathVariable("inquiryGroupnumber") int inquiryGroupnumber) {
+
+		logger.info("=======================================================");
+		logger.info("INQUIRY DETAIL ANSWER DATA REQUESTED");
+		InquiryVO selectData = new InquiryVO();
+		selectData.setInquiryGroupnumber(inquiryGroupnumber);
+		InquiryVO selectedData = inquiryService.inquiryDetailA(selectData);
+		logger.info("InquiryVO= " + selectedData.toString());
+		ResponseEntity<InquiryVO> selectedInquiryEntity = new ResponseEntity<>(selectedData, HttpStatus.OK);
+
+		logger.info("INQUIRY DETAIL ANSWER DATA SENT TO JSON");
+		logger.info("=======================================================");
+		return selectedInquiryEntity;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/qnaInsertA", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> inquiryInsertARest(InquiryVO inquiryVO) {
+		logger.info("=======================================================");
+		logger.info("INQUIRY ANSWER INSERT REQUESTED");
+		logger.info("InquiryVO= " + inquiryVO.toString());
+		int result = inquiryService.inquiryInsertA(inquiryVO);
+		Map<String, String> resultMap = new HashMap<>();
+		if (result == 1) {
+			resultMap.put("result", "SUCCESS");
+			logger.info("INSERT SUCCESS");
+		} else {
+			resultMap.put("result", "FAILED");
+			logger.info("INSERT FAILED");
+		}
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<>(resultMap, HttpStatus.OK);
+		logger.info("INQUIRY ANSWER INSERT RESULT SENT TO JSON");
+		logger.info("=======================================================");
+		return resultEntity;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/qnaUpdateA", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> inquiryUpdateARest(InquiryVO inquiryVO) {
+
+		logger.info("=======================================================");
+		logger.info("INQUIRY ANSWER UPDATE REQUESTED");
+		logger.info("InquiryVO= " + inquiryVO.toString());
+		int result = inquiryService.inquiryUpdateA(inquiryVO);
+		Map<String, String> resultMap = new HashMap<>();
+		if (result == 1) {
+			resultMap.put("result", "SUCCESS");
+			logger.info("UPDATE SUCCESS");
+		} else {
+			resultMap.put("result", "FAILED");
+			logger.info("UPDATE FAILED");
+		}
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<>(resultMap, HttpStatus.OK);
+		logger.info("INQUIRY ANSWER UPDATE RESULT SENT TO JSON");
+		logger.info("=======================================================");
+		return resultEntity;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/qnaDeleteA", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> inquiryDeleteARest(InquiryVO inquiryVO) {
+
+		logger.info("=======================================================");
+		logger.info("INQUIRY ANSWER DELETE REQUESTED");
+		logger.info("InquiryVO= " + inquiryVO.toString());
+		int result = inquiryService.inquiryDeleteA(inquiryVO);
+		Map<String, String> resultMap = new HashMap<>();
+		if (result == 1) {
+			resultMap.put("result", "SUCCESS");
+			logger.info("DELETE SUCCESS");
+		} else {
+			resultMap.put("result", "FAILED");
+			logger.info("DELETE FAILED");
+		}
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<>(resultMap, HttpStatus.OK);
+		logger.info("INQUIRY ANSWER DELETE RESULT SENT TO JSON");
+		logger.info("=======================================================");
+		return resultEntity;
+	}
+
 }
