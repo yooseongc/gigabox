@@ -9,7 +9,7 @@ public interface InquiryDAO {
 
 	public int inquiryInsert(InquiryVO ivo) throws Exception;
 
-	public List<InquiryVO> inquiryRead(InquiryVO ivo) throws Exception;
+	public InquiryVO inquiryRead(InquiryVO ivo) throws Exception;
 
 	public int inquiryUpdate(InquiryVO ivo) throws Exception;
 	

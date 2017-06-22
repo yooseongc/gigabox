@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +12,6 @@
 <title>GigaBox 공지사항</title>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript">
-	/* 한 페이지에 보여줄 레코드 수 변경 때마다 처리 이벤트 */
-	$("#pageSize").change(function() {
-		goPage(1);
-	});
-	/* 제목 클릭 시 상세 페이지 이동위한 처리이벤트 */
-</script>
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom CSS -->
@@ -28,12 +20,7 @@
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 </head>
 <body>
 	<!-- Navigation -->
@@ -114,32 +101,48 @@
 			<div class="container">
 				<!-- 검색 시작 -->
 				<div class="pull-right">
-					<input type="text" id="search" title="검색어 입력"
-						placeholder="검색어를 입력하세요" maxlength="20">
-					<button type="submit" class="btn btn-default">
-						<i class="glyphicon glyphicon-search"></i>
-					</button>
+					<form class="form-inline">
+						<div class="form-group">
+							<select class="btn-primary form-control" title="질문 유형">
+								<option value="t">전체</option>
+								<option value="c">영화관</option>
+							</select>
+						</div>
+						<input type="text" id="searchKeyword" title="검색어 입력"
+							placeholder="검색어를 입력하세요" maxlength="20">
+						<button type="submit" class="btn btn-default">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</form>
 				</div>
 				<!-- 검색 종료 -->
 				<table class="table">
 					<thead>
 						<tr>
-							<th>NO</th>
-							<th>영화관</th>
+							<th style="text-align: center;">NO</th>
+							<th style="text-align: center;">영화관</th>
 							<th style="text-align: center;">제목</th>
-							<th>등록일</th>
+							<th style="text-align: center;">등록일</th>
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach items="${noticeList}" var="noticeItem">
-							<tr>
-								<td>${noticeItem.noticeNumber}</td>
-								<td>${noticeItem.noticeBranchname}</td>
-								<td><a
-									href="/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
-									title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd"
-										value="${noticeItem.noticeRegisterdate}" /></td>
+					<tbody id="noticeListTableBody">
+						<c:forEach var="noticeItem" items="${noticeList}">
+							<tr data-id="${noticeItem.noticeNumber}">
+								<td style="text-align: center;">${noticeItem.noticeNumber}</td>
+								<td style="text-align: center;">${noticeItem.noticeBranchname}</td>
+								<c:if test="${noticeItem.noticeStatus == '중요'}">
+									<td style="font-weight: bold;"><span
+										class="label label-danger">공지</span><a
+										href="/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
+										title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
+								</c:if>
+								<c:if test="${noticeItem.noticeStatus == '일반'}">
+									<td><a
+										href="/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
+										title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
+								</c:if>
+								<td style="text-align: center;"><fmt:formatDate
+										value="${noticeItem.noticeRegisterdate}" pattern="yyyy-MM-dd" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -148,9 +151,23 @@
 				<!-- 페이지 네비게이션  -->
 				<div class="text-center">
 					<ul class="pagination">
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
+						<c:if test="${pageMaker.prev}">
+							<li><a
+								href="/notice/noticeList${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
+						</c:if>
+
+						<c:forEach begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}" var="idx">
+							<li
+								<c:out value="${pageMaker.criteria.page == idx?'class=\"active\"':''}"/>>
+								<a href="/notice/noticeList${pageMaker.makeQuery(idx)}">${idx}</a>
+							</li>
+						</c:forEach>
+
+						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							<li><a
+								href="/notice/noticeList${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
@@ -164,7 +181,7 @@
 	<!-- Footer -->
 	<footer>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12" align="center">
 				<p>Copyright &copy; Your Website 2014</p>
 			</div>
 		</div>

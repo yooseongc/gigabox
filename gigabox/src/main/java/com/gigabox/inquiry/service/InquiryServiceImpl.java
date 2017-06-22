@@ -31,7 +31,7 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public List<InquiryVO> inquiryRead(InquiryVO ivo) throws Exception {
+	public InquiryVO inquiryRead(InquiryVO ivo) throws Exception {
 		// TODO Auto-generated method stub
 		return inquiryDao.inquiryRead(ivo);
 	}

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.gigabox.notice.vo.NoticeSearchCriteria;
 import com.gigabox.notice.vo.NoticeVO;
 
 @Repository
@@ -16,12 +17,15 @@ public class NoticeDAOImpl implements NoticeDAO {
 	private SqlSession sqlSession;
 
 	private static final String namespace = "com.gigabox.mapper.NOTICEMapper";
-
-	// 글 목록 구현
+	
 	@Override
-	public List<NoticeVO> noticeList() throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + ".noticeList");
+	public List<NoticeVO> noticeList(NoticeSearchCriteria nsc) {
+		return sqlSession.selectList(namespace + ".noticeList", nsc);
+	}
+
+	@Override
+	public int noticeListCount(NoticeSearchCriteria nsc) {
+		return sqlSession.selectOne(namespace + ".noticeListCount", nsc);
 	}
 
 	// 글 상세 구현
@@ -30,4 +34,5 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return sqlSession.selectOne(namespace + ".noticeRead", nvo);
 	}
 
+	
 }

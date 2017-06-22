@@ -10,20 +10,78 @@
 		<result property="noticeContent" column="NOTICE_CONTENT" />
 		<result property="noticeRegisterdate" column="NOTICE_REGISTERDATE" />
 		<result property="noticeBranchname" column="NOTICE_BRANCHNAME" />
+		<result property="noticeStatus" column="NOTICE_STATUS" />
 	</resultMap>
 
 	<!-- 게시물 기본 조회 -->
 	<select id="noticeList" resultType="notice" resultMap="noticeResultMap">
-		<![CDATA[
+
 		SELECT *
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT NOTICE_NUMBER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGISTERDATE,
+		NOTICE_BRANCHNAME, NOTICE_STATUS
 		FROM TBL_NOTICE
-		]]>
+		WHERE 1 = 1
+		<if test="searchType == 't'.toString()">
+			AND NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			AND (NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND NOTICE_BRANCHNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		ORDER BY NOTICE_STATUS DESC, NOTICE_REGISTERDATE DESC
+		) LIST
+		)
+		<where>
+			RNUM BETWEEN #{pageStart} AND #{pageEnd}
+		</where>
 	</select>
+
+	<select id="noticeListCount" resultType="int">
+		SELECT NVL(COUNT(1), 0)
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT
+		NOTICE_NUMBER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGISTERDATE,
+		NOTICE_BRANCHNAME, NOTICE_STATUS
+		FROM TBL_NOTICE
+		WHERE 1 = 1
+		<if test="searchType == 't'">
+			AND NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'c'">
+			AND NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'tc'">
+			AND (NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR
+			NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'b'">
+			AND NOTICE_BRANCHNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		) LIST
+		)
+	</select>
+
 
 	<!-- 게시판 글 상세조회 -->
 	<select id="noticeRead" parameterType="notice" resultType="notice"
 		resultMap="noticeResultMap">
-		<!--NoticeRead -->
 	<![CDATA[
 	 SELECT NOTICE_TITLE
 	,NOTICE_BRANCHNAME
@@ -33,15 +91,4 @@
 	WHERE NOTICE_NUMBER = #{noticeNumber}  
 	]]>
 	</select>
-
-	<!-- 페이징.. -->
-	<select id="noticePage" resultType="notice" resultMap="noticeResultMap">
-	<![CDATA[
-	SELECT *
-	FROM(SELECT ROWNUM NOTICE_NUMBER,NOTICE_TITLE,NOTICE_REGISTERDATE,NOTICE_BRANCHNAME
-	FROM TBL_NOTICE)
-	WHERE NOTICE_NUMBER BETWEEN #{start_row} AND #{end_row};
-	]]>
-	</select>
-
 </mapper>

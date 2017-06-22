@@ -2,15 +2,14 @@ package com.gigabox.notice.vo;
 
 import java.util.Date;
 
-import com.gigabox.notice.page.PagingVO;
-
-public class NoticeVO extends PagingVO{
+public class NoticeVO {
 	private int noticeNumber; // 글번호
 	private int adminNumber; // 관리자번호
 	private String noticeTitle; // 제목
 	private String noticeContent;// 내용
 	private Date noticeRegisterdate; // 등록일
 	private String noticeBranchname; // 지점명
+	private String noticeStatus; // 공지 상태
 
 	public int getNoticeNumber() {
 		return noticeNumber;
@@ -59,12 +58,19 @@ public class NoticeVO extends PagingVO{
 	public void setNoticeBranchname(String noticeBranchname) {
 		this.noticeBranchname = noticeBranchname;
 	}
-	
+
+	public String getNoticeStatus() {
+		return noticeStatus;
+	}
+
+	public void setNoticeStatus(String noticeStatus) {
+		this.noticeStatus = noticeStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeVO [noticeNumber=" + noticeNumber + ", adminNumber=" + adminNumber + ", noticeTitle="
 				+ noticeTitle + ", noticeContent=" + noticeContent + ", noticeRegisterdate=" + noticeRegisterdate
-				+ ", noticeBranchname=" + noticeBranchname + "]";
+				+ ", noticeBranchname=" + noticeBranchname + ", noticeStatus=" + noticeStatus + "]";
 	}
-
 }

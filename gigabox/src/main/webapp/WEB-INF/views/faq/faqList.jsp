@@ -99,7 +99,7 @@
 		<br>
 		<!-- 검색 시작 -->
 		<div class="pull-right">
-			<form class="form-inline" action="/action_page.php">
+			<form class="form-inline">
 				<div class="form-group">
 					<select class="btn-primary form-control" title="질문 유형">
 						<option value="0">영화/영화관</option>

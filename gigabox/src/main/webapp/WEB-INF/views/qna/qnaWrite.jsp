@@ -154,7 +154,7 @@
 			</div>
 		</div>
 	</footer>
-	</div>
+
 	<!-- /.container -->
 
 	<!-- jQuery -->

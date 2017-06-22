@@ -16,10 +16,7 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-<style type="text/css">
-table {
-	
-}
+
 </style>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.js"></script>
@@ -31,10 +28,6 @@ table {
 <![endif]-->
 </head>
 <body>
-	<form method="post">
-		<input type="hidden" name="noticeNumber"
-			value="${noticeVO.noticeNumber }">
-	</form>
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -123,7 +116,7 @@ table {
 						</tr>
 						<tr>
 							<td colspan="4"
-								style="text-align: justify; table-layout: fixed; word-break: break-all;">${noticeRead.noticeContent}</td>
+								style="vertical-align: text-bottom;">${noticeRead.noticeContent}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -135,13 +128,14 @@ table {
 
 
 	<div class="container" align="center">
-		<button type="submit" class="btn btn-primary btn-sm">목록</button>
+		<a href="/notice/noticeList"><button type="submit"
+				class="btn btn-primary btn-sm">목록</button></a>
 	</div>
 
 	<!-- Footer -->
 	<footer>
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-12" align="center">
 			<p>Copyright &copy; Your Website 2014</p>
 		</div>
 	</div>

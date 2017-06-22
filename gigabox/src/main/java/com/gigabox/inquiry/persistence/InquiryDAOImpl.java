@@ -33,7 +33,7 @@ public class InquiryDAOImpl implements InquiryDAO {
 
 	// 글 읽기???? 일단 맹글기
 	@Override
-	public List<InquiryVO> inquiryRead(InquiryVO ivo) throws Exception {
+	public InquiryVO inquiryRead(InquiryVO ivo) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + ".read", ivo);
 	}
