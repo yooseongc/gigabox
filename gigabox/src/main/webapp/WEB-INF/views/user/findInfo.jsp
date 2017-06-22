@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,6 @@
 
 </head>
 <body>
-
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -93,11 +93,11 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					회원 서비스 <small>사용자 상세정보</small>
+					GIGABOX <small>정보찾기</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#">회원 서비스</a></li>
-					<li class="active">사용자 상세정보</li>
+					<li><a href="/">메인</a></li>
+					<li class="active">아이디/비밀번호찾기</li>
 				</ol>
 			</div>
 		</div>
@@ -108,23 +108,105 @@
 			<article>
 				<div class="col-md-12">
 					<div class="page-header">
-						<h1>사용자 상세정보 <small>님 안녕하세요.</small></h1>
+						<h1>아이디 찾기</h1>
 					</div>
-					<form class="form-horizontal" id="modifyForm">
-						<h2>회원정보보기</h2><p>
-						아이디:${sessionScope.loginDTO.userId }<br>
+					<form class="form-horizontal" id="findId">
+						<fieldset>
+							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
 						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userName">이름</label>
+							<div class="col-sm-6">
+									<input class="form-control" id="userName" type="text"
+									name="userName" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userBirthday">가입생년월일</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="userBirthday"
+									name="userBirthday" type="text" placeholder="- 없이 입력해 주세요. 예:YYYYMMDD" maxlength="8">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userTel">휴대폰 번호</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="userTel"
+									name="userTel" type="text" placeholder="- 없이 입력해 주세요." maxlength="11">
+							</div>
+						</div>
 						
+						<div class="form-group">
+							<div class="col-sm-12 text-center">
+								<button id="findIdSubmitBtn" class="btn btn-primary" type="submit">
+									확인<i class="fa fa-check spaceLeft"></i>
+								</button>
+								<button id="cancleBtn" class="btn btn-danger" type="submit">
+									취소<i class="fa fa-times spaceLeft"></i>
+								</button>
+							</div>
+						</div>
+						</fieldset>
 					</form>
 					<hr>
 				</div>
 			</article>
-
+			<article>
+				<div class="col-md-12">
+					<div class="page-header">
+						<h1>비밀번호 찾기</h1>
+					</div>
+					<form class="form-horizontal" id="findPw">
+						<fieldset>
+							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userId">아이디</label>
+							<div class="col-sm-6">
+									<input class="form-control" id="userId" type="text"
+									name="userId" maxlength="20">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userName">이름</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="userName"
+									name="userName" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userTel">휴대폰 번호</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="userTel"
+									name="userTel" type="text" placeholder="- 없이 입력해 주세요." maxlength="11">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="email">이메일</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="email"
+									name="email" type="email">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-12 text-center">
+								<button id="findPwSubmitBtn" class="btn btn-primary" type="submit">
+									확인<i class="fa fa-check spaceLeft"></i>
+								</button>
+								<button id="cancleBtn" class="btn btn-danger" type="submit">
+									취소<i class="fa fa-times spaceLeft"></i>
+								</button>
+							</div>
+						</div>
+						</fieldset>
+					</form>
+					<hr>
+				</div>
+			</article>
 		</div>
 		<!-- /.row -->
-
 		<hr>
-
 		<!-- Footer -->
 		<footer>
 			<div class="row">
@@ -133,15 +215,48 @@
 				</div>
 			</div>
 		</footer>
-
 	</div>
 	<!-- /.container -->
-	
 	
 	<!-- jQuery -->
 	<script src="/resources/js/jquery.js"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/resources/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+	 function formCheck(v_item, v_name, e_item) {
+			if (v_item.val().replace(/\s/g, "") == "") {
+				
+				e_item.text(v_name + " 확인해 주세요.");
+				e_item.show();
+				v_item.val("");
+				v_item.focus();
+				return false;
+			} else {
+				return true;
+			}
+		}
+	
+		$(document).ready(function() {
+			$("#errorMessage").hide();
+		 	
+			//취소버튼 클릭시 메인으로
+			$('#cancleBtn').click(function(e){
+				e.preventDefault();
+
+				$("#").attr("method", "GET");
+				$("#").attr("action", "/");
+				$("#").submit();
+			});
+			
+		 	//확인 버튼 클릭시
+		 	$("#").click(function(e) {
+		 		e.preventDefault();
+				
+				
+		 	});
+		});
+	</script>
 
 </body>
 </html>

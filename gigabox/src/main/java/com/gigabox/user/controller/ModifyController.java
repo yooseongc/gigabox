@@ -28,7 +28,7 @@ import com.gigabox.user.vo.UserVO;
 @RequestMapping("/user")
 public class ModifyController {
 
-	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ModifyController.class);
 
 	@Inject
 	private ModifyService modifyService;
@@ -54,7 +54,7 @@ public class ModifyController {
 	@RequestMapping(value = "/modifyForm", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> modifyFormPOST(@ModelAttribute UserVO userVO, LoginDTO loginDTO) {
 		logger.info("MODIFY LOADING...");
-
+		logger.info("INPUT DATA= " + userVO.toString());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		UserVO pwCheckUserVO = new UserVO();
 		pwCheckUserVO.setUserPw(userVO.getUserPw());
@@ -95,5 +95,13 @@ public class ModifyController {
 		}*/
 		/*return "redirect:/";*/
 	}
-
+	
+	//비밀번호 변경 폼 출력
+		@RequestMapping(value = "changePwForm", method = RequestMethod.GET)
+		public String changePwFormGET(){
+			logger.info("CHANGE FORM LOADING... ");
+			return "/user/changePwForm";
+		}	
+	
+	//비밀번호 변경 구현
 }
