@@ -18,6 +18,9 @@
 	<logger name="com.gigabox.faq">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.review.controller">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

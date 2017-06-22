@@ -48,8 +48,8 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public List<MovieVO> listCriteria(Criteria cri) throws Exception {
-		return dao.listCreiteria(cri);
+	public List<MovieVO> readMore(int mno) throws Exception {
+		return dao.readMore(mno);
 	}
 
 }

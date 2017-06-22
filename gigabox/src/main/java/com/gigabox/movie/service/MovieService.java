@@ -19,5 +19,5 @@ public interface MovieService {
 
 	public MovieVO movieDetail(MovieVO movieVO);
 	
-	public List<MovieVO> listCriteria(Criteria cri) throws Exception;
+	public List<MovieVO> readMore(int mno) throws Exception;
 }

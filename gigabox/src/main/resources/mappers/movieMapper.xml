@@ -61,7 +61,8 @@
 	<select id="movieList" resultType="movie" resultMap="movieResultMap">
 		<![CDATA[
 		SELECT * 
-		FROM TBL_MOVIE
+		FROM (select * from TBL_MOVIE)
+		where rownum <=8
 		]]>
 	</select>
 	
@@ -72,6 +73,17 @@
 		where movie_number > 0
 		order by movie_number desc
 		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 게시물 조회(더보기) 마지막 movieNumber가 int타입으로 넘어오는 상태.. 그럼 컨트롤러에서는 mno-1에 해당하는 것을 dao로 넘겨줄 것이다.-->	
+	<select id="readMore" resultType="movie">
+		<![CDATA[
+				select *
+		from tbl_movie
+		where movie_number <= #{movieNumber}
+		and movie_number > # {movieNumber} - 8
+		order by movie_number desc 
 		]]>
 	</select>
 

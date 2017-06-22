@@ -1,11 +1,8 @@
 package com.gigabox.movie.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
-
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gigabox.movie.service.MovieService;
-import com.gigabox.movie.vo.Criteria;
 import com.gigabox.movie.vo.MovieVO;
 
 @Controller
@@ -76,12 +72,13 @@ public class MovieController {
 		logger.info("=======================================================");
 		return selectedMovieVO;
 	}
-	
-	@RequestMapping(value = "/movieList", method = RequestMethod.GET)
-	public void listAll(Criteria cri, Model model) throws Exception {
-		logger.info("show list Page with Criteria.....");
-		
-		model.addAttribute("list", movieService.listCriteria(cri));
+
+	@RequestMapping(value = "/readMore", method = RequestMethod.GET)
+	public @ResponseBody List<MovieVO> readMore(@RequestBody MovieVO movieVO) throws Exception {
+		logger.info("readMore is called.....");
+
+		int mnoToStart = movieVO.getMovieNumber() - 1;
+
+		return movieService.readMore(mnoToStart);
 	}
-	
 }

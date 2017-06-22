@@ -19,5 +19,5 @@ public interface MovieDAO {
 	
 	public MovieVO movieDetail(MovieVO movieVO);
 	
-	public List<MovieVO> listCreiteria(Criteria cri) throws Exception;
+	public List<MovieVO> readMore(int mno) throws Exception;
 }

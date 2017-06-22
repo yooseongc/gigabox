@@ -50,8 +50,8 @@ public class MovieDAOImpl implements MovieDAO {
 	}
 
 	@Override
-	public List<MovieVO> listCreiteria(Criteria cri) throws Exception {
-		return session.selectList(namespace + ".listCriteria" , cri);
+	public List<MovieVO> readMore(int mno) throws Exception {
+		return session.selectList(namespace + ".listCriteria" , mno);
 	}
 
 }

@@ -29,6 +29,7 @@ public class Criteria {
 		return page;
 	}
 
+	
 	// method for MyBatis SQL Mapper -
 	public int getPageStrat() {
 		return (this.page - 1) * perPageNum;

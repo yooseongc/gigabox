@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.REVIEWMapper">
+
+	<resultMap id="reviewResultMap" type="review">
+		<result property="reviewNumber" column="REVIEW_NUMBER" />
+		<result property="movieNumber" column="MOVIE_NUMBER" />
+		<result property="userNumber" column="USER_NUMBER" />
+		<result property="reviewContent" column="REVIEW_CONTENT" />
+		<result property="reviewStarScore" column="REVIEW_STARSCROE" />
+		<result property="reviewLike" column="REVIEW_LIKE" />
+		<result property="reviewRegisterDate" column="REVIEW_REGISTERDATE" />
+	</resultMap>
+
+	<select id="list" resultType="review" resultMap="reviewResultMap">
+		select
+		*
+		from
+		tbl_review
+		where movie_number = #{movieNumber}
+		order by review_number
+		desc
+	</select>
+
+	<insert id="create" parameterType="review">
+		insert into tbl_review
+		(review_number, user_number, movie_number, review_content ,
+		review_starscore)
+		values (seq_review.nextval, 61, #{movieNumber},
+		#{reviewContent},10)
+	</insert>
+
+	<update id="update">
+		update tbl_review set review_content =
+		#{reviewContent}
+		where review_number = #{reviewNumber}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_review where review_number =
+		#{reviewNumber}
+	</delete>
+
+</mapper>
