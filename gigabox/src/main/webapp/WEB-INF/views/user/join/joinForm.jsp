@@ -154,8 +154,15 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userEmail">이메일</label>
 							<div class="col-sm-6">
+								<div class="input-group">
 								<input class="form-control" id="userEmail" type="email"
 									name="userEmail" placeholder="이메일">
+									<span class="input-group-btn">
+                                         <button class="btn btn-default" id="userEmailAuthBtn" >
+											<i class="fa fa-check spaceLeft"></i> &nbsp;&nbsp;이메일인증
+										</button>
+                              		</span>
+                              	</div>
 							</div>
 						</div>
 
@@ -367,13 +374,23 @@
 							
 						}
 					});
-				} /* else {
-					alert("아이디를 입력한 후 중복체크를 해 주세요.");
-				} */
-				
+				}
 				else {
 					console.log(!formCheck($("#userId"), "아이디중복을", $("#errorMessage")));
 				}
+			});
+			
+			//이메일인증 버튼 클릭시
+				$("#userEmailAuthBtn").click(function(e) {
+				e.preventDefault();
+				var eamilAuth = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+				if(!eamilAuth.test($("input[name=userEmail]").val())){
+		            alert("이 메일 형식이 올바르지 않습니다.");
+		            return
+		        }
+				/* else {
+					console.log(!formCheck($("#userId"), "이 메일 형식을", $("#errorMessage")));
+				} */
 			});
 			
 			// 주소 검색 모달 창 띄우기

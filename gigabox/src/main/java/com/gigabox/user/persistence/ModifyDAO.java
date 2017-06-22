@@ -1,0 +1,14 @@
+package com.gigabox.user.persistence;
+
+import com.gigabox.user.vo.UserVO;
+
+public interface ModifyDAO {
+	
+	//회원선택
+	public UserVO userDetail (UserVO userVO);
+	
+	//회원정보 수정
+	public int userModify (UserVO userVO);
+	
+	
+}

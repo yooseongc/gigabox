@@ -7,12 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Main Page</title>
+<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
-	<h2>회원 전용 페이지</h2>
+	<h2>회원서비스 - 마이페이지</h2>
 	<c:choose>
 		<c:when test="${not empty sessionScope.login}">
-		<li class="nav">${sessionScope.login.userId }님</li>
+		<li class="nav">${sessionScope.login.userId }님 로그인</li>
 		<li class="nav"><a href="/user/logout">로그아웃</a></li>
 		</c:when>
 		<c:when test="${empty session}">
@@ -21,13 +23,18 @@
 		</c:when>
 	</c:choose>
 	<br> 
-	님 환영합니다
+	ㄱㄱㄱㄱ
 	<br>
-	<!--  <input type="button" value="로그아웃" onclick="location.href='logout.do'">  
-    <input type="button" value="모든회원보기" onclick="location.href='memberList.do'"> -->
-	<input type="button" value="회원수정페이지"
-		onclick="location.href='/user/modifyForm'">
+	<input type="button" value="회원수정페이지" id="modifyFormButton"
+		onclick="location.href='/user/modifyForm/${sessionScope.login.userId }'">
 
+	<script>
+		$(document).ready(function() {
+			if ('${sessionScope.login.userId }' == '') {
+				$("#modifyFormButton").css('display', 'none');
+			}
+		});
+	</script>
 </body>
 </html>
 

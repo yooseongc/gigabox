@@ -11,7 +11,7 @@ import com.gigabox.user.vo.UserVO;
 public class JoinServiceImpl implements JoinService {
 
 	@Inject
-	JoinDAO joinDAO;
+	private JoinDAO joinDAO;
 	
 	@Override
 	public int userJoin(UserVO userVO) {

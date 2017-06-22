@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.ModifyMapper">
+
+	<resultMap type="modify" id="modifyResultMap">
+		<result property="userId" column="USER_ID" />
+		<result property="userPw" column="USER_PW" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userBirthday" column="USER_BIRTHDAY" />
+		<result property="userTel" column="USER_TEL" />
+		<result property="userAddr" column="USER_ADDR" />
+	</resultMap>
+
+	<select id="userDetail" resultMap="modifyResultMap">
+		SELECT * FROM TBL_USER WHERE USER_ID = #{userId}
+	</select>
+
+	<update id="userModify">
+		UPDATE TBL_USER
+		SET USER_NAME = #{userName},
+		USER_TEL = #{userTel},
+		USER_EMAIL = #{userEmail},
+		USER_ADDR = #{userAddr}
+		where USER_ID = #{userId}
+	</update>
+
+</mapper>

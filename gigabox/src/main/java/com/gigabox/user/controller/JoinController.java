@@ -100,11 +100,12 @@ public class JoinController {
 
 		result = service.userJoin(uvo);
 		if(result ==1){
-			url = "/user/login.do";
+			url = "/";
 		}
 		return "redirect:" + url;
 	}
 	
+	//아이디 중복확인
 	@ResponseBody
 	@RequestMapping(value="/idduplicationcheck", method=RequestMethod.POST)
 	public String idDuplicationCheck(@RequestBody UserVO vo) {

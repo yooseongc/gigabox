@@ -33,5 +33,5 @@ public class LoginDTO {
 	public String toString() {
 		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", useCookie=" + useCookie + "]";
 	}
-	
+
 }

@@ -8,6 +8,7 @@
 		<typeAlias type="com.gigabox.faq.vo.FaqVO" alias="faq"/>
 		<typeAlias type="com.gigabox.user.vo.UserVO" alias="join"/>
 		<typeAlias type="com.gigabox.user.vo.UserVO" alias="login"/>
+		<typeAlias type="com.gigabox.user.vo.UserVO" alias="modify"/>
 	</typeAliases>
 	
 </configuration>

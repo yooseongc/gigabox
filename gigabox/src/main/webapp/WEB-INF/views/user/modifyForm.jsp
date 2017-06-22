@@ -31,7 +31,6 @@
 
 </head>
 <body>
-
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -97,7 +96,7 @@
 					회원 서비스 <small>개인정보 수정</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#">회원 서비스</a></li>
+					<li><a href="/">회원 서비스</a></li>
 					<li class="active">개인정보 수정</li>
 				</ol>
 			</div>
@@ -120,7 +119,7 @@
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
 							<div class="col-sm-6">
 									<input class="form-control" id="userId" type="text"
-									name="userId" placeholder="아이디" maxlength="20">
+									name="userId" maxlength="20" value="${userInfo.userId }">
 							</div>
 						</div>
 
@@ -136,7 +135,7 @@
 							<label class="col-sm-3 control-label" for="userEmail">이메일</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userEmail" type="email"
-									name="userEmail" placeholder="이메일">
+									name="userEmail" value="${userInfo.userEmail }" readonly="readonly">
 							</div>
 						</div>
 
@@ -144,14 +143,14 @@
 							<label class="col-sm-3 control-label" for="userName">이름</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userName" type="text"
-									name="userName" placeholder="이름">
+									name="userName" placeholder="이름" value="${userInfo.userName }">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userBirthday">생년월일</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userBirthday" type="text"
-									name="userBirthday" placeholder="생년월일">
+									name="userBirthday" placeholder="생년월일" value="${userInfo.userBirthday }">
 							</div>
 						</div>
 						
@@ -159,7 +158,7 @@
 							<label class="col-sm-3 control-label" for="userTel">휴대폰번호</label>
 							<div class="col-sm-6">
 								<input type="tel" class="form-control" id="userTel"
-									name="userTel" placeholder="- 없이 입력해 주세요" maxlength="11"/>
+									name="userTel" placeholder="- 없이 입력해 주세요" maxlength="11" value="${userInfo.userTel }"/>
 							</div>
 						</div>
 						
@@ -200,11 +199,11 @@
 						
 						<div class="form-group">
 							<div class="col-sm-12 text-center">
-								<button id="joinSubmitBtn" class="btn btn-primary" type="submit">
+								<button id="modifySubmitBtn" class="btn btn-primary" type="submit">
 									수정완료<i class="fa fa-check spaceLeft"></i>
 								</button>
 								<button class="btn btn-danger" type="reset">
-									다시작성<i class="fa fa-times spaceLeft"></i>
+									수정취소<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>
 						</div>
@@ -379,8 +378,8 @@
 		 	
 		   
 		 	
-		 	//회원가입 버튼 클릭시
-		 	$("#joinSubmitBtn").click(function(e) {
+		 	//수정완료 버튼 클릭시
+		 	$("#modifySubmitBtn").click(function(e) {
 		 		e.preventDefault();
 		 		console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
 				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
@@ -389,9 +388,7 @@
 				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
 					return;
 				}
-				if (!formCheck($("#userPasswordCheck"), "비밀번호 확인을", $("#errorMessage"))) {
-					return;
-				}
+				
 				if (!formCheck($("#userEmail"), "이메일을", $("#errorMessage"))) {
 					return;
 				}
@@ -402,20 +399,15 @@
 					return;
 				}
 				
-				if ($("#userPw").val() != $("#userPasswordCheck").val()){
-					alert("비밀번호가 일치하지 않습니다")
-					return;
-				}
-				
 				var userAddressNumber = $("#userAddressNumber").val().replace(/\s/g,"");
 				var userAddressBasic = $("#userAddressBasic").val();
 				var userAddressDetail = $("#userAddressDetail").val();
 				$("#userAddr").attr("value", "("+userAddressNumber+") " 
 						+ userAddressBasic + " " + userAddressDetail);
 				
-				$("#joinForm").attr("method", "POST");
-				$("#joinForm").attr("action", "/user/joinForm.do");
-				$("#joinForm").submit();
+				$("#modifyForm").attr("method", "POST");
+				$("#modifyForm").attr("action", "/user/modifyForm.do");
+				$("#modifyForm").submit();
 				
 		 		
 		 	});

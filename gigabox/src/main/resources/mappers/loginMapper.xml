@@ -5,8 +5,13 @@
 <mapper namespace="com.gigabox.mapper.LoginMapper">
 
 		<resultMap type="login" id="loginResultMap">
+			<result property="userNumber" column="USER_NUMBER" />
 			<result property="userId" column="USER_ID" />
 			<result property="userPw" column="USER_PW" />
+			<result property="userName" column="USER_NAME" />
+			<result property="userBirthday" column="USER_BIRTHDAY" />
+			<result property="userTel" column="USER_TEL" />
+			<result property="userAddr" column="USER_ADDR" />
 		</resultMap>
 
 	<select id="idCheck" parameterType="login" resultType="int">

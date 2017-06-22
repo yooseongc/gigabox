@@ -71,7 +71,6 @@ public class LoginController {
 
 			String orgPass = loginDTO.getUserPw();
 			try {
-				
 				SHA256 sha = SHA256.getInsatnce();
 				String shaPass = sha.getSha256(orgPass.getBytes());
 				String dbPass = loginService.login(loginDTO).getUserPw();
