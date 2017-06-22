@@ -8,4 +8,5 @@ public interface ModifyService {
 	
 	public int userModify(UserVO userVO);
 
+	public int changePw(UserVO userVO);
 }

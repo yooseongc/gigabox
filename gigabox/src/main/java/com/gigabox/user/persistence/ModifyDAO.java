@@ -10,5 +10,6 @@ public interface ModifyDAO {
 	//회원정보 수정
 	public int userModify (UserVO userVO);
 	
-	
+	//비밀번호 변경
+	public int changePw (UserVO userVO);
 }

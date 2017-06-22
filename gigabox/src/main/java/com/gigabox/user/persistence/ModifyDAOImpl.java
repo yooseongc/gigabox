@@ -29,4 +29,11 @@ public class ModifyDAOImpl implements ModifyDAO {
 		return sqlSession.update(namespace + ".userModify", userVO);
 	}
 
+	//비밀번호 변경
+	@Override
+	public int changePw(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + ".changePw", userVO);
+	}
+
 }

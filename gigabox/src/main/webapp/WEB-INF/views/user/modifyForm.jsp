@@ -63,12 +63,20 @@
 				<div class="col-md-12">
 					<div class="page-header">
 						<h1>개인정보 수정 <small>회원님의 정보를 정확히 입력해주세요.</small></h1>
+						
 					</div>
+								
 					<form class="form-horizontal" id="modifyForm">
 						<fieldset>
 						
 							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
-						
+						<div class="form-group">
+							<div class="text-left">
+								<span class='text-center'>
+								<a href="/user/changePwForm" class="text-sm">비밀번호 변경/</a>
+								<a href="/user/userLeave" class="text-sm">회원탈퇴</a></span>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
 							<div class="col-sm-6">
@@ -156,7 +164,7 @@
 								<button id="modifySubmitBtn" class="btn btn-primary" type="submit">
 									수정완료<i class="fa fa-check spaceLeft"></i>
 								</button>
-								<button class="btn btn-danger" type="reset">
+								<button id="modifyCancleBtn" class="btn btn-danger" type="submit">
 									수정취소<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>
@@ -243,6 +251,15 @@
 		$(document).ready(function() {
 			
 			$("#errorMessage").addClass("hide");
+			
+			//수정취소버튼 클릭시 메인으로
+			$('#modifyCancleBtn').click(function(e){
+				e.preventDefault();
+
+				$("#modifyForm").attr("method", "GET");
+				$("#modifyForm").attr("action", "/");
+				$("#modifyForm").submit();
+			});
 			
 			// 주소 검색 모달 창 띄우기
 			$('#userAddressSearchModalBtn').click(function(e) {
@@ -356,15 +373,36 @@
 				$("#userAddr").attr("value", "("+userAddressNumber+") " 
 						+ userAddressBasic + " " + userAddressDetail);
 				
-				$("#modifyForm").attr("method", "POST");
+				/* $("#modifyForm").attr("method", "POST");
 				$("#modifyForm").attr("action", "/user/modifyForm.do");
-				$("#modifyForm").submit();
+				$("#modifyForm").submit(); */
 				
-		 		
+				$.ajax({
+					type: "POST",
+					url: "/",
+					data: $("#modifyForm").serialize(),
+					error: function() {
+						$("#errorMessage").text("시스템 오류입니다.");
+						$("#errorMessage").show();
+					},
+					success: function(resultData) {
+						if (resultData.message == 'PW-WRONG') {
+							$("#errorMessage").text("비밀번호가 일치하지 않습니다.");
+							$("#errorMessage").show();
+							$("#userPw").val("");
+							$("#userPw").focus();
+						} else if (resultData.message == 'Check-SUCCESS') {
+							console.log("modify success!!!");
+							$("#modifyForm").submit();
+						} else if (resultData.message == 'ERROR') {
+							$("#errorMessage").text("시스템 오류입니다.");
+							$("#errorMessage").show();
+						}
+					}
+				});
 		 	});
-		    
 		});
-		
+
 	</script>
 
 </body>

@@ -56,7 +56,7 @@
 							</div>
 							<span class='text-center'><a
 								href="#"
-								class="text-sm">비밀번호 찾기</a></span>
+								class="text-sm">ID/비밀번호 찾기</a></span>
 							<hr />
 							<div class="form-group">
 								<a href="/user/joinAgreeForm" class="btn btn-default btn-block m-t-md"> 회원가입</a>
