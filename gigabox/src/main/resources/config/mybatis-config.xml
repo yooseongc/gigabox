@@ -13,6 +13,9 @@
 		<typeAlias type="com.gigabox.cc.vo.FaqVO" alias="faq" />
 		<typeAlias type="com.gigabox.cc.vo.NoticeVO" alias="notice" />
 		<typeAlias type="com.gigabox.cc.vo.InquiryVO" alias="inquiry" />
+		
+		<typeAlias type="com.gigabox.movie.vo.MovieVO" alias="movie" />
+		<!-- <typeAlias type="com.gigabox.review.vo.ReviewVO" alias="review" /> -->
 	</typeAliases>
 	
 </configuration>
