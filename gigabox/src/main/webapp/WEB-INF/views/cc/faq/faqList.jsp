@@ -31,7 +31,7 @@
 
 	<!-- header -->
 	<c:import url="/templates/header.jsp"/>
-
+	
 	<!-- Page Content -->
 	<div class="container">
 

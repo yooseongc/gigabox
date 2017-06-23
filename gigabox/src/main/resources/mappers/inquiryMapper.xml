@@ -6,7 +6,7 @@
 	<resultMap id="inquiryResultMap" type="inquiry">
 		<result property="userNumber" column="USER_NUMBER" />
 		<result property="inquiryNumber" column="INQUIRY_NUMBER" />
-		<result property="inquiryGroupNumber" column="INQUIRY_GROUPNUMBER" />
+		<result property="inquiryGroupnumber" column="INQUIRY_GROUPNUMBER" />
 		<result property="inquiryTitle" column="INQUIRY_TITLE" />
 		<result property="inquiryCotnent" column="INQUIRY_CONTENT" />
 		<result property="inquiryRegisterdate" column="INQUIRY_REGISTERDATE" />

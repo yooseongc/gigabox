@@ -24,11 +24,9 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/js/bootstrap.min.js"></script>
 </head>
-
 <body>
-
 	<!-- header -->
-	<c:import url="/templates/header.jsp"/>
+	<c:import url="/templates/header.jsp" />
 
 	<!-- Page Content -->
 	<div class="container">
@@ -39,14 +37,15 @@
 					공지사항 <small>GIGABOX NEWS</small>
 				</h1>
 				<ul class="nav nav-tabs" role="tablist">
-					<li><a href="/cc/faq/faqList" class="" title="자주묻는질문 바로가기">자주묻는질문</a></li>
-					<li><a href="/cc/notice/noticeList" class="" title="공지사항 바로가기">공지사항</a></li>
-					<li><a href="/cc/qna/qnaList" class="" title="1:1문의 바로가기">1:1문의</a></li>
+					<li><a href="/cc/faq/faqList" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+					<li><a href="/cc/notice/noticeList" class="notice"
+						title="공지사항 바로가기">공지사항</a></li>
+					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기">1:1문의</a></li>
 				</ul>
 			</div>
 		</div>
 		<!-- /.row -->
-		
+
 		<br>
 		<!-- Content Row -->
 		<div class="row">
@@ -110,7 +109,7 @@
 								<li><a
 									href="/cc/notice/noticeList${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
 							</c:if>
-	
+
 							<c:forEach begin="${pageMaker.startPage}"
 								end="${pageMaker.endPage}" var="idx">
 								<li
@@ -118,7 +117,6 @@
 									<a href="/cc/notice/noticeList${pageMaker.makeQuery(idx)}">${idx}</a>
 								</li>
 							</c:forEach>
-	
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 								<li><a
 									href="/cc/notice/noticeList${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
@@ -130,38 +128,40 @@
 			<!-- /.col-lg-12 -->
 		</div>
 		<!-- /.row -->
-	
+
 		<hr>
-	
-	
+
+
 	</div>
 	<!-- /.container -->
 
 	<!-- footer -->
-	<c:import url="/templates/footer.jsp"/>
+	<c:import url="/templates/footer.jsp" />
 
 	<script type="text/javascript">
 		$(document).ready(
-			function() {
-				if ('${param.searchType}' != '') {
-					$("#searchType").val('${param.searchType}');
-				}
-				if ('${param.searchKeyword}' != '') {
-					$("#searchKeyword").val('${param.searchKeyword}');
-				}
-	
-				$('#noticeSearchButton').on("click", function(event) {
-					event.preventDefault();
-					var queryString = "/notice/noticeList"
-							+ '${pageMaker.makeQuery(1)}'
-							+ "&searchType="
-							+ $("#searchType").val()
-							+ "&searchKeyword="
-							+ $('#searchKeyword').val();
-	
-					self.location = queryString;
+				function() {
+					if ('${param.searchType}' != '') {
+						$("#searchType").val('${param.searchType}');
+					}
+					if ('${param.searchKeyword}' != '') {
+						$("#searchKeyword").val('${param.searchKeyword}');
+					}
+
+					$('#noticeSearchButton').on(
+							"click",
+							function(event) {
+								event.preventDefault();
+								var queryString = "/notice/noticeList"
+										+ '${pageMaker.makeQuery(1)}'
+										+ "&searchType="
+										+ $("#searchType").val()
+										+ "&searchKeyword="
+										+ $('#searchKeyword').val();
+
+								self.location = queryString;
+							});
 				});
-			});
 	</script>
 </body>
 </html>

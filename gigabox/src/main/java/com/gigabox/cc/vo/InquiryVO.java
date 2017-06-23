@@ -72,5 +72,4 @@ public class InquiryVO {
 				+ ", inquiryRegisterdate=" + inquiryRegisterdate + ", inquiryQora=" + inquiryQora + "]";
 	}
 
-
 }
