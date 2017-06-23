@@ -32,12 +32,11 @@ public class InquiryController {
 	@Inject
 	private InquiryService inquiryService;
 
-
 	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
 	// 본 메소드는 QNA 중 회원의 질문만을 들고오는 메소드이다.
 	@Transactional
-	@RequestMapping(value = "/qnaList", method = RequestMethod.GET)
+	@RequestMapping(value = "/inquiryList", method = RequestMethod.GET)
 	public String inquiryListGET(@ModelAttribute("isc") InquirySearchCriteria isc, Model model) {
 		logger.info("=======================================================");
 		logger.info("INQUIRY MAIN PAGE LOADING...");
@@ -82,7 +81,7 @@ public class InquiryController {
 		logger.info("INQUIRY MAIN PAGE LOADING END");
 		logger.info("=======================================================");
 
-		return "/cc/qnaMain";
+		return "/inquiry/inquiryList";
 	}
 
 	@Transactional
@@ -97,14 +96,13 @@ public class InquiryController {
 		InquiryVO selectedData = inquiryService.inquiryDetailQ(selectData);
 
 		// 작성자 정보 가져오기
-		
+
 		logger.info("InquiryVO= " + selectedData.toString());
-		
 
 		// 맵
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("inquiry", selectedData);
-		
+
 		ResponseEntity<Map<String, Object>> selectedInquiryEntity = new ResponseEntity<>(resultMap, HttpStatus.OK);
 
 		logger.info("INQUIRY DETAIL QUESTION DATA SENT TO JSON");
