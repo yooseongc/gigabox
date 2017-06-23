@@ -16,6 +16,7 @@ public class MovieVO {
 	private String movieSteelcut; 
 	private String movieTrailer; 
 	private int movieCode;
+	private String movieStatus; 
 	
 	public int getMovieCode() {
 		return movieCode;
@@ -33,7 +34,6 @@ public class MovieVO {
 		this.movieStatus = movieStatus;
 	}
 
-	private String movieStatus;
 	
 	public int getMovieNumber() {
 		return movieNumber;

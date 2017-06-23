@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.gigabox.movie.vo.MovieVO;
+import com.gigabox.movie.vo.RownumVO;
 
 @Repository
 public class MovieDAOImpl implements MovieDAO {
@@ -51,6 +52,16 @@ public class MovieDAOImpl implements MovieDAO {
 	@Override
 	public List<MovieVO> readMore(int mno) throws Exception {
 		return session.selectList(namespace + ".listCriteria" , mno);
+	}
+
+	@Override
+	public List<MovieVO> movieListRecent(RownumVO rownumVO) throws Exception {
+		return session.selectList(namespace + ".movieListRecent", rownumVO);
+	}
+
+	@Override
+	public List<MovieVO> movieListTobe(RownumVO rownumVO) throws Exception {
+		return session.selectList(namespace + ".movieListTobe", rownumVO);
 	}
 
 }

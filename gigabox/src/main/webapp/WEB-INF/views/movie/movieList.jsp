@@ -134,7 +134,7 @@
 						</div>
 						<input type="hidden" name="page" id="page" value="${page}">
 						<div class="btns">
-							<a href="javascript:loadNextPage();" class="btn btn-primary">더보기</a>
+							<a href="javascript:loadNextPage1();" class="btn btn-primary">더보기</a>
 						</div>
 					</div>
 					
@@ -173,7 +173,7 @@
 						</div>
 						<input type="hidden" name="page" id="page" value="${page}">
 						<div class="btns">
-							<a href="javascript:loadNextPage();" class="btn btn-primary">더보기</a>
+							<a href="javascript:loadNextPage2();" class="btn btn-primary">더보기</a>
 						</div>
 					</div>
 					
@@ -183,7 +183,7 @@
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
 							</div>
-							<c:forEach items="${movieList}" var="movieItem">
+							<c:forEach items="${movieListTobe}" var="movieItem">
 								<div class="col-md-3 col-sm-6">
 									<div class="panel panel-default text-center">
 										<div class="panel-heading">
@@ -213,7 +213,7 @@
 						</div>
 						<input type="hidden" name="page" id="page" value="${page}">
 						<div class="btns">
-							<a href="javascript:loadNextPage();" class="btn btn-primary">더보기</a>
+							<a href="javascript:loadNextPage3();" class="btn btn-primary">더보기</a>
 						</div>
 					</div>
 				</div>
@@ -530,62 +530,33 @@
 
 
 
-	<!-- 더보기 
 
-
-  <script id="template" type="text/x-handlebars-template">
-		{{#each .}}
-		<span> {{movieTitle}} <span>
-		<div>
-			<span> {{movieEngname}} <span>
-		</div>
-		{{/each}}
-	</script>
+	
 	<script>
-		var source = $("#template").html();
-		var template = Handlebars.compile(source);
-		var data = {movieTitle:"엥", movieEngname:"aabb"};
+		function loadNextPage3() {
 		
-		$(".row").html(template(data));
-	</script>
-	
-	
-	<script>
-		function loadNextPage() {
-
-			var lastmno = $(".btn btn-primary movieDetailListBtn:last").attr("data-id");
-			var source = $("#template").html();
-			var template = Handlebars.compile(source);
-			
-			
 			$.ajax({
 
 				type : 'post',
 
-				url : '/movie/readMore',
+				url : '/movie/movieListTobe',
 
 				headers : {
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "POST"
 				},
 				dataType : 'json' ,
-				data : JSON.stringify({
-					mno : lastmno
 				}),
-				success : function(data){
-					var str = "";
+				success : function(){
 					
-					if(data != "") {
-						$("#rowId").append(template(data));
 					}
 				}
-				}
+				});
 
-			});
-		}
+			}
+		
 	</script>
 
--->
 	<!-- 모달 닫기 -->
 	<script>
 		$("#closeBtn").on("click", function (){

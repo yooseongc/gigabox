@@ -23,4 +23,11 @@ public class RownumVO {
 		return "RownumVO [rowStart=" + rowStart + ", rowEnd=" + rowEnd + "]";
 	}
 	
+	public void next(int count) {
+		for (int i = 0; i < count; i++) {
+			rowStart += 8;
+			rowEnd += 8;
+		}
+	}
+	
 }
