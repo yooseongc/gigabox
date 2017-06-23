@@ -24,7 +24,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                 	<img src="/resources/images/logo_giga_white.png" style="height: 50px; margin-top: -10px;" alt="GIGABOX">
                 </a>
             </div>
@@ -100,30 +100,30 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 						</div>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="min-width: 170px; max-height: 60px;">
+                        <a href="#" class="dropdown-toggle" id="loginDropDown" data-toggle="dropdown" style="min-width: 170px; max-height: 60px;">
                         	<span id="loginDropdownSpan">로그인 <b class="caret"></b></span>
                         	<span id="logoutSpan" class="hide"> 
                         		<i class="fa fa-user fa-2x"></i>&nbsp;&nbsp; 
                         		<span class="label label-info" style="margin-top: -10px; vertical-align: middle;">${sessionScope.login.userName} 님</span>
                         	</span> 
                         </a>
-                        <div id="loginWindow" class="dropdown-menu" style="width: 400px; height: 300px; margin-left: -230px;">
+                        <div id="loginWindow" class="dropdown-menu" style="margin-top: 10px; width: 400px; height: 300px; margin-left: -230px;">
 							<div class="login-box well">
 								<form accept-charset="UTF-8" role="form" method="post" action="/user/loginSession"
 									id="loginForm">
 									<fieldset>
 										<legend>로그인</legend>
-										<div class="alert alert-danger" id="errorMessage">
+										<div class="alert alert-danger" id="errorMessageHeader">
 										</div>
 										<div class="form-group">
 											<label for="userId">아이디</label> <input
-												name="userId" value='' id="userId"
+												name="userId" value='' id="userIdHeader"
 												placeholder="ID" type="text"
 												class="form-control" />
 										</div>
 										<div class="form-group">
 											<label for="userPw">비밀번호</label> <input name="userPw"
-												id="userPw" value='' placeholder="Password" type="password"
+												id="userPwHeader" value='' placeholder="Password" type="password"
 												class="form-control" />
 										</div>
 										<div class="form-group">
@@ -163,7 +163,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 
 <script type="text/javascript">
 		
-		function formCheck(v_item, v_name, e_item) {
+		function formCheckHeader(v_item, v_name, e_item) {
 			if (v_item.val().replace(/\s/g, "") == "") {
 
 				e_item.text(v_name + " 입력해 주세요.");
@@ -177,7 +177,11 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		}
 
 		$(document).ready(function() {
+			   
+			$("#errorMessageHeader").addClass("hide");
 			
+			
+		    
 			if ("${sessionScope.login.userId}" != "") {
 				$("#loginDropdownSpan").addClass("hide");
 				$("#logoutSpan").removeClass("hide");
@@ -187,14 +191,25 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				$("#logoutWindow").addClass("hide");
 			}
 			
-			$("#errorMessage").hide();
+			// 현재 URL 가져오기
+		    var url = location.href;
+
+		    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
+			console.log(parameter);
+			if (parameter == 'login') {
+				alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
+				$("#loginDropDown").prop("aria-expanded", "true");
+			}
+			
+			
 			$("#loginButton").click(function(e) {
 				e.preventDefault();
-				console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
-				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
+				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));
+				if (!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader"))) {
 					return;
 				}
-				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+				if (!formCheckHeader($("#userPwHeader"), "비밀번호를", $("#errorMessageHeader"))) {
 					return;
 				}
 				
@@ -203,27 +218,27 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					type: "POST",
 					data: $("#loginForm").serialize(),
 					error: function() {
-						$("#errorMessage").text("시스템 오류입니다.");
-						$("#errorMessage").show();
+						$("#errorMessageHeader").text("시스템 오류입니다.");
+						$("#errorMessageHeader").show();
 					},
 					success: function(resultData) {
 						if (resultData.message == 'ID-MISSING') {
-							$("#errorMessage").text("해당 계정이 존재하지 않습니다.");
-							$("#errorMessage").show();
-							$("#userId").val("");
-							$("#userPw").val("");
-							$("#userId").focus();
+							$("#errorMessageHeader").text("해당 계정이 존재하지 않습니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
 						} else if (resultData.message == 'PW-WRONG') {
-							$("#errorMessage").text("비밀번호가 일치하지 않습니다.");
-							$("#errorMessage").show();
-							$("#userPw").val("");
-							$("#userPw").focus();
+							$("#errorMessageHeader").text("비밀번호가 일치하지 않습니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userPwHeader").val("");
+							$("#userPwHeader").focus();
 						} else if (resultData.message == 'LOGIN-SUCCESS') {
 							console.log("login success!!!");
 							$("#loginForm").submit();
 						} else if (resultData.message == 'ERROR') {
-							$("#errorMessage").text("시스템 오류입니다.");
-							$("#errorMessage").show();
+							$("#errorMessageHeader").text("시스템 오류입니다.");
+							$("#errorMessageHeader").removeClass("hide");
 						}
 					} 
 					});

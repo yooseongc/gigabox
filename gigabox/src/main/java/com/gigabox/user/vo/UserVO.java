@@ -17,6 +17,7 @@ public class UserVO {
 	private String userAgree;
 	private int userMileage;
 	private String userJoinAuth;
+	private String userStatus;
 
 	public int getUserNumber() {
 		return userNumber;
@@ -120,6 +121,14 @@ public class UserVO {
 
 	public void setUserJoinAuth(String userJoinAuth) {
 		this.userJoinAuth = userJoinAuth;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 		
 		if (session.getAttribute("login") == null) {
 			logger.info("NOT LOGINED");
-			response.sendRedirect("/user/login");
+			response.sendRedirect("/?pageAction=login");
 			return false;
 		}
 		logger.info("SESSION EXISTS");

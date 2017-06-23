@@ -34,4 +34,9 @@ public class JoinServiceImpl implements JoinService {
 		return joinDAO.pwEncryptionExec(userVO);
 	}
 
+	@Override
+	public int emailAuthConfirm(String enc) {
+		return joinDAO.emailAuthConfirm(enc);
+	}
+
 }

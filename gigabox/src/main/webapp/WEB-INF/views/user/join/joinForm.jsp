@@ -25,66 +25,17 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+<!-- jQuery -->
+<script src="/resources/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/js/bootstrap.min.js"></script>
+<!-- Google Recaptcha -->
 <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
 </head>
 <body>
 
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">Start Bootstrap</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="about.html">About</a></li>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Portfolio <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="portfolio-1-col.html">1 Column Portfolio</a></li>
-							<li><a href="portfolio-2-col.html">2 Column Portfolio</a></li>
-							<li><a href="portfolio-3-col.html">3 Column Portfolio</a></li>
-							<li><a href="portfolio-4-col.html">4 Column Portfolio</a></li>
-							<li><a href="portfolio-item.html">Single Portfolio Item</a>
-							</li>
-						</ul></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Blog <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="blog-home-1.html">Blog Home 1</a></li>
-							<li><a href="blog-home-2.html">Blog Home 2</a></li>
-							<li><a href="blog-post.html">Blog Post</a></li>
-						</ul></li>
-					<li class="dropdown active"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">Other Pages <b
-							class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="active"><a href="full-width.html">Full Width
-									Page</a></li>
-							<li><a href="sidebar.html">Sidebar Page</a></li>
-							<li><a href="faq.html">FAQ</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="pricing.html">Pricing Table</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+	<c:import url="/templates/header.jsp"/>
 
 	<!-- Page Content -->
 	<div class="container">
@@ -113,7 +64,7 @@
 					<form class="form-horizontal" id="joinForm">
 						<fieldset>
 						
-							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
+							<div class="alert alert-danger center-block hide" style="width: 400px;" id="errorMessage"></div>
 						
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
@@ -260,18 +211,12 @@
 		<!-- /.row -->
 
 		<hr>
-
-		<!-- Footer -->
-		<footer>
-			<div class="row">
-				<div class="col-lg-12">
-					<p>Copyright &copy; GigaBox 2017</p>
-				</div>
-			</div>
-		</footer>
-
+		
 	</div>
 	<!-- /.container -->
+	
+	<!-- Footer -->
+	<c:import url="/templates/footer.jsp"/>
 	
 	 <!-- Modal -->
      <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalLabel" aria-hidden="true">
@@ -319,13 +264,8 @@
   </div>
   <!-- /.modal -->
 	
-	<!-- jQuery -->
-	<script src="/resources/js/jquery.js"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/js/bootstrap.min.js"></script>
-
 	<script type="text/javascript">
-	 function formCheck(v_item, v_name, e_item) {
+		 function formCheck(v_item, v_name, e_item) {
 			if (v_item.val().replace(/\s/g, "") == "") {
 				
 				e_item.text(v_name + " 확인해 주세요.");
@@ -339,13 +279,16 @@
 		}
 	
 		$(document).ready(function() {
-			$("#errorMessage").hide();
+			
+			var recaptchaConfirm = false;
+			
+			$("#errorMessage").addClass("hide");
 			
 			// 아이디 중복 체크 
 			$("#userIDCheckBtn").click(function(e) {
 				e.preventDefault();
 				var idReg=/^[a-z]+[a-z0-9]{5,19}$/g;
-		        if(!idReg.test($("input[name=userId]").val())){
+		        if(!idReg.test($("#usereId").val())){
 		            alert("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
 		            return
 		        }
@@ -365,6 +308,7 @@
 							alert("시스템 오류입니다. 관리자에게 문의하세요.");
 						},
 						success: function(result) {
+							console.log(result);
 							if (result == 0) {
 								$("#userIDCheckErrorMsg").css("color", "green").text("사용하실 수 있는 아이디 입니다.");
 							} 
@@ -385,8 +329,10 @@
 				e.preventDefault();
 				var eamilAuth = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 				if(!eamilAuth.test($("input[name=userEmail]").val())){
-		            alert("이 메일 형식이 올바르지 않습니다.");
-		            return
+		            alert("이메일 형식이 올바르지 않습니다.");
+		            return;
+		        } else {
+		        	alert("이메일 형식이 올바릅니다.");
 		        }
 				/* else {
 					console.log(!formCheck($("#userId"), "이 메일 형식을", $("#errorMessage")));
@@ -428,6 +374,7 @@
 		                if(data == "Y") {
 		                    document.getElementById("message").innerHTML = "성공하셨습니다!";
 		                    $("#message").css('color', 'green');
+		                    recaptchaConfirm = true;
 		                }else{
 		                    document.getElementById("message").innerHTML = "실패하셨습니다! 다시 시도해 주세요!";
 		                    $("#message").css('color', 'red');
@@ -513,26 +460,37 @@
 		 		e.preventDefault();
 		 		console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
 				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userPasswordCheck"), "비밀번호 확인을", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userEmail"), "이메일을", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userName"), "이름을", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				if (!formCheck($("#userTel"), "휴대폰번호를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
 					return;
 				}
 				
 				if ($("#userPw").val() != $("#userPasswordCheck").val()){
-					alert("비밀번호가 일치하지 않습니다")
+					alert("비밀번호가 일치하지 않습니다");
+					return;
+				}
+				
+				if (!recaptchaConfirm) {
+					alert("중복 확인 방지 테스트를 해 주세요.");
 					return;
 				}
 				
@@ -543,15 +501,12 @@
 						+ userAddressBasic + " " + userAddressDetail);
 				
 				$("#joinForm").attr("method", "POST");
-				$("#joinForm").attr("action", "/user/joinForm.do");
+				$("#joinForm").attr("action", "/user/joinForm");
 				$("#joinForm").submit();
-				
 		 		
 		 	});
 		    
 		});
-		
-		
 		
 	</script>
 

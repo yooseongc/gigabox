@@ -20,4 +20,5 @@ public interface JoinDAO {
 	
 	public int pwEncryptionExec(UserVO userVO);
 	
+	public int emailAuthConfirm(String enc);
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,8 +15,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigabox.user.enc.utils.BCrypt;
 import com.gigabox.user.enc.utils.SHA256;
+import com.gigabox.user.enc.utils.SimpleCrypto;
 import com.gigabox.user.service.JoinService;
 import com.gigabox.user.util.ZipcodeSearchTO;
 import com.gigabox.user.util.ZipcodeVO;
@@ -40,6 +46,9 @@ public class JoinController {
 	@Inject
 	private JoinService service;
 	
+	@Inject
+	private JavaMailSender mailSender;
+	
 	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 	
 	public static final String ZIPCODE_API_KEY = "e515c666f2ef27ff51496904073254";
@@ -49,13 +58,14 @@ public class JoinController {
   	@RequestMapping(value = "/joinAgreeForm", method = RequestMethod.GET)
   	public String joinAgreeGET(){
   		logger.info("JOINAGREEFORM PAGE LOADING...");
-  		return "/user/joinAgreeForm";
+  		return "/user/join/joinAgreeForm";
   	}
   	
     //약관동의 확인시 회원가입 폼으로 이동
   	@RequestMapping(value = "/joinFormLoad", method = RequestMethod.GET)
   	public String joinFormLoadGET(){
   		logger.info("JOIN FORM LOADING... Redirect to /user/joinForm");
+  		// 매핑 ==> /joinForm  joinFormGET()으로 이동
   		return "forward:/user/joinForm";
   	}
     
@@ -72,8 +82,9 @@ public class JoinController {
 	}
 	
 	//가입 구현하기
+    @Transactional
 	@RequestMapping(value="/joinForm", method=RequestMethod.POST)
-	public String userJoinInsert(@ModelAttribute UserVO uvo){
+	public String userJoinInsert(@ModelAttribute UserVO uvo) throws Exception {
 		logger.info("userJoinInsert 호출 성공");
 		logger.info(uvo.toString());
 		
@@ -95,15 +106,67 @@ public class JoinController {
 			e.printStackTrace();
 		}
 		
+		// 인증 메일 보내기
+		String key = uvo.getUserName(); 
+		String idEncrypt = SimpleCrypto.encrypt(key, uvo.getUserId());
+		uvo.setUserJoinAuth(idEncrypt);
+		
+		String authAddr = "http://localhost:8080/user/emailAuth/" + idEncrypt;
+		logger.info("=======================================================");
+		logger.info("EMAIL SEND START");
+			
+		StringBuilder sb = new StringBuilder();
+		sb.append("<hr>");
+		sb.append("<h4> 본 메일은 GIGABOX 회원 가입 인증용 이메일 입니다.</h4>");
+		sb.append("<hr>");
+		sb.append("<p>회원 가입 인증을 완료하시려면 아래 링크를 클릭해 주세요.</p>");
+		sb.append("<p><a href='" + authAddr + "'>" + authAddr + "</a></p>");
+		sb.append("<hr>");
+		
+		MimeMessage message = mailSender.createMimeMessage(); 
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8"); 
+		messageHelper.setTo(uvo.getUserEmail()); 
+		messageHelper.setText(sb.toString(), true); 
+		messageHelper.setFrom("gigabox777@gmail.com"); 
+		messageHelper.setSubject("GIGABOX 회원 가입 인증용 이메일입니다.");	
+		mailSender.send(message);
+		
+		logger.info("EMAIL SEND END");
+		logger.info("=======================================================");
+		
 		int result = 0;
 		String url = "";
-
+		
+		// DB에 입력
 		result = service.userJoin(uvo);
+		
 		if(result ==1){
-			url = "/";
+			url = "/?pageAction=login";
 		}
 		return "redirect:" + url;
 	}
+    
+    // 이메일 인증 확인
+    @Transactional
+    @RequestMapping(value="/emailAuth/{enc}", method=RequestMethod.GET)
+    public String emailAuth(@PathVariable String enc) {
+    	
+    	logger.info("====================================================");
+    	logger.info("이메일 인증을 시작합니다.");
+    	int result = service.emailAuthConfirm(enc);
+    	logger.info("result= " + result);
+    	
+    	if (result == 1) {
+    		logger.info("정상 인증, 메인 페이지 로그인으로 넘어갑니다.");
+    		logger.info("===================================================");
+    		return "redirect:/?pageAction=emailAuthOK";
+    	} else {
+    		logger.info("인증 실패, 메인 페이지에서 경고를 띄웁니다.");
+    		logger.info("===================================================");
+    		return "redirect:/?pageAction=emailAuthError";
+    	}
+    	
+    }
 	
 	//아이디 중복확인
 	@ResponseBody
@@ -118,6 +181,7 @@ public class JoinController {
 		logger.info("ID DUPLICATION CHECK RESULT=" + result);
 		return result + "";
 	}
+	
 	
 	/**
 	 * 구글 리캡챠 적용 메소드

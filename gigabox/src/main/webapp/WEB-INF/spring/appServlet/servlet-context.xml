@@ -60,6 +60,8 @@
 			<exclude-mapping path="/user/validateRecaptcha.do"/>
 			<exclude-mapping path="/user/zipcode/list"/>
 			<exclude-mapping path="/user/zipcode/list.do"/>
+			<exclude-mapping path="/user/emailAuth/*"/>
+			
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

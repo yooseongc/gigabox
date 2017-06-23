@@ -46,4 +46,9 @@ public class JoinDAOImpl implements JoinDAO {
 		return sqlSession.update(namespace + ".pwEncryptionExec", userVO);
 	}
 
+	@Override
+	public int emailAuthConfirm(String enc) {
+		return sqlSession.update(namespace + ".emailAuthConfirm", enc);
+	}
+
 }

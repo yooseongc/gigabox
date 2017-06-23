@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<footer style="overflow: hidden;">
+<style>
+footer {
+	overflow: hidden;
+	font-size: 1.2em;
+	color: #ffffff;
+	background-color: #333333;
+}
+</style>
+<footer>
     
     
     <div class="row">
@@ -36,3 +43,108 @@
 	</div>
 </footer>
 
+	 <!-- 이메일 인증 비정상 처리시 모달 -->
+	 <!-- Modal -->
+     <div class="modal fade" id="emailAuthErrorModal" tabindex="-1" role="dialog" aria-labelledby="emailAuthErrorLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="emailAuthErrorLabel">회원 가입 인증 오류</h4>
+                 </div>
+                 <div class="modal-body">
+                      <i class="fa fa-fa-exclamation-triangle fa-3x"></i>
+                      <span>회원가입 인증에 오류가 발생하였습니다.<br>관리자에게 문의해 주세요.</span>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" id="emailAuthErrorModalCloseButton" class="btn btn-danger errorModalClose" data-dismiss="modal">닫기</button>
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+	      </div>
+	      <!-- /.modal-dialog -->
+	  </div>
+	  <!-- /.modal -->
+	 <!-- 이메일 인증 정상 처리시 모달 -->
+	 <!-- Modal -->
+     <div class="modal fade" id="emailAuthOKModal" tabindex="-1" role="dialog" aria-labelledby="emailAuthOKLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="emailAuthOKLabel">회원 가입 인증 정상 처리</h4>
+                 </div>
+                 <div class="modal-body">
+                      <i class="fa fa-fa-exclamation-triangle fa-3x"></i>
+                      <span>회원가입이 정상 처리되었습니다. 로그인 해 주세요.</span>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" id="emailAuthOKModalCloseButton" class="btn btn-danger" data-dismiss="modal">닫기</button>
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+	      </div>
+	      <!-- /.modal-dialog -->
+	  </div>
+	  <!-- /.modal -->
+	  
+	 <!-- 이메일 인증 안하고 로그인시 모달 -->
+	 <!-- Modal -->
+     <!-- <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="emailAuthNotYet" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="emailAuthNotYet">회원 가입 인증 오류</h4>
+                 </div>
+                 <div class="modal-body">
+                 	  <i class="fa fa-fa-exclamation-triangle fa-3x"></i>
+                      <span>회원가입 인증 후 다시 로그인 해 주세요.</span>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+                 </div>
+             </div>
+             /.modal-content
+	      </div>
+	      /.modal-dialog
+	  </div>
+	  /.modal -->
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		
+		// 현재 URL 가져오기
+	    var url = location.href;
+
+	    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+	    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
+		console.log(parameter);
+		if (parameter == 'emailAuthOK') {
+			 $('#emailAuthOKModal').modal({
+		        show: true, 
+		        backdrop: 'static',
+		        keyboard: true
+		     });
+		} else if (parameter == 'emailAuthError') {
+			 $('#emailAuthErrorModal').modal({
+		        show: true, 
+		        backdrop: 'static',
+		        keyboard: true
+		     });
+		}
+		
+		$("#emailAuthErrorModalCloseButton").on("click", function(e) {
+			e.preventDefault();
+			$("#emailAuthErrorModal").modal("hide");
+		});
+		$("#emailAuthOKModalCloseButton").on("click", function(e) {
+			e.preventDefault();
+			$("#emailAuthOKModal").modal("hide");
+			$("#loginDropDown").prop("aria-expanded", "true");
+		});
+		
+	});
+	
+</script>

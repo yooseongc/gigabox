@@ -18,19 +18,20 @@
 			<result property="userAgree" column="USER_AGREE" />
 			<result property="userMileage" column="USER_MILEAGE" />
 			<result property="userJoinAuth" column="USER_JOINAUTH"/>
+			<result property="userStatus" column="USER_STATUS"/>
 		</resultMap>
 	
 	<insert id="userJoinInsert" parameterType="join">
 			INSERT INTO TBL_USER (
 			    USER_NUMBER, USER_ID, USER_PW, USER_NAME, 
 			    USER_GENDER, USER_BIRTHDAY, USER_EMAIL, USER_TEL, 
-			    USER_ADDR, USER_AGREE)  
+			    USER_ADDR, USER_AGREE, USER_JOINAUTH, USER_STATUS)  
 			VALUES (
 			  seq_user.nextval, 
 			  #{userId}, #{userPw}, 
 			  #{userName}, #{userGender}, #{userBirthday}, 
 			  #{userEmail}, #{userTel}, 
-			  #{userAddr}, 'Y'
+			  #{userAddr}, 'Y', #{userJoinAuth}, '승인대기' 
 			)
 	</insert>
 	
@@ -46,5 +47,10 @@
 		WHERE USER_ID = #{userId} 
 	</update>
 
+	<update id="emailAuthConfirm" parameterType="string">
+		UPDATE TBL_USER 
+		SET USER_STATUS = '정상가입', USER_JOINAUTH = 'none', USER_REGISTERDATE = SYSDATE  
+		WHERE USER_JOINAUTH = #{0} 
+	</update>
 	
 	</mapper>

@@ -34,6 +34,8 @@ p.error { /* 에러메시지 */
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/js/bootstrap.min.js"></script>
 
+<script src="/resources/js/jquery.validate.js"></script>
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -144,12 +146,7 @@ p.error { /* 에러메시지 */
 	<c:import url="/templates/footer.jsp"/>
 
 
-	<!-- jQuery -->
-	<script src="/resources/js/jquery.js"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/js/bootstrap.min.js"></script>
 
-	<script src="/resources/js/jquery.validate.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		

@@ -33,7 +33,7 @@
  	<c:import url="/templates/header.jsp"/>
 	
 	<!-- Carousel -->
-    <section id="myCarousel" class="carousel slide" style="height: 600px; margin-top: -40px;">
+    <header id="myCarousel" class="carousel slide" style="height: 600px;">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -44,10 +44,10 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <div class="fill" style="background-size: 100% 600px; background-color: black;">
-                	<video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_form_1600x600.jpg" preload="none">
+                <div class="fill" style="background-image: url(http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_form_1600x600.jpg);">
+                	<!-- <video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_form_1600x600.jpg" preload="none">
                         <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/0aa6867bf20013acc0bc3bb7c0f63a52_I.mp4" type="video/mp4" />
-                    </video>
+                    </video> -->
                 </div>
                 <div class="carousel-caption">
                     <h2></h2>
@@ -60,10 +60,10 @@
                 </div>
             </div>
             <div class="item">
-                <div class="fill" style="background-size: 100% 600px; background-color: black;">
-                	<video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
+                <div class="fill" style="background-image: url(http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg);">
+                	<!-- <video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
                         <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
-                    </video>
+                    </video> -->
                 </div>
                 <div class="carousel-caption">
                     <h2></h2>
@@ -78,7 +78,7 @@
         <a class="right carousel-control" href="#myCarousel" data-slide="next">
             <span class="icon-next"></span>
         </a>
-    </section>
+    </header>
 
     <!-- Page Content -->
     <div class="container">
@@ -216,7 +216,7 @@
     <script>
     $('.carousel').carousel({
         interval: 5000 //changes the speed
-    })
+    });
     </script>
 
 </body>
