@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GigaBox 자주묻는질문</title>
+<title>GigaBox - 자주묻는질문</title>
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom CSS -->

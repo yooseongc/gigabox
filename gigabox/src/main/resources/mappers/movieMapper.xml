@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.MovieMapper">
+
+	<resultMap id="movieResultMap" type="movie">
+		<result property="movieNumber" column="MOVIE_NUMBER" />
+		<result property="movieTitle" column="MOVIE_TITLE" />
+		<result property="movieType" column="MOVIE_TYPE" />
+		<result property="movieRating" column="MOVIE_RATING" />
+		<result property="movieReleasedate" column="MOVIE_RELEASEDATE" />
+		<result property="movieDirector" column="MOVIE_DIRECTOR" />
+		<result property="movieCast" column="MOVIE_CAST" />
+		<result property="movieScreentime" column="MOVIE_SCREENTIME" />
+		<result property="movieGenre" column="MOVIE_GENRE" />
+		<result property="movieStoryline" column="MOVIE_STORYLINE" />
+		<result property="movieEngname" column="MOVIE_ENGNAME" />
+		<result property="moviePoster" column="MOVIE_POSTER" />
+		<result property="movieSteelcut" column="MOVIE_STEELCUT" />
+		<result property="movieTrailer" column="MOVIE_TRAILER" />
+		
+	</resultMap>
+
+	<select id="read" resultType="movie" resultMap="movieResultMap">
+		<![CDATA[
+		select
+		movie_number,movie_title
+		from tbl_movie
+		where movie_number = #{movieNumber}
+		]]>
+	</select>
+
+	<insert id="create" parameterType="movie">
+		insert into tbl_movie
+		(movie_number,movie_title,movie_type,movie_rating,movie_releasedate,movie_director,movie_cast,movie_screentime,
+		movie_genre,movie_storyline,movie_engname,movie_poster,movie_steelcut,movie_trailer)
+		values
+		(seq_movie.nextval,#{movieTitle},#{movieType},#{movieRating},#{movieReleasedate},#{movieDirector},#{movieCast},#{movieScreentime},
+		#{movieGenre},#{movieStoryline},#{movieEngname},#{moviePoster},#{movieSteelcut},#{movieTrailer})
+	</insert>
+
+	<update id="update">
+		update tbl_movie set movie_title=#{movieTitle}
+		where
+		movie_number = #{movieNumber}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_movie where
+		movie_number=#{movieNumber}
+	</delete>
+
+	<select id="movieDetail" parameterType="int" resultType="movie"
+		resultMap="movieResultMap">
+		SELECT *
+		FROM TBL_MOVIE
+		WHERE MOVIE_NUMBER = #{movieNumber}
+	</select>
+
+
+	<select id="movieList" resultType="movie" resultMap="movieResultMap">
+		<![CDATA[  
+		SELECT * 
+		FROM (select * from TBL_MOVIE)
+		where rownum <=8 
+		]]>
+	</select>
+	
+	<!-- <select id="movieList" resultType="movie" resultMap="movieResultMap">
+		<![CDATA[
+		SELECT * 
+		FROM (select * from TBL_MOVIE)
+		where rownum <=8
+		]]>
+	</select>
+	<select id="movieList" resultType="movie" resultMap="movieResultMap">
+		<![CDATA[
+		SELECT * 
+		FROM (select * from TBL_MOVIE)
+		where rownum <=8
+		]]>
+	</select> -->
+	
+	<select id="listCriteria" resultType="movie">
+		<![CDATA[
+		select *
+		from tbl_movie
+		where movie_number > 0
+		order by movie_number desc
+		limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 게시물 조회(더보기) 마지막 movieNumber가 int타입으로 넘어오는 상태.. 그럼 컨트롤러에서는 mno-1에 해당하는 것을 dao로 넘겨줄 것이다.-->	
+	<select id="readMore" resultType="movie">
+		<![CDATA[
+				select *
+		from tbl_movie
+		where movie_number <= #{movieNumber}
+		and movie_number > # {movieNumber} - 8
+		order by movie_number desc 
+		]]>
+	</select>
+
+</mapper>
