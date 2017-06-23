@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.NOTICEMapper">
+	<resultMap id="noticeResultMap" type="notice">
+		<result property="noticeNumber" column="NOTICE_NUMBER" />
+		<result property="adminNumber" column="ADMIN_NUMBER" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="noticeContent" column="NOTICE_CONTENT" />
+		<result property="noticeRegisterdate" column="NOTICE_REGISTERDATE" />
+		<result property="noticeBranchname" column="NOTICE_BRANCHNAME" />
+		<result property="noticeStatus" column="NOTICE_STATUS" />
+	</resultMap>
+
+	<!-- 게시물 기본 조회 -->
+	<select id="noticeList" resultType="notice" resultMap="noticeResultMap">
+		SELECT *
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT NOTICE_NUMBER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGISTERDATE,
+		NOTICE_BRANCHNAME, NOTICE_STATUS
+		FROM TBL_NOTICE
+		WHERE 1 = 1
+		<if test="searchType == 't'.toString()">
+			AND NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			AND (NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'b'.toString()">
+			AND NOTICE_BRANCHNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		ORDER BY NOTICE_STATUS DESC, NOTICE_REGISTERDATE DESC
+		) LIST
+		)
+		<where>
+			RNUM BETWEEN #{pageStart} AND #{pageEnd}
+		</where>
+	</select>
+
+	<select id="noticeListCount" resultType="int">
+		SELECT NVL(COUNT(1), 0)
+		FROM
+		(
+		SELECT LIST.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT
+		NOTICE_NUMBER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGISTERDATE,
+		NOTICE_BRANCHNAME, NOTICE_STATUS
+		FROM TBL_NOTICE
+		WHERE 1 = 1
+		<if test="searchType == 't'">
+			AND NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'c'">
+			AND NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'tc'">
+			AND (NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
+			OR
+			NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+		</if>
+		<if test="searchType == 'b'">
+			AND NOTICE_BRANCHNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		) LIST
+		)
+	</select>
+
+
+	<!-- 게시판 글 상세조회 -->
+	<select id="noticeRead" parameterType="notice" resultType="notice"
+		resultMap="noticeResultMap">
+	<![CDATA[
+	 SELECT NOTICE_TITLE
+	,NOTICE_BRANCHNAME
+	,NOTICE_REGISTERDATE
+	,NOTICE_CONTENT 
+	FROM TBL_NOTICE 
+	WHERE NOTICE_NUMBER = #{noticeNumber}  
+	]]>
+	</select>
+</mapper>

@@ -70,9 +70,9 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 												
 												<h4 class="title margin-top-20"><i class="fa fa-info-circle"></i> 고객센터</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/notice/noticeList">공지사항</a></li>
-					                                <li><a href="/faq/faqList">자주 묻는 질문</a></li>
-					                                <li><a href="/inquiry/inquiryList">Q&A</a></li>
+					                                <li><a href="/cc/notice/noticeList">공지사항</a></li>
+					                                <li><a href="/cc/faq/faqList">자주 묻는 질문</a></li>
+					                                <li><a href="/cc/qna/qnaList">Q&A</a></li>
 					                            </ul>  
 					                        </div>
 					                        <div class="col-lg-6" style="padding-left: 5%;">
