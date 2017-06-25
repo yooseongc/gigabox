@@ -19,7 +19,8 @@
 		<result property="moviePoster" column="MOVIE_POSTER" />
 		<result property="movieSteelcut" column="MOVIE_STEELCUT" />
 		<result property="movieTrailer" column="MOVIE_TRAILER" />
-		
+		<result property="reviewStarscore" column="REVIEW_STARSCORE" />
+
 	</resultMap>
 
 	<select id="read" resultType="movie" resultMap="movieResultMap">
@@ -60,28 +61,77 @@
 
 
 	<select id="movieList" resultType="movie" resultMap="movieResultMap">
-		<![CDATA[  
-		SELECT * 
-		FROM (select * from TBL_MOVIE)
-		where rownum <=8 
+		SELECT *
+			FROM ( SELECT LIST.*, ROWNUM AS RNUM, NVL(REVIEW.REVIEW_STARSCORE, 0) AS REVIEW_STARSCORE 
+				FROM ( 
+					SELECT TBL_MOVIE.*  
+					FROM TBL_MOVIE 
+					ORDER BY MOVIE_RELEASEDATE DESC
+				) LIST 
+      			LEFT OUTER JOIN (
+			        SELECT MOVIE_NUMBER, NVL(AVG(NVL(REVIEW_STARSCORE, 0)), 0) AS REVIEW_STARSCORE
+			        FROM TBL_REVIEW GROUP BY MOVIE_NUMBER 
+			    ) REVIEW 
+      			ON LIST.MOVIE_NUMBER = REVIEW.MOVIE_NUMBER
+			)
+	</select>
+
+	<!-- <select id="movieList" resultType="movie" resultMap="movieResultMap"> 
+		<![CDATA[ SELECT * FROM (select * from TBL_MOVIE) where rownum <=8 ]]> </select> 
+		<select id="movieList" resultType="movie" resultMap="movieResultMap"> <![CDATA[ 
+		SELECT * FROM (select * from TBL_MOVIE) where rownum <=8 ]]> </select> -->
+
+	<!-- 최신상영작 -->
+	<select id="movieListRecent" parameterType="com.gigabox.movie.vo.RownumVO" 
+		resultType="movie" resultMap="movieResultMap">
+		<![CDATA[
+		SELECT *
+		FROM ( SELECt list.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT
+		*
+		FROM
+		tbl_movie
+		where movie_status ='상영중'
+		ORDER BY
+		MOVIE_RELEASEDATE asc
+
+		) list
+		)
+		WHERE
+			RNUM >= #{rowStart} AND RNUM <= #{rowEnd} 
 		]]>
 	</select>
-	
-	<!-- <select id="movieList" resultType="movie" resultMap="movieResultMap">
+
+	<!-- 상영예정작 -->
+	<select id="movieListTobe" parameterType="com.gigabox.movie.vo.RownumVO" 
+		resultType="movie" resultMap="movieResultMap">
 		<![CDATA[
-		SELECT * 
-		FROM (select * from TBL_MOVIE)
-		where rownum <=8
+		SELECT *
+		FROM ( SELECt list.*, ROWNUM AS RNUM
+		FROM
+		(
+		SELECT
+		*
+		FROM
+		tbl_movie
+		where movie_status ='상영전'
+		ORDER BY
+		MOVIE_RELEASEDATE asc
+
+		) list
+		)
+		WHERE
+			RNUM >= #{rowStart} AND RNUM <= #{rowEnd} 
 		]]>
 	</select>
-	<select id="movieList" resultType="movie" resultMap="movieResultMap">
-		<![CDATA[
-		SELECT * 
-		FROM (select * from TBL_MOVIE)
-		where rownum <=8
-		]]>
-	</select> -->
-	
+
+	<!-- 박스오피스 -->
+	<select id="movieListBoxoffice">
+
+	</select>
+
 	<select id="listCriteria" resultType="movie">
 		<![CDATA[
 		select *
@@ -91,8 +141,9 @@
 		limit #{pageStart}, #{perPageNum}
 		]]>
 	</select>
-	
-	<!-- 게시물 조회(더보기) 마지막 movieNumber가 int타입으로 넘어오는 상태.. 그럼 컨트롤러에서는 mno-1에 해당하는 것을 dao로 넘겨줄 것이다.-->	
+
+	<!-- 게시물 조회(더보기) 마지막 movieNumber가 int타입으로 넘어오는 상태.. 그럼 컨트롤러에서는 mno-1에 해당하는 
+		것을 dao로 넘겨줄 것이다. -->
 	<select id="readMore" resultType="movie">
 		<![CDATA[
 				select *

@@ -36,7 +36,7 @@ public class InquiryController {
 
 	@Inject
 	private UserService userService;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
 	// 본 메소드는 QNA 중 회원의 질문만을 들고오는 메소드이다.
@@ -65,16 +65,16 @@ public class InquiryController {
 			initInquiryUser.setUserNumber(userNumber);
 			UserVO inquiryUser = userService.userDetail(initInquiryUser);
 			inquiryMap.put("user", inquiryUser);
-			
+
 			// 답변 여부
-			InquiryVO answerInquiry = inquiryService.inquiryDetailA(eachInquiry);
+			/*InquiryVO answerInquiry = inquiryService.inquiryDetailA(eachInquiry);
 			if (answerInquiry == null) {
 				// 답변이 없으면 0
 				inquiryMap.put("answerExist", new Integer(0));
 			} else {
 				// 답변이 있으면 1
 				inquiryMap.put("answerExist", new Integer(1));
-			}
+			}*/
 
 			// List에 저장
 			inquiryMapList.add(inquiryMap);
@@ -113,7 +113,8 @@ public class InquiryController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("inquiry", selectedData);
 
-		ResponseEntity<Map<String, Object>> selectedInquiryEntity = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		ResponseEntity<Map<String, Object>> selectedInquiryEntity = new ResponseEntity<Map<String, Object>>(resultMap,
+				HttpStatus.OK);
 
 		logger.info("INQUIRY DETAIL QUESTION DATA SENT TO JSON");
 		logger.info("=======================================================");
@@ -152,7 +153,8 @@ public class InquiryController {
 			resultMap.put("result", "FAILED");
 			logger.info("INSERT FAILED");
 		}
-		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.OK);
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap,
+				HttpStatus.OK);
 		logger.info("INQUIRY ANSWER INSERT RESULT SENT TO JSON");
 		logger.info("=======================================================");
 		return resultEntity;
@@ -174,7 +176,8 @@ public class InquiryController {
 			resultMap.put("result", "FAILED");
 			logger.info("UPDATE FAILED");
 		}
-		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.OK);
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap,
+				HttpStatus.OK);
 		logger.info("INQUIRY ANSWER UPDATE RESULT SENT TO JSON");
 		logger.info("=======================================================");
 		return resultEntity;
@@ -196,7 +199,8 @@ public class InquiryController {
 			resultMap.put("result", "FAILED");
 			logger.info("DELETE FAILED");
 		}
-		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap, HttpStatus.OK);
+		ResponseEntity<Map<String, String>> resultEntity = new ResponseEntity<Map<String, String>>(resultMap,
+				HttpStatus.OK);
 		logger.info("INQUIRY ANSWER DELETE RESULT SENT TO JSON");
 		logger.info("=======================================================");
 		return resultEntity;

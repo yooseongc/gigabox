@@ -17,6 +17,18 @@
 	<logger name="com.gigabox.user.controller">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.cc.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.gigabox.movie.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.gigabox.review.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.gigabox.user.controller">
+		<level value="info" />
+	</logger>
 	<logger name="com.gigabox.interceptor">
 		<level value="info" />
 	</logger>
@@ -37,7 +49,22 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<!-- Database Logger -->
+	<logger name="java.sqlonly" additivity="false">
+		<level value="DEBUG"/>
+	</logger>
+	<logger name="java.resultsettable" additivity="false">
+		<level value="DEBUG"/>
+	</logger>
+	
+	<!-- log4jdbc option  log the jdbc results as a table --> 
 
+	<logger name="jdbc.sqltiming" additivity="false"> 
+		<level value="debug" /> 
+		<appender-ref ref="console" /> 
+	</logger>
+	
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />

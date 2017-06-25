@@ -1,12 +1,14 @@
 package com.gigabox.cc.vo;
 
+import java.util.Date;
+
 public class InquiryVO {
 	private int userNumber; // 회원번호
 	private int inquiryNumber; // 문의번호
 	private int inquiryGroupnumber; // 글 그룹번호
 	private String inquiryTitle; // 제목
 	private String inquiryCotnent; // 내용
-	private String inquiryRegisterdate; // 등록일
+	private Date inquiryRegisterdate; // 등록일
 	private String inquiryQora; // 답변 여부
 
 	public int getUserNumber() {
@@ -49,11 +51,11 @@ public class InquiryVO {
 		this.inquiryCotnent = inquiryCotnent;
 	}
 
-	public String getInquiryRegisterdate() {
+	public Date getInquiryRegisterdate() {
 		return inquiryRegisterdate;
 	}
 
-	public void setInquiryRegisterdate(String inquiryRegisterdate) {
+	public void setInquiryRegisterdate(Date inquiryRegisterdate) {
 		this.inquiryRegisterdate = inquiryRegisterdate;
 	}
 
@@ -64,13 +66,12 @@ public class InquiryVO {
 	public void setInquiryQora(String inquiryQora) {
 		this.inquiryQora = inquiryQora;
 	}
-
+  
 	@Override
 	public String toString() {
 		return "InquiryVO [userNumber=" + userNumber + ", inquiryNumber=" + inquiryNumber + ", inquiryGroupnumber="
 				+ inquiryGroupnumber + ", inquiryTitle=" + inquiryTitle + ", inquiryCotnent=" + inquiryCotnent
 				+ ", inquiryRegisterdate=" + inquiryRegisterdate + ", inquiryQora=" + inquiryQora + "]";
 	}
-
 
 }

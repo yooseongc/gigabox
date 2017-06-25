@@ -4,43 +4,64 @@
 
 <mapper namespace="com.gigabox.mapper.ReviewMapper">
 
-	<!-- <resultMap id="reviewResultMap" type="review">
+	<resultMap id="reviewResultMap" type="review">
 		<result property="reviewNumber" column="REVIEW_NUMBER" />
 		<result property="movieNumber" column="MOVIE_NUMBER" />
 		<result property="userNumber" column="USER_NUMBER" />
 		<result property="reviewContent" column="REVIEW_CONTENT" />
-		<result property="reviewStarScore" column="REVIEW_STARSCROE" />
+		<result property="reviewStarscore" column="REVIEW_STARSCORE" />
 		<result property="reviewLike" column="REVIEW_LIKE" />
-		<result property="reviewRegisterDate" column="REVIEW_REGISTERDATE" />
+		<result property="reviewRegisterdate" column="REVIEW_REGISTERDATE" />
 	</resultMap>
 
-	<select id="list" resultType="review" resultMap="reviewResultMap">
-		select
-		*
-		from
-		tbl_review
-		where movie_number = #{movieNumber}
-		order by review_number
-		desc
+	<select id="reviewList" parameterType="reviewRownum" resultType="review" resultMap="reviewResultMap">
+		SELECT *
+		FROM ( 
+			SELECT LIST.*, ROWNUM AS RNUM
+			FROM (
+				SELECT * 
+				FROM TBL_REVIEW 
+				WHERE MOVIE_NUMBER = #{movieNumber} 
+				ORDER BY REVIEW_REGISTERDATE DESC 
+			) LIST 
+		) 
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd} 
+	</select>
+	
+	<select id="reviewListCount" parameterType="int" resultType="int">
+		SELECT NVL(COUNT(1), 0)
+		FROM (
+			SELECT LIST.*, ROWNUM AS RNUM
+			FROM (  
+					SELECT * FROM TBL_REVIEW 
+					WHERE MOVIE_NUMBER = #{movieNumber} 
+					ORDER BY REVIEW_REGISTERDATE DESC 
+			) LIST 
+		)
+		
 	</select>
 
-	<insert id="create" parameterType="review">
-		insert into tbl_review
-		(review_number, user_number, movie_number, review_content ,
-		review_starscore)
-		values (seq_review.nextval, 61, #{movieNumber},
-		#{reviewContent},10)
+	<insert id="reviewInsert" parameterType="review">
+		INSERT INto TBL_REVIEW
+		  (REVIEW_NUMBER, USER_NUMBER, MOVIE_NUMBER, REVIEW_CONTENT, REVIEW_STARSCORE, REVIEW_REGISTERDATE) 
+		VALUES (SEQ_REVIEW.NEXTVAL, #{userNumber}, #{movieNumber}, #{reviewContent}, #{reviewStarscore}, SYSDATE ) 
 	</insert>
 
-	<update id="update">
-		update tbl_review set review_content =
-		#{reviewContent}
-		where review_number = #{reviewNumber}
+	<update id="reviewUpdate" parameterType="review">
+		UPDATE TBL_REVIEW 
+		SET REVIEW_CONTENT = #{reviewContent}, REVIEW_STARSCORE = #{reviewStarscore} 
+		WHERE REVIEW_NUMBER = #{reviewNumber} 
 	</update>
 
-	<delete id="delete">
-		delete from tbl_review where review_number =
-		#{reviewNumber}
-	</delete> -->
+	<delete id="reviewDelete" parameterType="review">
+		DELETE FROM TBL_REVIEW 
+		WHERE REVIEW_NUMBER = #{reviewNumber} 
+	</delete>
+	
+	<select id="reviewRatingAverage" parameterType="int">
+		SELECT NVL(AVG(NVL(REVIEW_STARSCORE, 0)), 0)  
+		FROM TBL_REVIEW 
+		WHERE MOVIE_NUMBER = #{movieNumber} 
+	</select>
 
 </mapper>

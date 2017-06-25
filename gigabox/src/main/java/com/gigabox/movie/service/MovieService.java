@@ -3,6 +3,7 @@ package com.gigabox.movie.service;
 import java.util.List;
 
 import com.gigabox.movie.vo.MovieVO;
+import com.gigabox.movie.vo.RownumVO;
 
 public interface MovieService {
 	
@@ -19,4 +20,8 @@ public interface MovieService {
 	public MovieVO movieDetail(MovieVO movieVO);
 	
 	public List<MovieVO> readMore(int mno) throws Exception;
+	
+	public List<MovieVO> movieListRecent(RownumVO rownumVO) throws Exception;
+	
+	public List<MovieVO> movieListTobe(RownumVO rownumVO) throws Exception;
 }

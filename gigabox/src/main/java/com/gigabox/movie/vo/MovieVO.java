@@ -16,6 +16,9 @@ public class MovieVO {
 	private String movieSteelcut; 
 	private String movieTrailer; 
 	private int movieCode;
+	private String movieStatus; 
+	
+	private int reviewStarscore;
 	
 	public int getMovieCode() {
 		return movieCode;
@@ -33,7 +36,6 @@ public class MovieVO {
 		this.movieStatus = movieStatus;
 	}
 
-	private String movieStatus;
 	
 	public int getMovieNumber() {
 		return movieNumber;
@@ -145,6 +147,14 @@ public class MovieVO {
 
 	public void setMovieTrailer(String movieTrailer) {
 		this.movieTrailer = movieTrailer;
+	}
+
+	public int getReviewStarscore() {
+		return reviewStarscore;
+	}
+
+	public void setReviewStarscore(int reviewStarscore) {
+		this.reviewStarscore = reviewStarscore;
 	}
 
 	@Override

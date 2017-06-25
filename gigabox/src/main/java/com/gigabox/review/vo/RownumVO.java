@@ -1,9 +1,12 @@
-package com.gigabox.movie.vo;
+package com.gigabox.review.vo;
 
 public class RownumVO {
 	
 	private int rowStart = 1;
-	private int rowEnd = 8;
+	private int rowEnd = 10;
+	private int movieNumber;
+	
+	
 	
 	public int getRowStart() {
 		return rowStart;
@@ -20,14 +23,20 @@ public class RownumVO {
 	
 	@Override
 	public String toString() {
-		return "RownumVO [rowStart=" + rowStart + ", rowEnd=" + rowEnd + "]";
+		return "RownumVO [rowStart=" + rowStart + ", rowEnd=" + rowEnd +  ", movieNumber=" + movieNumber + "]";
 	}
 	
 	public void next(int count) {
 		for (int i = 0; i < count; i++) {
-			rowStart += 8;
-			rowEnd += 8;
+			rowStart += 10;
+			rowEnd += 10;
 		}
+	}
+	public int getMovieNumber() {
+		return movieNumber;
+	}
+	public void setMovieNumber(int movieNumber) {
+		this.movieNumber = movieNumber;
 	}
 	
 }

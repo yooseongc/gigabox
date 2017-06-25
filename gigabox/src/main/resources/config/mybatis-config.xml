@@ -15,7 +15,11 @@
 		<typeAlias type="com.gigabox.cc.vo.InquiryVO" alias="inquiry" />
 		
 		<typeAlias type="com.gigabox.movie.vo.MovieVO" alias="movie" />
-		<!-- <typeAlias type="com.gigabox.review.vo.ReviewVO" alias="review" /> -->
+		<typeAlias type="com.gigabox.movie.vo.RownumVO" alias="movieRownum" />
+		
+		<typeAlias type="com.gigabox.review.vo.ReviewVO" alias="review" />
+		<typeAlias type="com.gigabox.review.vo.RownumVO" alias="reviewRownum" />
+		
 	</typeAliases>
 	
 </configuration>
