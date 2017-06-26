@@ -8,7 +8,7 @@ import com.gigabox.cc.vo.InquiryVO;
 public interface InquiryDAO {
 	//public List<InquiryVO> inquiryList() throws Exception;
 
-	//public int inquiryInsert(InquiryVO ivo) throws Exception;
+	public int inquiryInsert(InquiryVO ivo) throws Exception;
 
 	//public InquiryVO inquiryRead(InquiryVO ivo) throws Exception;
 

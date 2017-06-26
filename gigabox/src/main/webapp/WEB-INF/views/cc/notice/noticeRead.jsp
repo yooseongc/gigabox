@@ -71,7 +71,7 @@
 										value="${noticeRead.noticeRegisterdate}" /></td>
 							</tr>
 							<tr style="height: 500px;">
-								<td colspan="4">${noticeRead.noticeContent}</td>
+								<td colspan="4" style="padding: 40px;">${noticeRead.noticeContent}</td>
 							</tr>
 						</tbody>
 					</table>

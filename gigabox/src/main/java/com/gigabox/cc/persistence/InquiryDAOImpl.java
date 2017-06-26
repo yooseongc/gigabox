@@ -52,15 +52,20 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public int inquiryDeleteA(InquiryVO inquiryVO) {
 		return sqlSession.delete(namespace + ".inquiryDeleteA", inquiryVO);
 	}
+	
+	//글쓰기
+	@Override
+	public int inquiryInsert(InquiryVO ivo) throws Exception {
+		return sqlSession.insert(namespace + ".qnaWrite", ivo);
+	}
 }
+
 /*
  * @Override public List<InquiryVO> inquiryList() throws Exception { // TODO
  * Auto-generated method stub return sqlSession.selectList(namespace +
  * ".inquiryList"); }
  * 
- * @Override public int inquiryInsert(InquiryVO ivo) throws Exception { // TODO
- * Auto-generated method stub return sqlSession.insert(namespace + ".create",
- * ivo); }
+ * 
  * 
  * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
  * TODO Auto-generated method stub return sqlSession.selectOne(namespace +

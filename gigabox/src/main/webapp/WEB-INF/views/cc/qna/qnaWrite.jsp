@@ -60,32 +60,21 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="container">
-				<!-- 검색 시작 -->
-				<div class="pull-right">
-					<input type="text" id="search" title="검색어 입력"
-						placeholder="검색어를 입력하세요" maxlength="20">
-					<button type="submit" class="btn btn-default">
-						<i class="glyphicon glyphicon-search"></i>
-					</button>
-					<div class="container">
-						<form action="">
-							<table class="table">
-								<tr>
+				<table class="table">
+					<tbody id="inquiryWrite">
+					<c:out value="inquiryItem">
+						<tr>
+							<th>제목</th>
+							<td>${inquiry}</td>
+						</tr>
+						<tr>
+						<td>내용</td>
+						<td>${inquiry.}</td>
+						</tr>
+						</c:out>
+					</tbody>
+				</table>
 
-								</tr>
-							</table>
-						</form>
-					</div>
-				</div>
-				<hr>
-				<!-- 페이지 네비게이션  -->
-				<div class="text-center">
-					<ul class="pagination">
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-					</ul>
-				</div>
 			</div>
 		</div>
 		<!-- /.col-lg-12 -->

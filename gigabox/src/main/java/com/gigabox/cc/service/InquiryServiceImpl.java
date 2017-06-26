@@ -53,14 +53,18 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.inquiryDeleteA(inquiryVO);
 	}
 
+	//글쓰기
+	@Override
+	public int inquiryInsert(InquiryVO ivo) throws Exception {
+		return inquiryDao.inquiryInsert(ivo);
+	}
+
 }
 /*
  * @Override public List<InquiryVO> inquiryList() throws Exception { // TODO
  * Auto-generated method stub return inquiryDao.inquiryList(); }
  * 
- * @Override public int inquiryInsert(InquiryVO ivo) throws Exception { // TODO
- * Auto-generated method stub return inquiryDao.inquiryInsert(ivo); }
- * 
+ *
  * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
  * TODO Auto-generated method stub return inquiryDao.inquiryRead(ivo); }
  * 

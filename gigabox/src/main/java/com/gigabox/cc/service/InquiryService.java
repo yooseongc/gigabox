@@ -21,8 +21,11 @@ public List<InquiryVO> inquiryList(InquirySearchCriteria isc);
 	
 	public int inquiryDeleteA(InquiryVO inquiryVO);
 
+	//글쓰기
+	public int inquiryInsert(InquiryVO ivo) throws Exception;
+	
 	//public List<InquiryVO> inquiryList() throws Exception;
-	//public int inquiryInsert(InquiryVO ivo) throws Exception;
+	
 	//public InquiryVO inquiryRead(InquiryVO ivo) throws Exception;
 	//public int inquiryUpdate(InquiryVO ivo) throws Exception;
 	//public int inquiryDelete(Integer inquiryNumber) throws Exception;
