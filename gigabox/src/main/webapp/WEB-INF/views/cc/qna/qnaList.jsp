@@ -56,14 +56,17 @@
 			<div class="col-lg-12">
 				<div class="container">
 					<!-- 검색 시작 -->
+					<div class="pull-left">
+						<a hidden="">
+						<button type="button" class="btn btn-danger">글쓰기</button>
+						</a>
+					</div>
+
 					<div class="pull-right">
 						<form class="form-inline">
 							<div class="form-group">
 								<select class="btn-primary form-control">
-									<option value="t"></option>
-									<option value="c"></option>
-									<option value="tc"></option>
-									<option value="b"></option>
+									<option value="t">제목</option>
 								</select>
 							</div>
 							<input type="text" id="searchKeyword" title="검색어 입력"
@@ -85,9 +88,9 @@
 						<tbody id="inquiryListTableBody">
 							<c:forEach var="inquiryItem" items="${inquiryList}">
 								<tr>
-									<td>${inquiryItem.inquiry.inquiryNumber}</td>
+									<td style="text-align: center;">${inquiryItem.inquiry.inquiryNumber}</td>
 									<td>${inquiryItem.inquiry.inquiryTitle}</td>
-									<td><fmt:formatDate
+									<td style="text-align: center;"><fmt:formatDate
 											value="${inquiryItem.inquiry.inquiryRegisterdate}"
 											pattern="yyyy-MM-dd" /></td>
 								</tr>
@@ -100,19 +103,19 @@
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
 								<li><a
-									href="/cc/notice/noticeList${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
+									href="/cc/qna/qnaList${pageMaker.makeQuery(pageMaker.startPage-1)}">&laquo;</a></li>
 							</c:if>
 
 							<c:forEach begin="${pageMaker.startPage}"
 								end="${pageMaker.endPage}" var="idx">
 								<li
 									<c:out value="${pageMaker.criteria.page == idx?'class=\"active\"':''}"/>>
-									<a href="/cc/notice/noticeList${pageMaker.makeQuery(idx)}">${idx}</a>
+									<a href="/cc/qna/qnaList${pageMaker.makeQuery(idx)}">${idx}</a>
 								</li>
 							</c:forEach>
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 								<li><a
-									href="/cc/notice/noticeList${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
+									href="/cc/qna/qnaList${pageMaker.makeQuery(pageMaker.endPage+1)}">&raquo;</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -127,5 +130,18 @@
 	<hr>
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
+
+	<script>
+		$(document).ready(function() {
+			var formObj = $("form[role='form']");
+
+			$("#qnaWriteBtn").on("click", function() {
+				formObj.attr("action", "/cc/qna/qnaWrite");
+				formObj.attr("method", "POST");
+				formObj.submit();
+			});
+
+		});
+	</script>
 </body>
 </html>

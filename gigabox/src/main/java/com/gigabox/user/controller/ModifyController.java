@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gigabox.user.dto.LoginDTO;
 import com.gigabox.user.enc.utils.BCrypt;
@@ -38,9 +39,9 @@ public class ModifyController {
 	public String modifyFormGET(Model model, HttpSession session, HttpServletRequest request,
 			@PathVariable String userId) {
 		logger.info("MODIFYFORM PAGE LOADING...");
-		
+
 		logger.info("userId= " + userId);
-		
+
 		UserVO userVO = new UserVO();
 		userVO.setUserId(userId);
 		userVO = modifyService.userDetail(userVO);
@@ -71,6 +72,8 @@ public class ModifyController {
 				resultMap.put("pwCheckResult", 1);
 				resultMap.put("message", "Check-SUCCESS");
 
+				modifyService.userModify(userVO);
+
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 			} else {
 				// 비밀번호 불일치
@@ -86,19 +89,98 @@ public class ModifyController {
 			resultMap.put("message", "ERROR");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
+	}
 
+	// 비밀번호 변경 폼 출력
+	@RequestMapping(value = "/changePwForm/{userId}", method = RequestMethod.GET)
+	public String changePwFormGET(Model model, HttpSession session, HttpServletRequest request,
+			@PathVariable String userId) {
+		logger.info("CHANGE FORM LOADING... ");
+		logger.info("userId= " + userId);
+
+		UserVO userVO = new UserVO();
+		userVO.setUserId(userId);
+		userVO = modifyService.userDetail(userVO);
+
+		model.addAttribute("userInfo", userVO);
+
+		return "/user/changePwForm";
+	}
+
+	// 비밀번호 변경 구현
+	@RequestMapping(value = "/changePwForm", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> changePwPOST(@RequestParam String newPw, @ModelAttribute UserVO userVO,
+			LoginDTO loginDTO) {
+		logger.info("CHANGE FORM LOADING... ");
+		logger.info("INPUT DATA= " + userVO.toString());
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		UserVO pwCheckUserVO = new UserVO();
+		pwCheckUserVO.setUserPw(userVO.getUserPw());
+		String orgPass = userVO.getUserPw();
+		try {
+			SHA256 sha = SHA256.getInsatnce();
+			String shaPass = sha.getSha256(orgPass.getBytes());
+			String dbPass = modifyService.userDetail(userVO).getUserPw();
+			boolean pwCheckResult = BCrypt.checkpw(shaPass, dbPass);
+			if (pwCheckResult) {
+				// 비밀번호 일치
+				logger.info("LOGIN SUCCESS (" + userVO.getUserId() + ")");
+				resultMap.put("pwCheckResult", 1);
+				resultMap.put("message", "Check-SUCCESS");
+				userVO.setUserPw(newPw);
+
+				// 새 비밀번호 암호화
+				int pwEncryptionResult = 0;
+				String orgPass1 = userVO.getUserPw();
+
+				String shaPass1 = "";
+				try {
+					SHA256 sha1 = SHA256.getInsatnce();
+					shaPass1 = sha1.getSha256(orgPass1.getBytes());
+					String bcPass1 = BCrypt.hashpw(shaPass1, BCrypt.gensalt());
+					userVO.setUserPw(bcPass1);
+					pwEncryptionResult = modifyService.pwEncryptionExec(userVO);
+
+					logger.info("PW ENCRYPTION RESULT= " + pwEncryptionResult);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				//새 비밀번호로 업데이트
+				modifyService.changePw(userVO);
+
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+			} else {
+				// 비밀번호 불일치
+				logger.info("LOGIN FAILED (" + userVO.getUserId() + ")");
+				resultMap.put("pwCheckResult", 0);
+				resultMap.put("message", "PW-WRONG");
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("LOGIN PROCESS - ERROR");
+			resultMap.put("message", "ERROR");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
 	}
 	
-	//비밀번호 변경 폼 출력
+	// 비밀번호 변경 폼 출력
+	@RequestMapping(value = "/userLeaveForm/{userId}", method = RequestMethod.GET)
+	public String userLeaveGET(Model model, HttpSession session, HttpServletRequest request,
+			@PathVariable String userId) {
+		logger.info("USERLEAVE FORM LOADING... ");
+		logger.info("userId= " + userId);
 
-	@RequestMapping(value = "/changePwForm", method = RequestMethod.GET)
-	public String changePwFormGET(){
-		logger.info("CHANGE FORM LOADING... ");
-		
-		return "/user/changePwForm";
+		UserVO userVO = new UserVO();
+		userVO.setUserId(userId);
+		userVO = modifyService.userDetail(userVO);
+
+		model.addAttribute("userInfo", userVO);
+
+		return "/user/userLeaveForm";
 	}	
-		
-	
-	//비밀번호 변경 구현
-
 }

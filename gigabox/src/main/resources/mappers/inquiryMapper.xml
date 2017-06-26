@@ -125,7 +125,7 @@
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
 		AND INQUIRY_QORA = 'Q'
 	</select>
-
+		
 	<select id="inquiryDetailA" parameterType="int" resultType="inquiry"
 		resultMap="inquiryResultMap">
 		SELECT INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,

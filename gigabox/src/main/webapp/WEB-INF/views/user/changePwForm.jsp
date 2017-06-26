@@ -20,6 +20,11 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+	
+<!-- jQuery -->
+<script src="/resources/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/js/bootstrap.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -31,60 +36,9 @@
 
 </head>
 <body>
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">Start Bootstrap</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="about.html">About</a></li>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Portfolio <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="portfolio-1-col.html">1 Column Portfolio</a></li>
-							<li><a href="portfolio-2-col.html">2 Column Portfolio</a></li>
-							<li><a href="portfolio-3-col.html">3 Column Portfolio</a></li>
-							<li><a href="portfolio-4-col.html">4 Column Portfolio</a></li>
-							<li><a href="portfolio-item.html">Single Portfolio Item</a>
-							</li>
-						</ul></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Blog <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="blog-home-1.html">Blog Home 1</a></li>
-							<li><a href="blog-home-2.html">Blog Home 2</a></li>
-							<li><a href="blog-post.html">Blog Post</a></li>
-						</ul></li>
-					<li class="dropdown active"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">Other Pages <b
-							class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="active"><a href="full-width.html">Full Width
-									Page</a></li>
-							<li><a href="sidebar.html">Sidebar Page</a></li>
-							<li><a href="faq.html">FAQ</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="pricing.html">Pricing Table</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+	
+	<!-- header -->
+	<c:import url="/templates/header.jsp"/>
 
 	<!-- Page Content -->
 	<div class="container">
@@ -114,6 +68,13 @@
 						<fieldset>
 							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
 						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userId">아이디</label>
+							<div class="col-sm-6">
+									<input class="form-control" id="userId" type="text"
+									name="userId" maxlength="20" value="${userInfo.userId }" readonly="readonly">
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userPw">현재 비밀번호</label>
 							<div class="col-sm-6">
@@ -154,21 +115,11 @@
 		</div>
 		<!-- /.row -->
 		<hr>
-		<!-- Footer -->
-		<footer>
-			<div class="row">
-				<div class="col-lg-12">
-					<p>Copyright &copy; GigaBox 2017</p>
-				</div>
-			</div>
-		</footer>
 	</div>
 	<!-- /.container -->
 	
-	<!-- jQuery -->
-	<script src="/resources/js/jquery.js"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/js/bootstrap.min.js"></script>
+	<!-- Footer -->
+	<c:import url="/templates/footer.jsp"/>
 
 	<script type="text/javascript">
 	 function formCheck(v_item, v_name, e_item) {
@@ -188,12 +139,9 @@
 			$("#errorMessage").hide();
 		 	
 			//수정취소버튼 클릭시 메인으로
-			$('#changePwCancleBtn').click(function(e){
+			 $('#changePwCancleBtn').click(function(e){
 				e.preventDefault();
-
-				$("#changePwForm").attr("method", "GET");
-				$("#changePwForm").attr("action", "/");
-				$("#changePwForm").submit();
+				location.href ="/";
 			});
 			
 		 	//변경완료 버튼 클릭시
@@ -203,14 +151,15 @@
 				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
 					return;
 				}
-				$("#").attr("method", "POST");
-				$("#").attr("action", "/");
-				$("#").submit();
+				if ($("#newPw").val() != $("#newPwCheck").val()){
+					alert("새 비밀번호가 일치하지 않습니다");
+					return;
+				}
 				
 				$.ajax({
 					type: "POST",
-					url: "/",
-					data: $("#").serialize(),
+					url: "/user/changePwForm",
+					data: $("#changePwForm").serialize(),
 					error: function() {
 						$("#errorMessage").text("시스템 오류입니다.");
 						$("#errorMessage").show();
@@ -222,8 +171,10 @@
 							$("#userPw").val("");
 							$("#userPw").focus();
 						} else if (resultData.message == 'Check-SUCCESS') {
-							console.log("modify success!!!");
-							$("#modifyForm").submit();
+							console.log("chagne success!!!");
+							$("#changePwForm").submit();
+							alert("비밀번호가 변경되었습니다.")
+							location.href ="/";
 						} else if (resultData.message == 'ERROR') {
 							$("#errorMessage").text("시스템 오류입니다.");
 							$("#errorMessage").show();

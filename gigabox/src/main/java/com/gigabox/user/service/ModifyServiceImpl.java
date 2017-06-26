@@ -33,4 +33,10 @@ public class ModifyServiceImpl implements ModifyService {
 		// TODO Auto-generated method stub
 		return modifyDAO.changePw(userVO);
 	}
+
+	@Override
+	public int pwEncryptionExec(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return modifyDAO.pwEncryptionExec(userVO);
+	}
 }

@@ -73,7 +73,7 @@
 						<div class="form-group">
 							<div class="text-left">
 								<span class='text-center'>
-								<a href="/user/changePwForm" class="text-sm">비밀번호 변경/</a>
+								<a href="/user/changePwForm/${sessionScope.login.userId}" class="text-sm">비밀번호 변경/</a>
 								<a href="/user/userLeave" class="text-sm">회원탈퇴</a></span>
 							</div>
 						</div>
@@ -164,7 +164,7 @@
 								<button id="modifySubmitBtn" class="btn btn-primary" type="submit">
 									수정완료<i class="fa fa-check spaceLeft"></i>
 								</button>
-								<button id="modifyCancleBtn" class="btn btn-danger" type="submit">
+								<button id="modifyCancleBtn" class="btn btn-danger" type="submit" >
 									수정취소<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>
@@ -231,8 +231,6 @@
 	      <!-- /.modal-dialog -->
 	  </div>
 	  <!-- /.modal -->
-	
-	
 
 	<script type="text/javascript">
 	 	function formCheck(v_item, v_name, e_item) {
@@ -254,11 +252,9 @@
 			
 			//수정취소버튼 클릭시 메인으로
 			$('#modifyCancleBtn').click(function(e){
+				
 				e.preventDefault();
-
-				$("#modifyForm").attr("method", "GET");
-				$("#modifyForm").attr("action", "/");
-				$("#modifyForm").submit();
+				location.href ="/";
 			});
 			
 			// 주소 검색 모달 창 띄우기
@@ -373,13 +369,9 @@
 				$("#userAddr").attr("value", "("+userAddressNumber+") " 
 						+ userAddressBasic + " " + userAddressDetail);
 				
-				/* $("#modifyForm").attr("method", "POST");
-				$("#modifyForm").attr("action", "/user/modifyForm.do");
-				$("#modifyForm").submit(); */
-				
 				$.ajax({
 					type: "POST",
-					url: "/",
+					url: "/user/modifyForm",
 					data: $("#modifyForm").serialize(),
 					error: function() {
 						$("#errorMessage").text("시스템 오류입니다.");
@@ -394,6 +386,8 @@
 						} else if (resultData.message == 'Check-SUCCESS') {
 							console.log("modify success!!!");
 							$("#modifyForm").submit();
+							alert("회원정보가 수정되었습니다.")
+							location.href ="/";
 						} else if (resultData.message == 'ERROR') {
 							$("#errorMessage").text("시스템 오류입니다.");
 							$("#errorMessage").show();

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.spec.IvParameterSpec;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -67,14 +68,13 @@ public class InquiryController {
 			inquiryMap.put("user", inquiryUser);
 
 			// 답변 여부
-			/*InquiryVO answerInquiry = inquiryService.inquiryDetailA(eachInquiry);
-			if (answerInquiry == null) {
-				// 답변이 없으면 0
-				inquiryMap.put("answerExist", new Integer(0));
-			} else {
-				// 답변이 있으면 1
-				inquiryMap.put("answerExist", new Integer(1));
-			}*/
+			/*
+			 * InquiryVO answerInquiry =
+			 * inquiryService.inquiryDetailA(eachInquiry); if (answerInquiry ==
+			 * null) { // 답변이 없으면 0 inquiryMap.put("answerExist", new
+			 * Integer(0)); } else { // 답변이 있으면 1 inquiryMap.put("answerExist",
+			 * new Integer(1)); }
+			 */
 
 			// List에 저장
 			inquiryMapList.add(inquiryMap);
@@ -94,6 +94,58 @@ public class InquiryController {
 		return "/cc/qna/qnaList";
 	}
 
+	// 글쓰기폼
+	@Transactional
+	@RequestMapping(value = "/qnaWrite", method = RequestMethod.GET)
+	public String inquiryWriteGET(@ModelAttribute InquirySearchCriteria isc, Model model) {
+		logger.info("writeForm 호출 성공");
+
+		List<InquiryVO> inquiryList = inquiryService.inquiryList(isc);
+
+		model.addAttribute("inquiryList", inquiryList);
+
+		return "cc/qna/qnaWrite";
+
+	}
+
+	// 글쓰기 구현
+	/*@RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
+	public String boardInsert(@ModelAttribute("isc") InquirySearchCriteria isc, Model model) {
+		logger.info("=======================================================");
+		logger.info("INQUIRY 글쓰기 호출");
+
+		int result = 0;
+		String url = "";
+
+		result = inquiryService.inquiryInsertA(inquiryVO);
+		if (result == 1) {
+			url = "/board/boardList.do";
+		}
+		return "redirect:" + url;
+	}*/
+
+	/*
+	 * @RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
+	 * public String boardInsert(@ModelAttribute BoardVO bvo, HttpServletRequest
+	 * request) throws IllegalStateException, IOException {
+	 * logger.info("board 호출 성공"); logger.info("fileName: " +
+	 * bvo.getFile().getOriginalFilename()); logger.info("b_title: " +
+	 * bvo.getB_title());
+	 * 
+	 * int result = 0; String url = "";
+	 * 
+	 * String b_file = FileUploadUtil.fileUpload(bvo.getFile(), request);
+	 * bvo.setB_file(b_file);
+	 * 
+	 * result = boardService.boardInsert(bvo); if (result == 1) { url =
+	 * "/board/boardList.do"; } return "redirect:" + url; }
+	 */
+
+	////////////////////
+	////////////////////
+	///////////////////
+	//////////////////
+
 	@Transactional
 	@ResponseBody
 	@RequestMapping(value = "/qnaDetailQ/{inquiryNumber}", method = RequestMethod.PUT)
@@ -106,7 +158,6 @@ public class InquiryController {
 		InquiryVO selectedData = inquiryService.inquiryDetailQ(selectData);
 
 		// 작성자 정보 가져오기
-
 		logger.info("InquiryVO= " + selectedData.toString());
 
 		// 맵
@@ -205,5 +256,4 @@ public class InquiryController {
 		logger.info("=======================================================");
 		return resultEntity;
 	}
-
 }

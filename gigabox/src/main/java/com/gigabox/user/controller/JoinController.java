@@ -88,8 +88,8 @@ public class JoinController {
 		logger.info("userJoinInsert 호출 성공");
 		logger.info(uvo.toString());
 		
-		int pwEncryptionResult =0;
 		// 암호화 적용
+		int pwEncryptionResult =0;
 		String orgPass = uvo.getUserPw(); 
 		
 		String shaPass = "";

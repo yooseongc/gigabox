@@ -36,4 +36,11 @@ public class ModifyDAOImpl implements ModifyDAO {
 		return sqlSession.update(namespace + ".changePw", userVO);
 	}
 
+	//새 비밀번호 암호화
+	@Override
+	public int pwEncryptionExec(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + ".pwEncryptionExec", userVO);
+	}
+
 }

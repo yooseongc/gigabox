@@ -20,6 +20,8 @@
 		<typeAlias type="com.gigabox.review.vo.ReviewVO" alias="review" />
 		<typeAlias type="com.gigabox.review.vo.RownumVO" alias="reviewRownum" />
 		
+		<typeAlias type="com.gigabox.movieroom.vo.MovieRoomVO" alias="movieRoom"/>
+		
 	</typeAliases>
 	
 </configuration>
