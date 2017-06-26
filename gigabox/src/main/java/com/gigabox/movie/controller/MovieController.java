@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gigabox.movie.service.MovieService;
 import com.gigabox.movie.vo.MovieVO;
 import com.gigabox.movie.vo.RownumVO;
-import com.gigabox.review.service.ReviewService;
 
 @Controller
 @RequestMapping("/movie")
@@ -33,57 +31,48 @@ public class MovieController {
 
 
 	@RequestMapping(value = "/movieList", method = RequestMethod.GET)
-	public void movieList(Model model) throws Exception {
-		logger.info("movieList.jsp ENTER...");
-		model.addAttribute("movieList", movieService.movieList());
-	}
-	
-	//최신개봉영화
-	@RequestMapping(value = "/movieListRecent", method = RequestMethod.GET)
-	public void movieListRecent(Model model) throws Exception {
-		logger.info("최신 개봉 영화 리스트를 출력합니다...");
+	public String movieList(Model model) throws Exception {
+		logger.info("=================================================");
+		logger.info("MOVIE LIST PRINT OUT");
 		RownumVO rownumVO = new RownumVO();
+		logger.info("rownumVO= " + rownumVO.toString());
+		model.addAttribute("rowEnd", rownumVO.getRowEnd());
 		model.addAttribute("movieListRecent", movieService.movieListRecent(rownumVO));
-		
+		model.addAttribute("movieListCountRecent", movieService.movieListCountRecent());
+		model.addAttribute("movieListTobe", movieService.movieListTobe(rownumVO));
+		model.addAttribute("movieListCountTobe", movieService.movieListCountTobe());
+		logger.info("=================================================");
+		return "/movie/movieList";
 	}
 	
-	//최신개봉영화 더보기
-	@RequestMapping(value = "/movieListRecent/{count}", method = RequestMethod.GET)
-	public void movieListRecentReadMore(Model model, @PathVariable int count) throws Exception {
-		logger.info("최신 개봉 영화 리스트를 출력합니다...");
-		logger.info("현재 count= " + count);
-		count++;
+	@ResponseBody
+	@RequestMapping(value = "/movieList/recent/{count}", method = RequestMethod.GET)
+	public ResponseEntity<List<MovieVO>> movieListMoreRecent(Model model, @PathVariable int count) throws Exception {
+		logger.info("=================================================");
+		logger.info("MOVIE LIST PRINT OUT MORE");
+		logger.info("count= " + count);
 		RownumVO rownumVO = new RownumVO();
 		rownumVO.next(count);
-		model.addAttribute("movieListRecent", movieService.movieListRecent(rownumVO));
 		
-	}
+		logger.info("rownumVO= " + rownumVO.toString());
+		logger.info("=================================================");
+		return new ResponseEntity<List<MovieVO>>(movieService.movieListRecent(rownumVO), HttpStatus.OK);
+	}  
 	
-	//상영예정작
-	@RequestMapping(value = "/movieListTobe", method = RequestMethod.GET)
-	public void movieListTobe(Model model) throws Exception {
-		logger.info("최신 개봉 영화 리스트를 출력합니다...");
-		RownumVO rownumVO = new RownumVO();
-		model.addAttribute("movieListTobe", movieService.movieListTobe(rownumVO));
-	}
-	
-	//상영예정작 더보기
-	@RequestMapping(value = "/movieListTobe/{count}", method = RequestMethod.GET)
-	public void movieListTobeReadMore(Model model, @PathVariable int count) throws Exception {
-		logger.info("상영예정작 리스트를 출력합니다...");
-		logger.info("현재 count= " + count);
-		count++;
+	@ResponseBody
+	@RequestMapping(value = "/movieList/tobe/{count}", method = RequestMethod.GET)
+	public ResponseEntity<List<MovieVO>> movieListMoreTobe(Model model, @PathVariable int count) throws Exception {
+		logger.info("=================================================");
+		logger.info("MOVIE LIST PRINT OUT MORE");
+		logger.info("count= " + count);
 		RownumVO rownumVO = new RownumVO();
 		rownumVO.next(count);
-		model.addAttribute("movieListTobe", movieService.movieListTobe(rownumVO));
 		
-	}
-
-	/*@RequestMapping(value = "/movieDelete/{movieNumber}", method = RequestMethod.POST)
-	public String movieDelete(@PathVariable("movieNumber") int movieNumber) throws Exception {
-		this.movieService.remove(movieNumber);
-		return "redirect:/test/movieList";
-	}*/
+		logger.info("rownumVO= " + rownumVO.toString());
+		logger.info("=================================================");
+		return new ResponseEntity<List<MovieVO>>(movieService.movieListTobe(rownumVO), HttpStatus.OK);
+	}  
+	
 
 	@RequestMapping(value = "/movieDetail/{movieNumber}", method = RequestMethod.PUT)
 	public ResponseEntity<MovieVO> moevieDetailRest(@PathVariable("movieNumber") int movieNumber) {
@@ -100,12 +89,5 @@ public class MovieController {
 		return selectedMovieVO;
 	}
 
-	@RequestMapping(value = "/readMore", method = RequestMethod.GET)
-	public @ResponseBody List<MovieVO> readMore(@RequestBody MovieVO movieVO) throws Exception {
-		logger.info("readMore is called.....");
-
-		int mnoToStart = movieVO.getMovieNumber() - 1;
-
-		return movieService.readMore(mnoToStart);
-	}
+	
 }

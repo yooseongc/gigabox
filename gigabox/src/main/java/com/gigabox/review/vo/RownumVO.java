@@ -28,7 +28,7 @@ public class RownumVO {
 	
 	public void next(int count) {
 		for (int i = 0; i < count; i++) {
-			rowStart += 10;
+			//rowStart += 10;
 			rowEnd += 10;
 		}
 	}

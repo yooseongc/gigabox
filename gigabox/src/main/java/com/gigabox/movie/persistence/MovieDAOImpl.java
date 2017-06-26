@@ -14,54 +14,34 @@ import com.gigabox.movie.vo.RownumVO;
 public class MovieDAOImpl implements MovieDAO {
 
 	@Inject
-	private SqlSession session;
+	private SqlSession sqlSession;
 
 	private static String namespace = "com.gigabox.mapper.MovieMapper";
 
-	@Override
-	public void create(MovieVO vo) throws Exception {
-		session.insert(namespace + ".create", vo);
-
-	}
 
 	@Override
-	public MovieVO read(int MovieNumber) throws Exception {
-		return session.selectOne(namespace + ".read", MovieNumber);
+	public List<MovieVO> movieListRecent(RownumVO rownumVO) {
+		return sqlSession.selectList(namespace + ".movieListRecent", rownumVO);
 	}
-
+	
 	@Override
-	public void update(MovieVO vo) throws Exception {
-		session.update(namespace + ".update", vo);
+	public int movieListCountRecent() {
+		return sqlSession.selectOne(namespace + ".movieListCountRecent");
 	}
-
+	
 	@Override
-	public void delete(int MovieNumber) throws Exception {
-		session.delete(namespace + ".delete", MovieNumber);
+	public List<MovieVO> movieListTobe(RownumVO rownumVO) {
+		return sqlSession.selectList(namespace + ".movieListTobe", rownumVO);
 	}
-
+	
 	@Override
-	public List<MovieVO> movieList() throws Exception {
-		return session.selectList(namespace + ".movieList");
+	public int movieListCountTobe() {
+		return sqlSession.selectOne(namespace + ".movieListCountTobe");
 	}
-
+	
 	@Override
 	public MovieVO movieDetail(MovieVO movieVO) {
-		return session.selectOne(namespace + ".movieDetail", movieVO);
-	}
-
-	@Override
-	public List<MovieVO> readMore(int mno) throws Exception {
-		return session.selectList(namespace + ".listCriteria" , mno);
-	}
-
-	@Override
-	public List<MovieVO> movieListRecent(RownumVO rownumVO) throws Exception {
-		return session.selectList(namespace + ".movieListRecent", rownumVO);
-	}
-
-	@Override
-	public List<MovieVO> movieListTobe(RownumVO rownumVO) throws Exception {
-		return session.selectList(namespace + ".movieListTobe", rownumVO);
+		return sqlSession.selectOne(namespace + ".movieDetail", movieVO);
 	}
 
 }

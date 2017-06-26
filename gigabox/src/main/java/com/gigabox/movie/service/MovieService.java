@@ -7,21 +7,14 @@ import com.gigabox.movie.vo.RownumVO;
 
 public interface MovieService {
 	
-	public void regist(MovieVO movie) throws Exception;
+	public List<MovieVO> movieListRecent(RownumVO rownumVO);
 	
-	public MovieVO read(Integer mno) throws Exception;
+	public int movieListCountRecent();
 	
-	public void modify(MovieVO mno) throws Exception;
+	public List<MovieVO> movieListTobe(RownumVO rownumVO);
 	
-	public void remove(Integer mno) throws Exception;
+	public int movieListCountTobe();
 	
-	public List<MovieVO> movieList() throws Exception;
-
 	public MovieVO movieDetail(MovieVO movieVO);
 	
-	public List<MovieVO> readMore(int mno) throws Exception;
-	
-	public List<MovieVO> movieListRecent(RownumVO rownumVO) throws Exception;
-	
-	public List<MovieVO> movieListTobe(RownumVO rownumVO) throws Exception;
 }

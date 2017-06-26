@@ -18,7 +18,7 @@ public class MovieVO {
 	private int movieCode;
 	private String movieStatus; 
 	
-	private int reviewStarscore;
+	private double reviewStarscore;
 	
 	public int getMovieCode() {
 		return movieCode;
@@ -149,11 +149,11 @@ public class MovieVO {
 		this.movieTrailer = movieTrailer;
 	}
 
-	public int getReviewStarscore() {
+	public double getReviewStarscore() {
 		return reviewStarscore;
 	}
 
-	public void setReviewStarscore(int reviewStarscore) {
+	public void setReviewStarscore(double reviewStarscore) {
 		this.reviewStarscore = reviewStarscore;
 	}
 

@@ -56,7 +56,6 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                        <div class="col-lg-6" style="border-right: 1px #555555 solid; padding-left: 5%;">
 					                            <h4 class="title"><i class="fa fa-film"></i> 영화</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/movie/movieList?listType=boxoffice">박스 오피스</a></li>
 					                                <li><a href="/movie/movieList?listType=recent">최신 개봉작</a></li>
 					                                <li><a href="/movie/movieList?listType=tobe">상영 예정작</a></li>
 					                                <li><a href="/cinema/branchList">영화관 찾기</a></li>

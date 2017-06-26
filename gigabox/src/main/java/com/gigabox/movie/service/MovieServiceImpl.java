@@ -14,52 +14,33 @@ import com.gigabox.movie.vo.RownumVO;
 public class MovieServiceImpl implements MovieService {
 
 	@Inject
-	private MovieDAO dao;
-	
+	private MovieDAO movieDAO;
+
 	@Override
-	public void regist(MovieVO movie) throws Exception {
-		dao.create(movie);
+	public List<MovieVO> movieListRecent(RownumVO rownumVO) {
+		return movieDAO.movieListRecent(rownumVO);
 	}
 
 	@Override
-	public MovieVO read(Integer mno) throws Exception {
-		return dao.read(mno);
+	public int movieListCountRecent() {
+		return movieDAO.movieListCountRecent();
 	}
 
 	@Override
-	public void modify(MovieVO mno) throws Exception {
-		dao.update(mno);
-	}
-
-
-	@Override
-	public void remove(Integer mno) throws Exception {
-		dao.delete(mno);
+	public List<MovieVO> movieListTobe(RownumVO rownumVO) {
+		return movieDAO.movieListTobe(rownumVO);
 	}
 
 	@Override
-	public List<MovieVO> movieList() throws Exception {
-		return dao.movieList();
+	public int movieListCountTobe() {
+		return movieDAO.movieListCountTobe();
 	}
 
 	@Override
 	public MovieVO movieDetail(MovieVO movieVO) {
-		return dao.movieDetail(movieVO);
+		return movieDAO.movieDetail(movieVO);
 	}
-
-	@Override
-	public List<MovieVO> readMore(int mno) throws Exception {
-		return dao.readMore(mno);
-	}
-
-	@Override
-	public List<MovieVO> movieListRecent(RownumVO rownumVO) throws Exception {
-		return dao.movieListRecent(rownumVO);
-	}
-
-	@Override
-	public List<MovieVO> movieListTobe(RownumVO rownumVO) throws Exception {
-		return dao.movieListTobe(rownumVO);
-	}
+	
+	
 
 }
