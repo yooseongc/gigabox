@@ -82,7 +82,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                                <li><a href="/user/findPWForm">ID/PW 찾기</a></li>
 					                                <li><a href="/user/joinAgreeForm">회원 가입</a></li>
 					                                <li><a href="/user/modifyForm/${sessionScope.login.userId}">회원 정보 수정</a></li>
-					                                <li><a href="/user/userLeave/${sessionScope.login.userId}">회원 탈퇴</a></li>
+					                                <li><a href="/user/userLeaveForm/${sessionScope.login.userId}">회원 탈퇴</a></li>
 					                            </ul>
 					                            
 					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
