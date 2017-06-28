@@ -15,4 +15,7 @@ public interface ModifyDAO {
 	
 	//새 비밀번호 암호화
 	public int pwEncryptionExec(UserVO userVO);
+	
+	//회원 탈퇴
+	public int userLeave (UserVO userVO);
 }

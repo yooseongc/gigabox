@@ -61,6 +61,8 @@
 			<exclude-mapping path="/user/zipcode/list"/>
 			<exclude-mapping path="/user/zipcode/list.do"/>
 			<exclude-mapping path="/user/emailAuth/*"/>
+			<exclude-mapping path="/user/userLeaveForm"/>
+			<exclude-mapping path="/user/findInfoForm"/>
 			
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>

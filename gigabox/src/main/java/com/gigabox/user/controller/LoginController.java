@@ -50,7 +50,22 @@ public class LoginController {
 
 		logger.info("LOGIN... " + loginDTO.toString());
 
-		// 1. 아이디 존재 체크
+		// 1. 탈퇴 여부 체크
+		UserVO statusCheckUserVO = new UserVO();
+		statusCheckUserVO.setUserId(loginDTO.getUserId());
+		int statusCheckResult = loginService.statusCheck(statusCheckUserVO);
+		logger.info("statusCheck= " + statusCheckResult);
+		if (statusCheckResult == 1){
+			//탈퇴된 회원
+			logger.info("ACCOUNT (" + loginDTO.getUserStatus() + ") LEAVE MEMBER.");
+			resultMap.put("statusCheckResult", statusCheckResult);
+			resultMap.put("message", "LEAVE-MEMBER");
+
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+
+		}
+		
+		// 2. 아이디 존재 체크
 		UserVO idCheckUserVO = new UserVO();
 		idCheckUserVO.setUserId(loginDTO.getUserId());
 		idCheckUserVO.setUserPw(loginDTO.getUserPw());
@@ -66,7 +81,7 @@ public class LoginController {
 
 		} else {
 			// 해당 계정이 존재.
-			// 2. 비밀번호 확인
+			// 3. 비밀번호 확인
 			logger.info("ACCOUNT (" + loginDTO.toString() + ") EXISTS.");
 			logger.info("PASSWORD CHECKING PROCEED...");
 
@@ -99,6 +114,7 @@ public class LoginController {
 		}
 	}
 
+	//세션생성
 	@RequestMapping(value = "/loginSession", method = RequestMethod.POST)
 	public void loginSessionCreation(LoginDTO dto, HttpSession session, Model model) throws Exception {
 		logger.info("LOGIN PROCESS - Create Session");

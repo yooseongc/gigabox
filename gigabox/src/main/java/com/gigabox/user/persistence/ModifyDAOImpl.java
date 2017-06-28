@@ -43,4 +43,11 @@ public class ModifyDAOImpl implements ModifyDAO {
 		return sqlSession.update(namespace + ".pwEncryptionExec", userVO);
 	}
 
+	//회원 탈퇴
+	@Override
+	public int userLeave(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + ".userLeave", userVO);
+	}
+
 }

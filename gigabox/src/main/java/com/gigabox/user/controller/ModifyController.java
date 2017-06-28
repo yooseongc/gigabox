@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -85,7 +86,7 @@ public class ModifyController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("LOGIN PROCESS - ERROR");
+			logger.info("MODIFY PROCESS - ERROR");
 			resultMap.put("message", "ERROR");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
@@ -148,7 +149,7 @@ public class ModifyController {
 					e.printStackTrace();
 				}
 
-				//새 비밀번호로 업데이트
+				// 새 비밀번호로 업데이트
 				modifyService.changePw(userVO);
 
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -162,15 +163,15 @@ public class ModifyController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("LOGIN PROCESS - ERROR");
+			logger.info("CHANGEPW PROCESS - ERROR");
 			resultMap.put("message", "ERROR");
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}
 	}
-	
-	// 비밀번호 변경 폼 출력
+
+	// 회원탈퇴 폼 출력
 	@RequestMapping(value = "/userLeaveForm/{userId}", method = RequestMethod.GET)
-	public String userLeaveGET(Model model, HttpSession session, HttpServletRequest request,
+	public String userLeaveFormGET(Model model, HttpSession session, HttpServletRequest request,
 			@PathVariable String userId) {
 		logger.info("USERLEAVE FORM LOADING... ");
 		logger.info("userId= " + userId);
@@ -181,6 +182,37 @@ public class ModifyController {
 
 		model.addAttribute("userInfo", userVO);
 
+		logger.info("UserVO = " + userVO);
 		return "/user/userLeaveForm";
-	}	
+	}
+
+	// 회원 탈퇴 구현
+	@RequestMapping(value = "/userLeaveForm", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> userLeaveForm(HttpSession session, 
+			HttpServletResponse response) {
+		logger.info("LEAVE LOADING... ");
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		UserVO sessionVO = (UserVO) session.getAttribute("login");
+
+		try {
+				logger.info("CHECK SUCCESS (" + sessionVO.getUserId() + ")");
+				logger.info("BYE~ BYE~");
+				
+				resultMap.put("mileageCheckResult", 1);
+				resultMap.put("message", "CHECK-SUCCESS");
+				
+				modifyService.userLeave(sessionVO);
+
+				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("USERLEAVE PROCESS - ERROR");
+			resultMap.put("message", "ERROR");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+	}
+	
 }

@@ -78,7 +78,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                    
 					                            <h4 class="title"><i class="fa fa-users"></i> 회원 서비스</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/user/findPWForm">ID/PW 찾기</a></li>
+					                                <li><a href="/user/findInfoForm">ID/PW 찾기</a></li>
 					                                <li><a href="/user/joinAgreeForm">회원 가입</a></li>
 					                                <li><a href="/user/modifyForm/${sessionScope.login.userId}">회원 정보 수정</a></li>
 					                                <li><a href="/user/userLeaveForm/${sessionScope.login.userId}">회원 탈퇴</a></li>
@@ -232,6 +232,12 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 							$("#errorMessageHeader").removeClass("hide");
 							$("#userPwHeader").val("");
 							$("#userPwHeader").focus();
+						} else if (resultData.message == 'LEAVE-MEMBER') {
+							$("#errorMessageHeader").text("탈퇴된 회원입니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
 						} else if (resultData.message == 'LOGIN-SUCCESS') {
 							console.log("login success!!!");
 							$("#loginForm").submit();

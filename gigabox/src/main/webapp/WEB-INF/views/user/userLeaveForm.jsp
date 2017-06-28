@@ -66,7 +66,7 @@
 						<h1>회원탈퇴</h1>
 						<h6>*30일간 재가입이 불가능 합니다.</h6>
 					</div>
-					<form class="form-horizontal" id="userLeaveForm">
+					<form class="form-horizontal">
 						<table class="table table-striped table-bordered table-hover">
 							<caption>${userInfo.userName }님회원정보</caption>
 							<thead>
@@ -75,7 +75,7 @@
 									<th>아이디</th>
 									<th>전화번호</th>
 									<th>이메일</th>
-									<th>주소</th>
+									<th>마일리지</th>
 									<th>탈퇴확인</th>
 								</tr>
 							</thead>
@@ -85,9 +85,9 @@
 									<td>${userInfo.userId }</td>
 									<td>${userInfo.userTel }</td>
 									<td>${userInfo.userEmail }</td>
-									<td>${userInfo.userAddr }</td>
+									<td>${userInfo.userMileage }</td>
 									<td><button id="leaveBtn" class="btn btn-danger"
-											type="submit">탈퇴</button></td>
+											>탈퇴</button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -110,21 +110,24 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="leaveOKModalLabel">회원 탈퇴 확인</h4>
 				</div>
 				<div class="modal-body">
-					<form id="addrSearchForm" onsubmit="return false;">
-						<strong> 정말 회원탈퇴?? 레알?<br> 진심?<br> 기타 등등 안내문<br>
-						</strong> <br>
-						<br>
+					<form id="userLeaveForm" onsubmit="return false;">
+						<fieldset>
+							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
+						<strong>-주의-<br>
+						*탈퇴 일로부터 30일간 현재 개인정보로 재가입이 불가능합니다.<br>*현재까지 적립된 마일리지가 모두 사라집니다.<br>
+							*기타 등등 안내문<br>
+						</strong> <br> <br>
+						<div class="form-group" style="text-align: center;">
+						<button id="leaveOKBtn" class="btn btn-danger" type="submit">탈퇴</button>
+						<button class="btn btn-primary" data-dismiss="modal">취소</button>
+						</div>
+						</fieldset>
 					</form>
 				</div>
-				<div class="modal-footer text-center">
-					<button id="" class="btn btn-danger" type="submit">탈퇴</button>
-					<button class="btn btn-primary" data-dismiss="modal">취소</button>
-				</div>
+				<div class="modal-footer" style="text-align: center;"></div>
 			</div>
 			<!-- /.modal-content -->
 		</div>
@@ -132,7 +135,20 @@
 	</div>
 	<!-- /.modal -->
 	<script type="text/javascript">
+	function formCheck(v_item, v_name, e_item) {
+		if (v_item.val().replace(/\s/g, "") == "") {
+			
+			e_item.text(v_name + " 확인해 주세요.");
+			e_item.show();
+			v_item.val("");
+			v_item.focus();
+			return false;
+		} else {
+			return true;
+		}
+	}
 		$(document).ready(function() {
+			$("#errorMessage").hide();
 			$('#leaveBtn').click(function(e) {
 				e.preventDefault();
 				$('#leaveOK').modal({
@@ -141,6 +157,31 @@
 					keyboard : true
 				});
 			});
+			
+		$('#leaveOKBtn').click(function(e){
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "/user/userLeaveForm",
+				data: $("#userLeaveForm").serialize(),
+				error: function() {
+					$("#errorMessage").text("시스템 오류입니다.");
+					$("#errorMessage").show();
+				},
+				success: function(resultData) {
+					if (resultData.message == 'CHECK-SUCCESS') {
+						console.log("change success!!!");
+						$("#changePwForm").submit();
+						alert("정상적으로 탈퇴처리 되었습니다.")
+						location.href ="/user/logout";
+					} else if (resultData.message == 'ERROR') {
+						$("#errorMessage").text("시스템 오류입니다.");
+						$("#errorMessage").show();
+					}
+				}
+			});
+			
+		});
 		});
 	</script>
 </body>

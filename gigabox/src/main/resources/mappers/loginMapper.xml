@@ -12,8 +12,15 @@
 			<result property="userBirthday" column="USER_BIRTHDAY" />
 			<result property="userTel" column="USER_TEL" />
 			<result property="userAddr" column="USER_ADDR" />
+			<result property="userStatus" column="USER_STATUS"/>
 		</resultMap>
 
+	<select id="statusCheck" parameterType="login" resultType="int">
+		SELECT COUNT(*) 
+		FROM TBL_USER 
+		WHERE USER_STATUS = '탈퇴회원' AND USER_ID = #{userId}
+	</select>
+	
 	<select id="idCheck" parameterType="login" resultType="int">
 		SELECT COUNT(*) 
 		FROM TBL_USER 
@@ -21,10 +28,9 @@
 	</select>
 	
 	<select id="login" resultType="login" resultMap="loginResultMap">
-		SELECT
-		USER_ID, USER_PW, USER_NAME, USER_NUMBER   
+		SELECT *    
 		FROM TBL_USER
-		WHERE USER_ID = #{userId} 
+		WHERE USER_ID = #{userId}
 	</select>
 
 </mapper>
