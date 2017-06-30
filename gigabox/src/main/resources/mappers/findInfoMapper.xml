@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.FindInfoMapper">
+
+	<resultMap type="find" id="findResultMap">
+		<result property="userNumber" column="USER_NUMBER" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userBirthday" column="USER_BIRTHDAY" />
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userTel" column="USER_TEL" />
+		<result property="userReg" column="USER_REGISTERDATE" />
+		<result property="userStatus" column="USER_STATUS"/>
+	</resultMap>
+
+	<!-- 아이디 찾기 쿼리 -->
+	<select id="findUserId" resultType="find" resultMap="findResultMap">
+		SELECT USER_ID, USER_REGISTERDATE
+		FROM TBL_USER
+		WHERE USER_NAME = #{userName} AND
+		USER_BIRTHDAY = #{userBirthday} AND
+		USER_TEL = #{userTel} AND
+		USER_STATUS = '정상가입'
+	</select>
+
+	<!-- 비밀번호 찾기 쿼리 -->
+	<!-- <select id="findUserPw"> </select> -->
+
+</mapper>

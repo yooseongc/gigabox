@@ -34,9 +34,17 @@ public class ModifyServiceImpl implements ModifyService {
 		return modifyDAO.changePw(userVO);
 	}
 
+	//새 비밀번호 암호화
 	@Override
 	public int pwEncryptionExec(UserVO userVO) {
 		// TODO Auto-generated method stub
 		return modifyDAO.pwEncryptionExec(userVO);
+	}
+
+	//회원 탈퇴
+	@Override
+	public int userLeave(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return modifyDAO.userLeave(userVO);
 	}
 }

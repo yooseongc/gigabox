@@ -3,7 +3,7 @@ package com.gigabox.user.dto;
 public class LoginDTO {
 	private String userId;
 	private String userPw;
-	private String userName;
+	private String userStatus;
 
 	public String getUserId() {
 		return userId;
@@ -21,17 +21,17 @@ public class LoginDTO {
 		this.userPw = userPw;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUserStatus() {
+		return userStatus;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + "]";
+		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userStatus=" + userStatus + "]";
 	}
 
 }
