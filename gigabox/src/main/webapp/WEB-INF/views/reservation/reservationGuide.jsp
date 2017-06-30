@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GigaBox - 영화관 찾기</title>
+<title>GigaBox - 예매 안내</title>
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom CSS -->
@@ -50,23 +50,19 @@
 
 	<!-- header -->
 	<c:import url="/templates/header.jsp" />
-	<div>
-		<img src="http://image2.megabox.co.kr/mop/home/theater/bg.jpg"
-			width="100%" height="500" style="">
-	</div>
 	<!-- Page Content -->
-	<div>
+	<div class="container">
 
 		<!-- Page Heading/Breadcrumbs -->
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					영화 <small id="pageType">영화관 찾기</small>
+					예매 <small id="pageType">예매 안내</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>
-					<li>영화</li>
-					<li class="active" id="pageType2">영화관 찾기</li>
+					<li>예매</li>
+					<li class="active" id="pageType2">예매 안내</li>
 				</ol>
 			</div>
 		</div>
@@ -74,43 +70,38 @@
 
 		<!-- Content Row -->
 		<div class="row">
-			<!-- Sidebar Column -->
-			<div class="col-md-3">
-				<div class="list-group">
-					<ul>
-						<c:forEach items="${movieRoomList}" var="movieRoomItem">
-							<li style="list-style-type: none"><a href="index.html"
-								class="list-group-item"
-								data-id="${movieRoomItem.movieRoomNumber }">서울${movieRoomItem.movieRoomNumber }</a></li>
-						</c:forEach>
-					</ul>
+			<div class="col-lg-12"
+				style="display: inline-block; text-align: center;">
+				<div>
+					<img src="/resources/images/reservationGuide.png" alt="예매 안내"
+						usemap="#gudieBtn" width="100%">
+					<map name="gudieBtn">
+						<area shape="rect" coords="845, 1138, 1105, 1205"
+							href="http://naver.com">
+					</map>
 				</div>
 			</div>
-			<!-- Content Column -->
-			<div class="col-md-9">
-				<h2>Section Heading</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Soluta, et temporibus, facere perferendis veniam beatae non
-					debitis, numquam blanditiis necessitatibus vel mollitia dolorum
-					laudantium, voluptate dolores iure maxime ducimus fugit.</p>
+		</div>
+		<div class="row">
+			<div class="col-lg-12"
+				style="display: inline-block; text-align: center;">
+				<h1 class="page-header">
+
+				</h1>
+				<div>
+					<img src="/resources/images/reservationGuide2.png" alt="가격 안내"
+						width="100%">
+					<br><br>
+				</div>
 			</div>
 		</div>
-		<!-- /.row -->
-
-		<!-- 		<img src="http://image2.megabox.co.kr/mop/home/map/world2.jpg"> -->
-
-
-
-
-
-
 	</div>
 	<!-- /.container -->
 
+
+
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
-
-
 
 </body>
 </html>

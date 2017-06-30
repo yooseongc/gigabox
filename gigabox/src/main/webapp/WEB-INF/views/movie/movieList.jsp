@@ -596,6 +596,10 @@
 						console.log("댓글 불러오기 오류입니다.");
 					},
 					success : function(data) {
+						if (data.length == 0) {
+							$("#review").html("");
+							return;
+						}
 						dataArray = {arr: data, movieNumber: data[0].review.movieNumber};
 						console.log("댓글 불러오기");
 						reviewReadMoreCount = 0;

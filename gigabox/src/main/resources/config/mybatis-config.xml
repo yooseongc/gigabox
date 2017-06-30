@@ -21,6 +21,11 @@
 		<typeAlias type="com.gigabox.review.vo.ReviewVO" alias="review" />
 		<typeAlias type="com.gigabox.review.vo.RownumVO" alias="reviewRownum" />
 		
+		<typeAlias type="com.gigabox.branch.vo.BranchVO" alias="branch" />
+		
+		<typeAlias type="com.gigabox.movieroom.vo.MovieRoomVO" alias="movieRoom" />
+		<typeAlias type="com.gigabox.schedule.vo.ScheduleVO" alias="schedule" />
+		
 	</typeAliases>
 	
 </configuration>
