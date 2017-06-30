@@ -149,6 +149,7 @@
 	}
 		$(document).ready(function() {
 			$("#errorMessage").hide();
+			//탈퇴버튼 클릭시 모달
 			$('#leaveBtn').click(function(e) {
 				e.preventDefault();
 				$('#leaveOK').modal({

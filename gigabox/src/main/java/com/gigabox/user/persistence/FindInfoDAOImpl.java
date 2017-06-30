@@ -18,7 +18,7 @@ public class FindInfoDAOImpl implements FindInfoDAO{
 	
 	//아이디 찾기
 	@Override
-	public int findUserId(UserVO userVO) {
+	public UserVO findUserId(UserVO userVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + ".findUserId", userVO);
 	}

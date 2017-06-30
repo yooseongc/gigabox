@@ -68,7 +68,7 @@
 						<fieldset>
 							<div class="alert alert-danger center-block"
 								style="width: 400px;" id="errorMessage1"></div>
-
+							찾는 게 [${userInformation.userId }] 이거 맞아?
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="userName">이름</label>
 								<div class="col-sm-6">
@@ -97,7 +97,7 @@
 								<div class="col-sm-12 text-center">
 									<button id="findUserIdSubmitBtn" class="btn btn-primary"
 										type="submit">
-										찾기<i class="fa fa-check spaceLeft"></i>
+										ID찾기<i class="fa fa-check spaceLeft"></i>
 									</button>
 									<button id="cancleBtn1" class="btn btn-danger" type="submit">
 										취소<i class="fa fa-times spaceLeft"></i>
@@ -141,19 +141,12 @@
 										type="text" placeholder="- 없이 입력해 주세요." maxlength="11">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="email">이메일</label>
-								<div class="col-sm-6">
-									<input class="form-control" id="email" name="email"
-										type="email">
-								</div>
-							</div>
 
 							<div class="form-group">
 								<div class="col-sm-12 text-center">
 									<button id="findUserPwSubmitBtn" class="btn btn-primary"
 										type="submit">
-										찾기<i class="fa fa-check spaceLeft"></i>
+										PW찾기<i class="fa fa-check spaceLeft"></i>
 									</button>
 									<button id="cancleBtn2" class="btn btn-danger" type="submit">
 										취소<i class="fa fa-times spaceLeft"></i>
@@ -175,7 +168,7 @@
 	<c:import url="/templates/footer.jsp" />
 	
 	<!-- Modal -->
-	<div class="modal fade" id="findId" tabindex="-1" role="dialog"
+	<div class="modal fade" id="findIdModal" tabindex="-1" role="dialog"
 		aria-labelledby="finIdModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -183,8 +176,8 @@
 					<h3 class="modal-title">알림</h3>
 				</div>
 				<div class="modal-body">
-					<form id="findUserId text-center">
-						<strong>회원님의 아이디는 [] 입니다. 가입일:[]
+					<form id="findUserId">
+						<strong>회원님의 아이디는  ${userInformation.userId }입니다. 가입일: ${userInformation.userReg }
 						</strong> <br> <br>
 						<div class="form-group" style="text-align: center;">
 						<button class="btn btn-primary" data-dismiss="modal">확인</button>
@@ -212,11 +205,66 @@
 				return true;
 			}
 		}
-
+		
 		$(document).ready(function() {
 			$("#errorMessage1").hide();
 			$("#errorMessage2").hide();
+			
+			//ID찾기 버튼 클릭시
+			$("#findUserIdSubmitBtn").click(function(e) {
+				e.preventDefault();
+				if (!formCheck($("#userName"), "이름을", $("#errorMessage1"))) {
+					$("#errorMessage1").removeClass("hide");
+					return;
+				}
+				if (!formCheck($("#userBirthday"), "생년월일을", $("#errorMessage1"))) {
+					$("#errorMessage1").removeClass("hide");
+					return;
+				}
+				if (!formCheck($("#userTel"), "휴대폰 번호를", $("#errorMessage1"))) {
+					$("#errorMessage1").removeClass("hide");
+					return;
+				}
+				/* $.ajax({
+					url: "/user/findUserIdForm",
+					type: "POST",
+					data: $("#findUserIdForm").serialize(),
+					error: function() {
+						$("#errorMessageHeader").text("시스템 오류입니다.");
+						$("#errorMessageHeader").show();
+					},
+					success: function(resultData) {
+						if (resultData.message == 'NOT FIND-ID') {
+							$("#errorMessageHeader").text("회원정보가 존재하지 않습니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userName").focus();
+						} else if (resultData.message == 'FIND-ID') {
+							console.log("FIND SUCCESS!!!");
+							$("#findUserIdForm").submit();
+						} else if (resultData.message == 'ERROR') {
+							$("#errorMessageHeader").text("시스템 오류입니다.");
+							$("#errorMessageHeader").removeClass("hide");
+						}
+					} 
+					}); */
+				
+				$("#findUserIdForm").attr("method", "POST");
+				$("#findUserIdForm").attr("action", "/user/findUserIdForm");
+				$("#findUserIdForm").submit(); 
+				
+				$('#findUserId').modal({
+					show : true,
+					backdrop : 'static',
+					keyboard : true
+				});
+			});
+			
+			//PW확인 버튼 클릭시
+			$("#").click(function(e) {
+				e.preventDefault();
 
+			});
+			
 			//취소1버튼 클릭시 메인으로
 			$('#cancleBtn1').click(function(e) {
 				e.preventDefault();
@@ -228,22 +276,6 @@
 				e.preventDefault();
 
 				location.href = "/";
-			});
-
-			//ID찾기 버튼 클릭시
-			$("#findUserIdSubmitBtn").click(function(e) {
-				e.preventDefault();
-				$('#findId').modal({
-					show : true,
-					backdrop : 'static',
-					keyboard : true
-				});
-			});
-			
-			//PW확인 버튼 클릭시
-			$("#").click(function(e) {
-				e.preventDefault();
-
 			});
 		});
 	</script>

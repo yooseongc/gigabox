@@ -15,7 +15,7 @@ public class FindInfoServiceImpl implements FindInfoService{
 
 	//아이디 찾기
 	@Override
-	public int findUserId(UserVO userVO) {
+	public UserVO findUserId(UserVO userVO) {
 		// TODO Auto-generated method stub
 		return findInfoDAO.findUserId(userVO);
 	}

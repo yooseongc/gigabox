@@ -9,6 +9,7 @@
 		<typeAlias type="com.gigabox.user.vo.UserVO" alias="join"/>
 		<typeAlias type="com.gigabox.user.vo.UserVO" alias="login"/>
 		<typeAlias type="com.gigabox.user.vo.UserVO" alias="modify"/>
+		<typeAlias type="com.gigabox.user.vo.UserVO" alias="find"/>
 		
 		<typeAlias type="com.gigabox.cc.vo.FaqVO" alias="faq" />
 		<typeAlias type="com.gigabox.cc.vo.NoticeVO" alias="notice" />
