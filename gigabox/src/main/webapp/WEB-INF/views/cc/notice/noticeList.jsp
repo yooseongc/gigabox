@@ -36,11 +36,13 @@
 				<h1 class="page-header">
 					공지사항 <small>GIGABOX NEWS</small>
 				</h1>
-				<ul class="nav nav-tabs" role="tablist">
-					<li><a href="/cc/faq/faqList" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+				<ul class="nav nav-tabs nav-justified" role="tablist">
+					<li><a href="/cc/faq/faqList" class="faq" title="자주묻는질문 바로가기"><i
+							class="fa fa-question"></i>&nbsp;&nbsp;자주묻는질문</a></li>
 					<li><a href="/cc/notice/noticeList" class="notice"
-						title="공지사항 바로가기">공지사항</a></li>
-					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기">1:1문의</a></li>
+						title="공지사항 바로가기"><i class="fa fa-info"></i>&nbsp;&nbsp;공지사항</a></li>
+					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기"><i
+							class="fa fa-comments-o"></i>&nbsp;&nbsp;1:1문의</a></li>
 				</ul>
 			</div>
 		</div>
@@ -61,12 +63,16 @@
 									<option value="c">내용</option>
 								</select>
 							</div>
-							<input type="text" id="searchKeyword" class="form-control"
-								title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
-							<button type="submit" id="noticeSearchBtn"
-								class="btn btn-default">
-								<i class="glyphicon glyphicon-search"></i>
-							</button>
+
+
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="검색어 입력하세요">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
 						</form>
 					</div>
 					<!-- 검색 종료 -->
