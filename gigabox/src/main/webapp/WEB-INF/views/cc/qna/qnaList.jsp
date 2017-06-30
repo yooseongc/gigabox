@@ -41,11 +41,14 @@
 				<h1 class="page-header">
 					고객 센터 <small>1:1 문의</small>
 				</h1>
-				<ul class="nav nav-tabs" role="tablist">
-					<li><a href="/cc/faq/faqList" class="faq" title="자주묻는질문 바로가기">자주묻는질문</a></li>
+				<ul class="nav nav-tabs nav-justified" role="tablist">
+					<li class=""><a href="/cc/faq/faqList" class="faq"
+						title="자주묻는질문 바로가기"><i
+							class="fa fa-question"></i>&nbsp;&nbsp;자주묻는질문</a></li>
 					<li><a href="/cc/notice/noticeList" class="notice"
-						title="공지사항 바로가기">공지사항</a></li>
-					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기">1:1문의</a></li>
+						title="공지사항 바로가기"><i class="fa fa-info"></i>&nbsp;&nbsp;공지사항</a></li>
+					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기"><i
+							class="fa fa-comments-o"></i>&nbsp;&nbsp;1:1문의</a></li>
 				</ul>
 			</div>
 		</div>
@@ -61,14 +64,16 @@
 							<button type="button" class="btn btn-danger">글쓰기</button>
 						</a>
 					</div>
-
 					<div class="pull-right">
 						<form class="form-inline">
-							<input type="text" id="searchKeyword" class="form-control"
-								title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
-							<button type="submit" class="btn btn-default" id="qnaSearchBtn">
-								<i class="glyphicon glyphicon-search"></i>
-							</button>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="검색하세요">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
 						</form>
 					</div>
 					<!-- 검색 종료 -->
@@ -135,22 +140,19 @@
 	<c:import url="/templates/footer.jsp" />
 
 	<script>
-		$(document).ready(function() {
-			/* 검색 대상이 변경될 때마다 처리 이벤트 */
-			$("#search").change(function() {
-				if ($("#"))
-			});
-			/* 검색 버튼 클릭시 처리 이벤트 */
-			$("#qnaSearchBtn").on("click"),function(event){
-				self.location="list"
-				+'${pageMaker.makeQuery(1)}'
-				+"&searchType="
-				+$("select option:")
-			}
-		
-			});
+		$(document).ready(
+				function() {
+					/* 검색 대상이 변경될 때마다 처리 이벤트 */
+					$("#search").change(function() {
+						if ($("#"))
+					});
+					/* 검색 버튼 클릭시 처리 이벤트 */
+					$("#qnaSearchBtn").on("click"), function(event) {
+						self.location = "list" + '${pageMaker.makeQuery(1)}'
+								+ "&searchType=" + $("select option:")
+					}
 
-		
+				});
 	</script>
 </body>
 </html>
