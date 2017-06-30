@@ -58,20 +58,15 @@
 					<!-- 검색 시작 -->
 					<div class="pull-left">
 						<a hidden="">
-						<button type="button" class="btn btn-danger">글쓰기</button>
+							<button type="button" class="btn btn-danger">글쓰기</button>
 						</a>
 					</div>
 
 					<div class="pull-right">
 						<form class="form-inline">
-							<div class="form-group">
-								<select class="btn-primary form-control">
-									<option value="t">제목</option>
-								</select>
-							</div>
-							<input type="text" id="searchKeyword" title="검색어 입력"
-								placeholder="검색어를 입력하세요" maxlength="20">
-							<button type="submit" class="btn btn-default">
+							<input type="text" id="searchKeyword" class="form-control"
+								title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
+							<button type="submit" class="btn btn-default" id="qnaSearchBtn">
 								<i class="glyphicon glyphicon-search"></i>
 							</button>
 						</form>
@@ -80,7 +75,7 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th style="text-align: center;">NO</th>
+								<th style="text-align: center;">구분</th>
 								<th style="text-align: center;">제목</th>
 								<th style="text-align: center;">등록일</th>
 							</tr>
@@ -88,8 +83,16 @@
 						<tbody id="inquiryListTableBody">
 							<c:forEach var="inquiryItem" items="${inquiryList}">
 								<tr>
-									<td style="text-align: center;">${inquiryItem.inquiry.inquiryNumber}</td>
-									<td>${inquiryItem.inquiry.inquiryTitle}</td>
+									<c:if test="${inquiryItem.inquiry.inquiryQora == 'Q'}">
+										<td style="text-align: center;"><i
+											class="fa fa-question-circle"></i></td>
+									</c:if>
+									<c:if test="${inquiryItem.inquiry.inquiryQora == 'A'}">
+										<td style="text-align: right;">└>&nbsp;<i
+											class="glyphicon glyphicon-exclamation-sign"></i></td>
+									</c:if>
+									<td><a
+										href="/cc/qna/qnaRead?inquiryNumber=${inquiryItem.inquiry.inquiryNumber}">${inquiryItem.inquiry.inquiryTitle}</a></td>
 									<td style="text-align: center;"><fmt:formatDate
 											value="${inquiryItem.inquiry.inquiryRegisterdate}"
 											pattern="yyyy-MM-dd" /></td>
@@ -133,15 +136,21 @@
 
 	<script>
 		$(document).ready(function() {
-			var formObj = $("form[role='form']");
-
-			$("#qnaWriteBtn").on("click", function() {
-				formObj.attr("action", "/cc/qna/qnaWrite");
-				formObj.attr("method", "POST");
-				formObj.submit();
+			/* 검색 대상이 변경될 때마다 처리 이벤트 */
+			$("#search").change(function() {
+				if ($("#"))
+			});
+			/* 검색 버튼 클릭시 처리 이벤트 */
+			$("#qnaSearchBtn").on("click"),function(event){
+				self.location="list"
+				+'${pageMaker.makeQuery(1)}'
+				+"&searchType="
+				+$("select option:")
+			}
+		
 			});
 
-		});
+		
 	</script>
 </body>
 </html>

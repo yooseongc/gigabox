@@ -23,6 +23,9 @@ public List<InquiryVO> inquiryList(InquirySearchCriteria isc);
 
 	//글쓰기
 	public int inquiryInsert(InquiryVO ivo) throws Exception;
+
+	//읽기 페이지
+	InquiryVO inquiryRead(InquiryVO ivo);
 	
 	//public List<InquiryVO> inquiryList() throws Exception;
 	

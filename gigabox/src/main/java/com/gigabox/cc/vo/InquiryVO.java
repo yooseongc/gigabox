@@ -7,7 +7,7 @@ public class InquiryVO {
 	private int inquiryNumber; // 문의번호
 	private int inquiryGroupnumber; // 글 그룹번호
 	private String inquiryTitle; // 제목
-	private String inquiryCotnent; // 내용
+	private String inquiryContent; // 내용
 	private Date inquiryRegisterdate; // 등록일
 	private String inquiryQora; // 답변 여부
 
@@ -43,12 +43,12 @@ public class InquiryVO {
 		this.inquiryTitle = inquiryTitle;
 	}
 
-	public String getInquiryCotnent() {
-		return inquiryCotnent;
+	public String getInquiryContent() {
+		return inquiryContent;
 	}
 
-	public void setInquiryCotnent(String inquiryCotnent) {
-		this.inquiryCotnent = inquiryCotnent;
+	public void setInquiryContent(String inquiryContent) {
+		this.inquiryContent = inquiryContent;
 	}
 
 	public Date getInquiryRegisterdate() {
@@ -66,11 +66,11 @@ public class InquiryVO {
 	public void setInquiryQora(String inquiryQora) {
 		this.inquiryQora = inquiryQora;
 	}
-  
+
 	@Override
 	public String toString() {
 		return "InquiryVO [userNumber=" + userNumber + ", inquiryNumber=" + inquiryNumber + ", inquiryGroupnumber="
-				+ inquiryGroupnumber + ", inquiryTitle=" + inquiryTitle + ", inquiryCotnent=" + inquiryCotnent
+				+ inquiryGroupnumber + ", inquiryTitle=" + inquiryTitle + ", inquiryContent=" + inquiryContent
 				+ ", inquiryRegisterdate=" + inquiryRegisterdate + ", inquiryQora=" + inquiryQora + "]";
 	}
 

@@ -28,6 +28,12 @@ public class InquiryDAOImpl implements InquiryDAO {
 		return sqlSession.selectOne(namespace + ".inquiryListCount", isc);
 	}
 
+	//읽기 페이지
+	@Override
+	public InquiryVO inquiryRead(InquiryVO ivo) {
+		return sqlSession.selectOne(namespace + ".inquiryRead", ivo);
+	}
+
 	@Override
 	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO) {
 		return sqlSession.selectOne(namespace + ".inquiryDetailQ", inquiryVO);
@@ -52,8 +58,8 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public int inquiryDeleteA(InquiryVO inquiryVO) {
 		return sqlSession.delete(namespace + ".inquiryDeleteA", inquiryVO);
 	}
-	
-	//글쓰기
+
+	// 글쓰기
 	@Override
 	public int inquiryInsert(InquiryVO ivo) throws Exception {
 		return sqlSession.insert(namespace + ".qnaWrite", ivo);
@@ -70,12 +76,4 @@ public class InquiryDAOImpl implements InquiryDAO {
  * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
  * TODO Auto-generated method stub return sqlSession.selectOne(namespace +
  * ".read", ivo); }
- * 
- * @Override public int inquiryUpdate(InquiryVO ivo) throws Exception { // TODO
- * Auto-generated method stub return sqlSession.update(namespace + ".update",
- * ivo); }
- * 
- * @Override public int inquiryDelete(Integer inquiryNumber) throws Exception {
- * // TODO Auto-generated method stub return sqlSession.delete(namespace +
- * ".delete", inquiryNumber); }
  */

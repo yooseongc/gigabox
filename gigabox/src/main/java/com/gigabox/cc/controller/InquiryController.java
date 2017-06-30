@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gigabox.cc.service.InquiryService;
 import com.gigabox.cc.vo.InquirySearchCriteria;
 import com.gigabox.cc.vo.InquiryVO;
+import com.gigabox.cc.vo.NoticeVO;
 import com.gigabox.common.PageMaker;
 import com.gigabox.user.service.UserService;
 import com.gigabox.user.vo.UserVO;
@@ -94,6 +95,23 @@ public class InquiryController {
 		return "/cc/qna/qnaList";
 	}
 
+	/* 글 상세보기 구현 */
+
+	@RequestMapping(value = "/qnaRead", method = RequestMethod.GET)
+	public String qnaRead(@ModelAttribute InquiryVO ivo, Model model) {
+		logger.info("qnaRead 호출성공");
+		logger.info("서버로부터 받은 NoticeVO= " + ivo.getInquiryNumber());
+
+		InquiryVO read = new InquiryVO();
+		read = inquiryService.inquiryRead(ivo);
+
+		if (read != null && (!read.equals(""))) {
+			read.setInquiryContent(read.getInquiryContent().toString().replaceAll("\n", "<br>"));
+		}
+		model.addAttribute("inquiryRead", read);
+		return "/cc/qna/qnaRead";
+	}
+
 	// 글쓰기폼
 	@Transactional
 	@RequestMapping(value = "/qnaWrite", method = RequestMethod.GET)
@@ -107,44 +125,6 @@ public class InquiryController {
 		return "cc/qna/qnaWrite";
 
 	}
-
-	// 글쓰기 구현
-	/*@RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
-	public String boardInsert(@ModelAttribute("isc") InquirySearchCriteria isc, Model model) {
-		logger.info("=======================================================");
-		logger.info("INQUIRY 글쓰기 호출");
-
-		int result = 0;
-		String url = "";
-
-		result = inquiryService.inquiryInsertA(inquiryVO);
-		if (result == 1) {
-			url = "/board/boardList.do";
-		}
-		return "redirect:" + url;
-	}*/
-
-	/*
-	 * @RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
-	 * public String boardInsert(@ModelAttribute BoardVO bvo, HttpServletRequest
-	 * request) throws IllegalStateException, IOException {
-	 * logger.info("board 호출 성공"); logger.info("fileName: " +
-	 * bvo.getFile().getOriginalFilename()); logger.info("b_title: " +
-	 * bvo.getB_title());
-	 * 
-	 * int result = 0; String url = "";
-	 * 
-	 * String b_file = FileUploadUtil.fileUpload(bvo.getFile(), request);
-	 * bvo.setB_file(b_file);
-	 * 
-	 * result = boardService.boardInsert(bvo); if (result == 1) { url =
-	 * "/board/boardList.do"; } return "redirect:" + url; }
-	 */
-
-	////////////////////
-	////////////////////
-	///////////////////
-	//////////////////
 
 	@Transactional
 	@ResponseBody

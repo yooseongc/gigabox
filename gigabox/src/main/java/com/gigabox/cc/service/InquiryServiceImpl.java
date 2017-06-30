@@ -28,6 +28,12 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.inquiryListCount(isc);
 	}
 
+	//읽기 페이지
+	@Override
+	public InquiryVO inquiryRead(InquiryVO ivo) {
+		return inquiryDao.inquiryRead(ivo);
+	}
+
 	@Override
 	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO) {
 		return inquiryDao.inquiryDetailQ(inquiryVO);
@@ -53,25 +59,15 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.inquiryDeleteA(inquiryVO);
 	}
 
-	//글쓰기
+	// 글쓰기
 	@Override
 	public int inquiryInsert(InquiryVO ivo) throws Exception {
 		return inquiryDao.inquiryInsert(ivo);
 	}
 
 }
+
 /*
  * @Override public List<InquiryVO> inquiryList() throws Exception { // TODO
  * Auto-generated method stub return inquiryDao.inquiryList(); }
- * 
- *
- * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
- * TODO Auto-generated method stub return inquiryDao.inquiryRead(ivo); }
- * 
- * @Override public int inquiryUpdate(InquiryVO ivo) throws Exception { // TODO
- * Auto-generated method stub return inquiryDao.inquiryUpdate(ivo); }
- * 
- * @Override public int inquiryDelete(Integer inquiryNumber) throws Exception {
- * // TODO Auto-generated method stub return
- * inquiryDao.inquiryDelete(inquiryNumber); }
  */

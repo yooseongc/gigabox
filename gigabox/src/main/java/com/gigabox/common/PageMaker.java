@@ -8,13 +8,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class PageMaker {
 
-	private int totalCount; //
+	private int totalCount; //f레코드 수
 	private int startPage; // 시작 페이지 번호
 	private int endPage; // 끝 페이지 번호
 	private boolean prev; // 이전
 	private boolean next; // 다음
 
-	private int displayPageNum = 10; //화면에 보여질 목록 갯수
+	private int displayPageNum = 10; //화면에 보여질 목록 개수
 
 	private Criteria criteria;
 

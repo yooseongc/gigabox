@@ -41,6 +41,8 @@ public class FaqController {
 		logger.info("PAGE END= " + fsc.getPageEnd());
 
 		model.addAttribute("faqList", faqService.faqList(fsc));
+		
+		System.out.println(fsc.getSearchType()+"검색 검색 검새걱검색 검색검색");
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(fsc);

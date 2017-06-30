@@ -31,15 +31,15 @@
 		<if test="searchType == 'c'.toString()">
 			AND NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'tc'.toString()">
+		<!-- <if test="searchType == 'tc'.toString()">
 			AND (NOTICE_TITLE LIKE '%' || #{searchKeyword} || '%'
 			OR NOTICE_CONTENT LIKE '%' || #{searchKeyword} || '%' )
-		</if>
+		</if> -->
 		<if test="searchType == 'b'.toString()">
 			AND NOTICE_BRANCHNAME LIKE '%' || #{searchKeyword} || '%'
 		</if>
-
-		ORDER BY NOTICE_STATUS DESC, NOTICE_REGISTERDATE DESC
+			
+		ORDER BY NOTICE_STATUS DESC, NOTICE_REGISTERDATE DESC, NOTICE_NUMBER DESC
 		) LIST
 		)
 		<where>

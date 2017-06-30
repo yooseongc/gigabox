@@ -55,16 +55,16 @@
 					<div class="pull-right">
 						<form class="form-inline">
 							<div class="form-group">
-								<select class="btn-primary form-control">
-									<option value="t"></option>
-									<option value="c"></option>
-									<option value="tc"></option>
-									<option value="b"></option>
+								<select id="searchType" name="searchType"
+									class="btn-primary form-control">
+									<option value="t">제목</option>
+									<option value="c">내용</option>
 								</select>
 							</div>
-							<input type="text" id="searchKeyword" title="검색어 입력"
-								placeholder="검색어를 입력하세요" maxlength="20">
-							<button type="submit" class="btn btn-default">
+							<input type="text" id="searchKeyword" class="form-control"
+								title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
+							<button type="submit" id="noticeSearchBtn"
+								class="btn btn-default">
 								<i class="glyphicon glyphicon-search"></i>
 							</button>
 						</form>
@@ -74,7 +74,7 @@
 						<thead>
 							<tr>
 								<th style="text-align: center;">NO</th>
-								<th style="text-align: center;">영화관</th>
+								<th style="text-align: center;">지점</th>
 								<th style="text-align: center;">제목</th>
 								<th style="text-align: center;">등록일</th>
 							</tr>
@@ -86,7 +86,7 @@
 									<td style="text-align: center;">${noticeItem.noticeBranchname}</td>
 									<c:if test="${noticeItem.noticeStatus == '중요'}">
 										<td style="font-weight: bold;"><span
-											class="label label-danger">공지</span><a
+											class="label label-danger">공지</span>&nbsp;&nbsp;<a
 											href="/cc/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
 											title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
 									</c:if>
@@ -139,29 +139,49 @@
 	<c:import url="/templates/footer.jsp" />
 
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					if ('${param.searchType}' != '') {
-						$("#searchType").val('${param.searchType}');
-					}
-					if ('${param.searchKeyword}' != '') {
-						$("#searchKeyword").val('${param.searchKeyword}');
-					}
+		$(document).ready(function() {
+			/* if ('${param.searchType}' != '') {
+				$("#searchType").val('${param.searchType}');
+			}
+			if ('${param.searchKeyword}' != '') {
+				$("#searchKeyword").val('${param.searchKeyword}');
+			}
 
-					$('#noticeSearchButton').on(
-							"click",
-							function(event) {
-								event.preventDefault();
-								var queryString = "/notice/noticeList"
-										+ '${pageMaker.makeQuery(1)}'
-										+ "&searchType="
-										+ $("#searchType").val()
-										+ "&searchKeyword="
-										+ $('#searchKeyword').val();
+			$('#noticeSearchButton').on(
+					"click",
+					function(event) {
+						event.preventDefault();
+						var queryString = "/notice/noticeList"
+								+ '${pageMaker.makeQuery(1)}'
+								+ "&searchType="
+								+ $("#searchType").val()
+								+ "&searchKeyword="
+								+ $('#searchKeyword').val();
 
-								self.location = queryString;
-							});
-				});
+						self.location = queryString;
+					}); */
+			/* 검색 대상이 변경될 때마다 처리 이벤트 */
+			$("#searchType").change(function() {
+				if ($("#searchType").val() == "all") {
+					$("#searchKeyword").val("글 목록 전체");
+				} else if ($("#searchType").val() != "all") {
+					$("#searchKeyword")
+					val("");
+					$("#searchKeyword").focus();
+				}
+			});
+
+			/* 검색 버튼 클릭시 처리 이벤트 */
+			$("#noticeSearchBtn").click(function() {
+				if ($("#searchType").val() == "all") {
+					$("#searchKeyword").val("");
+				} else {
+					if (!chkSubmit($('#searchKeyword'), "검색어를"))
+						return;
+				}
+				goPage(1);
+			});
+		});
 	</script>
 </body>
 </html>

@@ -30,8 +30,8 @@
 <body>
 
 	<!-- header -->
-	<c:import url="/templates/header.jsp"/>
-	
+	<c:import url="/templates/header.jsp" />
+
 	<!-- Page Content -->
 	<div class="container">
 
@@ -55,7 +55,8 @@
 		<div class="pull-right">
 			<form class="form-inline">
 				<div class="form-group">
-					<select id="searchType" class="btn-primary form-control">
+					<select id="searchType" name="searchType"
+						class="btn-primary form-control">
 						<option value="mileage">마일리지</option>
 						<option value="reservation">영화예매</option>
 						<option value="payment">결제</option>
@@ -65,11 +66,12 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="text" id="searchKeyword" class="form-control"
-						title="검색어 입력" placeholder="검색어를 입력하세요" maxlength="20">
+					<input type="text" id="searchKeyword" name="searchKeyword"
+						class="form-control" title="검색어 입력" placeholder="검색어를 입력하세요"
+						maxlength="20">
 				</div>
 				<button class="btn btn-default" type="submit" id="faqSearchBtn">
-					<i class="glyphicon glyphicon-search"></i>
+					<i class="fa fa-search"></i>
 				</button>
 			</form>
 		</div>
@@ -80,8 +82,9 @@
 			<div class="col-lg-12">
 				<table class="table panel panel-default">
 					<thead>
-						<tr>
-							<td style="font-size: 1.2em; text-align: center; width: 230px; margin-right: 50px;">분류</td>
+						<tr id="searchFaq">
+							<td
+								style="font-size: 1.2em; text-align: center; width: 230px; margin-right: 50px;">분류</td>
 							<td style="font-size: 1.2em; text-align: center;">제목</td>
 						</tr>
 					</thead>
@@ -91,9 +94,9 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<form class="form-inline">
-									<div class="form-group" style="text-align: center; font-size: 1.2em; width: 200px; margin-right: 50px;">
-										${faqItem.faqType}
-									</div>
+									<div class="form-group"
+										style="text-align: center; font-size: 1.2em; width: 200px; margin-right: 50px;">
+										${faqItem.faqType}</div>
 									<div class="form-group">
 										<a class="accordion-toggle" data-toggle="collapse"
 											data-parent="#accordion" href="#${faqItem.faqNumber}">${faqItem.faqTitle}</a>
@@ -138,35 +141,31 @@
 
 	</div>
 	<!-- /.container -->
-	
+
 	<!-- footer -->
-	<c:import url="/templates/footer.jsp"/>
+	<c:import url="/templates/footer.jsp" />
 
-	
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					if ('${param.searchType}' != '') {
-						$("#searchType").val('${param.searchType}');
-					}
-					if ('${param.searchKeyword}' != '') {
-						$("#searchKeyword").val('${param.searchKeyword}');
-					}
+		$(document).ready(function() {
+			/* 검색 대상이 변경될 때마다 처리 이벤트 */
+			$("#searchType").change(function() {
+				if ($("#searchType").val() == "all") {
+					$("#searchKeyword").val("글 목록 전체");
+				} else if ($("#searchType").val() != "all") {
+					$("#searchKeyword").val("");
+					$("#searchKeyword").focus();
+				}
+			});
+			/* 검색 버튼 클릭시 처리 이벤트 */
+			$("#faqSearchBtn").click(function() {
+				if ($("#searchType").val() == "all") {
+					$("#searchKeyword").val("");
 
-					$('#faqSearchButton').on(
-							"click",
-							function(event) {
-								event.preventDefault();
-								var queryString = "/faq/faqList"
-										+ '${pageMaker.makeQuery(1)}'
-										+ "&searchType="
-										+ $("#searchType").val()
-										+ "&searchKeyword="
-										+ $('#searchKeyword').val();
-
-								self.location = queryString;
-							});
-				});
+					return;
+				}
+				goPage(1);
+			});
+		});
 	</script>
 
 </body>

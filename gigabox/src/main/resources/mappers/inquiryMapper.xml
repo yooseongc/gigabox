@@ -8,7 +8,7 @@
 		<result property="inquiryNumber" column="INQUIRY_NUMBER" />
 		<result property="inquiryGroupnumber" column="INQUIRY_GROUPNUMBER" />
 		<result property="inquiryTitle" column="INQUIRY_TITLE" />
-		<result property="inquiryCotnent" column="INQUIRY_CONTENT" />
+		<result property="inquiryContent" column="INQUIRY_CONTENT" />
 		<result property="inquiryRegisterdate" column="INQUIRY_REGISTERDATE" />
 		<result property="inquiryQora" column="INQUIRY_QORA" />
 	</resultMap>
@@ -16,55 +16,52 @@
 	<select id="inquiryList" resultType="inquiry" resultMap="inquiryResultMap">
 		SELECT *
 		FROM
-		(
-		SELECT LIST.*, ROWNUM AS RNUM
-		FROM
-		(
-		SELECT INQUIRY_NUMBER,
-		USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
-		INQUIRY_REGISTERDATE,
-		INQUIRY_GROUPNUMBER, INQUIRY_QORA
-		FROM TBL_INQUIRY
-		WHERE INQUIRY_QORA =
-		'Q'
-
-		<!-- 답변 미완료 -->
-		<if test="inquiryType == 'Q'.toString()">
-			AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS
-			TEMP_GROUPNUMBER
-			FROM TBL_INQUIRY
-			GROUP BY INQUIRY_GROUPNUMBER
-			HAVING
-			COUNT(INQUIRY_GROUPNUMBER) = 1 )
-		</if>
-		<!-- 답변 완료 -->
-		<if test="inquiryType == 'A'.toString()">
-			AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS
-			TEMP_GROUPNUMBER
-			FROM TBL_INQUIRY
-			GROUP BY INQUIRY_GROUPNUMBER
-			HAVING
-			COUNT(INQUIRY_GROUPNUMBER) = 2 )
-		</if>
-		<if test="searchType == 't'.toString()">
-			AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
-		</if>
-		<if test="searchType == 'c'.toString()">
-			AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		</if>
-		<if test="searchType == 'tc'.toString()">
-			AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
-			OR
-			INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )
-		</if>
-
-		ORDER BY INQUIRY_GROUPNUMBER DESC
-		) LIST
+			(
+				SELECT LIST.*, ROWNUM AS RNUM
+				FROM
+				(
+					SELECT INQUIRY_NUMBER,
+						USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
+						INQUIRY_REGISTERDATE,
+						INQUIRY_GROUPNUMBER, INQUIRY_QORA
+					FROM TBL_INQUIRY
+					WHERE 1=1 
+					<!--  답변 미완료 
+					<if test="inquiryType == 'Q'.toString()">
+						AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS
+						TEMP_GROUPNUMBER
+						FROM TBL_INQUIRY
+						GROUP BY INQUIRY_GROUPNUMBER
+						HAVING
+						COUNT(INQUIRY_GROUPNUMBER) = 1 )
+					</if>
+					답변 완료
+					<if test="inquiryType == 'A'.toString()">
+						AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS
+						TEMP_GROUPNUMBER
+						FROM TBL_INQUIRY
+						GROUP BY INQUIRY_GROUPNUMBER
+						HAVING
+						COUNT(INQUIRY_GROUPNUMBER) = 2 )
+					</if> -->
+					<if test="searchType == 't'.toString()">
+						AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="searchType == 'c'.toString()">
+						AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="searchType == 'tc'.toString()">
+						AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
+						OR
+						INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )
+					</if>
+					ORDER BY INQUIRY_GROUPNUMBER DESC, INQUIRY_QORA DESC
+			) LIST
 		)
-		<where>
-			RNUM BETWEEN #{pageStart} AND #{pageEnd}
-		</where>
-
+	<where>
+		RNUM BETWEEN #{pageStart} AND #{pageEnd}
+	</where>
+	
 	</select>
 
 	<select id="inquiryListCount" resultType="int">
@@ -115,18 +112,34 @@
 		)
 	</select>
 
-	<select id="inquiryDetailQ" parameterType="int" resultType="inquiry"
+
+
+
+	<!-- 게시판 글 상세조회 -->
+	<select id="inquiryRead" parameterType="inquiry" resultType="inquiry"
 		resultMap="inquiryResultMap">
-		SELECT INQUIRY_NUMBER, USER_NUMBER, INQUIRY_TITLE,
-		INQUIRY_CONTENT, INQUIRY_REGISTERDATE,
-		INQUIRY_GROUPNUMBER,
-		INQUIRY_QORA
-		FROM TBL_INQUIRY
-		WHERE INQUIRY_NUMBER = #{inquiryNumber}
-		AND INQUIRY_QORA = 'Q'
+	<![CDATA[
+	 SELECT INQUIRY_TITLE
+	,INQUIRY_REGISTERDATE
+	,INQUIRY_CONTENT, USER_NUMBER  
+	FROM TBL_INQUIRY 
+	WHERE INQUIRY_NUMBER = #{inquiryNumber} 
+	]]>
 	</select>
-		
-	<select id="inquiryDetailA" parameterType="int" resultType="inquiry"
+
+
+
+	<select id="inquiryDetail" parameterType="int" resultType="inquiry"
+		resultMap="inquiryResultMap">
+		SELECT INQUIRY_NUMBER, USER_NUMBER, INQUIRY_TITLE, 
+		INQUIRY_CONTENT, INQUIRY_REGISTERDATE, 
+		INQUIRY_GROUPNUMBER, 
+		INQUIRY_QORA 
+		FROM TBL_INQUIRY 
+		WHERE INQUIRY_NUMBER = #{inquiryNumber} 
+	</select>
+
+	<!-- <select id="inquiryDetail" parameterType="int" resultType="inquiry"
 		resultMap="inquiryResultMap">
 		SELECT INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
 		INQUIRY_REGISTERDATE,
@@ -134,9 +147,9 @@
 		FROM TBL_INQUIRY
 		WHERE INQUIRY_GROUPNUMBER = #{inquiryGroupnumber} AND INQUIRY_QORA =
 		'A'
-	</select>
+	</select> -->
 
-	<insert id="inquiryInsertA" parameterType="inquiry">
+	<insert id="inquiryInsert" parameterType="inquiry">
 		INSERT INTO
 		TBL_INQUIRY (
 		INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
@@ -147,14 +160,14 @@
 		#{inquiryGroupnumber}, 'A' )
 	</insert>
 
-	<update id="inquiryUpdateA" parameterType="inquiry">
+	<update id="inquiryUpdate" parameterType="inquiry">
 		UPDATE TBL_INQUIRY
 		SET
 		INQUIRY_TITLE = #{inquiryTitle}, INQUIRY_CONTENT = #{inquiryContent}
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
 	</update>
 
-	<delete id="inquiryDeleteA" parameterType="inquiry">
+	<delete id="inquiryDelete" parameterType="inquiry">
 		DELETE FROM
 		TBL_INQUIRY
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}

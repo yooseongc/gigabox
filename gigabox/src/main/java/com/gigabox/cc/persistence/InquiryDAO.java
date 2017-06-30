@@ -29,4 +29,7 @@ public List<InquiryVO> inquiryList(InquirySearchCriteria isc);
 	public int inquiryUpdateA(InquiryVO inquiryVO);
 	
 	public int inquiryDeleteA(InquiryVO inquiryVO);
+	
+	//읽기 페이지
+	public InquiryVO inquiryRead(InquiryVO ivo);
 }
