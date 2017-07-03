@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="tag" uri="/WEB-INF/tld/movieRatingTag.tld"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
 <html>
@@ -22,19 +21,6 @@
 <script src="/resources/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/js/bootstrap.min.js"></script>
-
-<!-- handlebar -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js">
-	
-</script>
-
-<!-- bootstrap star rating -->
-<link rel="stylesheet"
-	href="/resources/bootstrap-star-rating/css/star-rating.css" media="all"
-	rel="stylesheet" type="text/css" />
-<script src="/resources/bootstrap-star-rating/js/star-rating.js"
-	type="text/javascript"></script>
 
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -77,7 +63,7 @@
 						usemap="#gudieBtn" width="100%">
 					<map name="gudieBtn">
 						<area shape="rect" coords="845, 1138, 1105, 1205"
-							href="http://naver.com">
+							href="/reservation/resvMain">
 					</map>
 				</div>
 			</div>

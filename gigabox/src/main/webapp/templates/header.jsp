@@ -38,7 +38,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
                         <a href="/cinema/branchList" style="height: 60px; width: 170px;">영화관</a>
                     </li>
                     <li>
-                        <a href="javascript:loadReservationModal();" style="height: 60px; width: 170px;">빠른 예매</a>
+                        <a href="/reservation/resvMain" style="height: 60px; width: 170px;">빠른 예매</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width: 170px;">전체 메뉴 <b class="caret"></b></a>
@@ -64,7 +64,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            <h4 class="title  margin-top-20"><i class="fa fa-ticket"></i> 예매</h4>
 					                            <ul class="unstyled">
 					                                <li><a href="/reservation/resvInfo">예매 안내</a></li>
-					                                <li><a href="/?pageAction=resv">빠른 예매</a></li>
+					                                <li><a href="/reservation/resvMain">빠른 예매</a></li>
 					                            </ul>
 												
 												<h4 class="title margin-top-20"><i class="fa fa-info-circle"></i> 고객센터</h4>
@@ -197,8 +197,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
 			console.log(parameter);
 			if (parameter == 'login') {
-				alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
-				$("#loginDropDown").prop("aria-expanded", "true");
+				//alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
+				$("#loginDropDown").trigger("click");
 			}
 			
 			

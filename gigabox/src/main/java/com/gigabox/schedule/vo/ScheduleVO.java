@@ -18,6 +18,7 @@ public class ScheduleVO {
 	private String movieReleasedate;
 	private String movieStatus;
 	private int movieScreentime;
+	private String movieRating;
 	
 	// 영화관, 상영관 관련
 	private String movieroomName;
@@ -129,15 +130,23 @@ public class ScheduleVO {
 		return "ScheduleVO [scheduleNumber=" + scheduleNumber + ", movieNumber=" + movieNumber + ", movieroomNumber="
 				+ movieroomNumber + ", scheduleType=" + scheduleType + ", scheduleStart=" + scheduleStart
 				+ ", scheduleEnd=" + scheduleEnd + ", movieTitle=" + movieTitle + ", movieType=" + movieType
-				+ ", movieReleasedate=" + movieReleasedate + ", movieScreentime=" + movieScreentime + ", movieroomName="
-				+ movieroomName + ", movieroom2D=" + movieroom2D + ", movieroom3D=" + movieroom3D + ", movieroom4D="
-				+ movieroom4D + ", branchNumber=" + branchNumber + ", branchName=" + branchName + "]";
+				+ ", movieReleasedate=" + movieReleasedate + ", movieStatus=" + movieStatus + ", movieScreentime="
+				+ movieScreentime + ", movieRating=" + movieRating + ", movieroomName=" + movieroomName
+				+ ", movieroom2D=" + movieroom2D + ", movieroom3D=" + movieroom3D + ", movieroom4D=" + movieroom4D
+				+ ", branchNumber=" + branchNumber + ", branchName=" + branchName + "]";
 	}
+	
 	public String getMovieStatus() {
 		return movieStatus;
 	}
 	public void setMovieStatus(String movieStatus) {
 		this.movieStatus = movieStatus;
+	}
+	public String getMovieRating() {
+		return movieRating;
+	}
+	public void setMovieRating(String movieRating) {
+		this.movieRating = movieRating;
 	}
 	
 }

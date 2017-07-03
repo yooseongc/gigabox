@@ -42,6 +42,9 @@
 		<interceptor>
 			<mapping path="/user"/>
 			<mapping path="/user/**"/>
+			<mapping path="/reservation/resvMain"/>
+			<mapping path="/reservation/resvSeat"/>
+			<mapping path="/reservation/resvPayment"/>
 			<exclude-mapping path="/user/login"/>
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/logout"/>
