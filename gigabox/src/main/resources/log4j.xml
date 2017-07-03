@@ -29,6 +29,9 @@
 	<logger name="com.gigabox.user.controller">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.branch.controller">
+		<level value="info" />
+	</logger>
 	<logger name="com.gigabox.interceptor">
 		<level value="info" />
 	</logger>

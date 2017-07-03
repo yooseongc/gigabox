@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.crypto.spec.IvParameterSpec;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gigabox.cc.service.InquiryService;
 import com.gigabox.cc.vo.InquirySearchCriteria;
 import com.gigabox.cc.vo.InquiryVO;
-import com.gigabox.cc.vo.NoticeVO;
 import com.gigabox.common.PageMaker;
 import com.gigabox.user.service.UserService;
 import com.gigabox.user.vo.UserVO;
