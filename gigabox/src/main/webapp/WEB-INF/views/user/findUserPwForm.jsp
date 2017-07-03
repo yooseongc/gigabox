@@ -47,12 +47,12 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					회원 서비스 <small>개인정보 수정</small>
+					GIGABOX<small>정보찾기</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>
 					<li>회원 서비스</li>
-					<li class="active">비밀번호 변경</li>
+					<li class="active">비밀번호 찾기(변경)</li>
 				</ol>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 					<div class="page-header">
 						<h1>비밀번호 변경 </h1>
 					</div>
-					<form class="form-horizontal" id="changePwForm">
+					<form class="form-horizontal" id="findUserPwForm">
 						<fieldset>
 							<div class="alert alert-danger center-block" style="width: 400px;" id="errorMessage"></div>
 						
@@ -73,21 +73,14 @@
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
 							<div class="col-sm-6">
 									<input class="form-control" id="userId" type="text"
-									name="userId" maxlength="20" value="${userInfo.userId }" readonly="readonly">
+									name="userId" maxlength="20" value="${findUserPw.userId }" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label" for="userPw">현재 비밀번호</label>
+							<label class="col-sm-3 control-label" for="userPw">새 비밀번호</label>
 							<div class="col-sm-6">
-									<input class="form-control" id="userPw" type="password"
-									name="userPw" maxlength="12">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="newPw">새 비밀번호</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="newPw"
-									name="newPw" type="password" placeholder="영문소문자, 숫자 8자 이상" maxlength="12">
+								<input class="form-control" id="userPw"
+									name="userPw" type="password" placeholder="영문소문자, 숫자 8자 이상" maxlength="12">
 							</div>
 						</div>
 						<div class="form-group">
@@ -138,21 +131,12 @@
 	
 		$(document).ready(function() {
 			$("#errorMessage").hide();
-		 	
-			//수정취소버튼 클릭시 메인으로
-			 $('#changePwCancleBtn').click(function(e){
-				e.preventDefault();
-				location.href ="/";
-			});
 			
 		 	//변경완료 버튼 클릭시
 		 	$("#changePwSubmitBtn").click(function(e) {
 		 		e.preventDefault();
 				
-				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
-					return;
-				}
-				if ($("#newPw").val() != $("#newPwCheck").val()){
+				if ($("#userPw").val() != $("#newPwCheck").val()){
 					$("#errorMessage").text("새 비밀번호가 일치하지 않습니다.");
 					$("#errorMessage").show();
 					return;
@@ -160,23 +144,18 @@
 				
 				$.ajax({
 					type: "POST",
-					url: "/user/changePwForm",
-					data: $("#changePwForm").serialize(),
+					url: "/user/findUserPwForm",
+					data: $("#findUserPwForm").serialize(),
 					error: function() {
 						$("#errorMessage").text("시스템 오류입니다.");
 						$("#errorMessage").show();
 					},
 					success: function(resultData) {
-						if (resultData.message == 'PW-WRONG') {
-							$("#errorMessage").text("비밀번호가 일치하지 않습니다.");
-							$("#errorMessage").show();
-							$("#userPw").val("");
-							$("#userPw").focus();
-						} else if (resultData.message == 'Check-SUCCESS') {
+						if (resultData.message == 'CHANGE-SUCCESS') {
 							console.log("change success!!!");
-							$("#changePwForm").submit();
+							$("#findUserPwForm").submit();
 							alert("비밀번호가 변경되었습니다.")
-							location.href ="/";
+							location.href ="/user/logout";
 						} else if (resultData.message == 'ERROR') {
 							$("#errorMessage").text("시스템 오류입니다.");
 							$("#errorMessage").show();
@@ -184,6 +163,12 @@
 					}
 				});
 		 	});
+		 	
+		 	//취소버튼 클릭시 메인으로
+			 $('#changePwCancleBtn').click(function(e){
+				e.preventDefault();
+				location.href ="/";
+			});
 		});
 	</script>
 

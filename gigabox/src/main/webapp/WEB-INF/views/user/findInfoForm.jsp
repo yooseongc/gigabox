@@ -50,7 +50,8 @@
 					GIGABOX <small>정보찾기</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/">메인</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">아이디/비밀번호찾기</li>
 				</ol>
 			</div>
@@ -68,7 +69,6 @@
 						<fieldset>
 							<div class="alert alert-danger center-block"
 								style="width: 400px;" id="errorMessage1"></div>
-							찾는 게 [${userInformation.userId }] 이거 맞아?
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="userName">이름</label>
 								<div class="col-sm-6">
@@ -95,11 +95,10 @@
 
 							<div class="form-group">
 								<div class="col-sm-12 text-center">
-									<button id="findUserIdSubmitBtn" class="btn btn-primary"
-										type="submit">
-										ID찾기<i class="fa fa-check spaceLeft"></i>
+									<button id="findUserIdSubmitBtn" class="btn btn-primary">
+										아이디 찾기<i class="fa fa-check spaceLeft"></i>
 									</button>
-									<button id="cancleBtn1" class="btn btn-danger" type="submit">
+									<button id="cancleBtn1" class="btn btn-danger">
 										취소<i class="fa fa-times spaceLeft"></i>
 									</button>
 								</div>
@@ -114,7 +113,7 @@
 					<div class="page-header">
 						<h1>비밀번호 찾기</h1>
 					</div>
-					<form class="form-horizontal" id="findUserPwForm">
+					<form class="form-horizontal" id="findPwForm">
 						<fieldset>
 							<div class="alert alert-danger center-block"
 								style="width: 400px;" id="errorMessage2"></div>
@@ -129,7 +128,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="userName">이름</label>
 								<div class="col-sm-6">
-									<input class="form-control" id="userName" name="userName"
+									<input class="form-control" id="userName1" name="userName"
 										type="text">
 								</div>
 							</div>
@@ -137,7 +136,7 @@
 								<label class="col-sm-3 control-label" for="userTel">휴대폰
 									번호</label>
 								<div class="col-sm-6">
-									<input class="form-control" id="userTel" name="userTel"
+									<input class="form-control" id="userTel1" name="userTel"
 										type="text" placeholder="- 없이 입력해 주세요." maxlength="11">
 								</div>
 							</div>
@@ -146,7 +145,7 @@
 								<div class="col-sm-12 text-center">
 									<button id="findUserPwSubmitBtn" class="btn btn-primary"
 										type="submit">
-										PW찾기<i class="fa fa-check spaceLeft"></i>
+										비밀번호찾기<i class="fa fa-check spaceLeft"></i>
 									</button>
 									<button id="cancleBtn2" class="btn btn-danger" type="submit">
 										취소<i class="fa fa-times spaceLeft"></i>
@@ -167,7 +166,7 @@
 	<!-- Footer -->
 	<c:import url="/templates/footer.jsp" />
 	
-	<!-- Modal -->
+	<!-- Modal(Success) -->
 	<div class="modal fade" id="findIdModal" tabindex="-1" role="dialog"
 		aria-labelledby="finIdModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -179,6 +178,56 @@
 					<form id="findUserId">
 						<strong>회원님의 아이디는  ${userInformation.userId }입니다. 가입일: ${userInformation.userReg }
 						</strong> <br> <br>
+						<div class="form-group" style="text-align: center;">
+						<button class="btn btn-primary" data-dismiss="modal">확인</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer" style="text-align: center;"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	<!-- Modal(failed) -->
+	<div class="modal fade" id="failedIdModal" tabindex="-1" role="dialog"
+		aria-labelledby="failedIdModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">알림</h3>
+				</div>
+				<div class="modal-body">
+					<form>
+						<strong>존재하지 않는 회원정보 입니다.</strong>
+						<br><br>
+						<div class="form-group" style="text-align: center;">
+						<button class="btn btn-primary" data-dismiss="modal">확인</button>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer" style="text-align: center;"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+	<!-- Modal(error) -->
+	<div class="modal fade" id="failedPwModal" tabindex="-1" role="dialog"
+		aria-labelledby="failedPwModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">알림</h3>
+				</div>
+				<div class="modal-body">
+					<form>
+						<strong>존재하지 않는 회원정보 입니다.</strong>
+						<br><br>
 						<div class="form-group" style="text-align: center;">
 						<button class="btn btn-primary" data-dismiss="modal">확인</button>
 						</div>
@@ -210,9 +259,38 @@
 			$("#errorMessage1").hide();
 			$("#errorMessage2").hide();
 			
+			if ('${alert}' == 'id') {
+				//찾은 아이디 출력 모달
+				$('#findIdModal').modal({
+					show : true,
+					backdrop : 'static',
+					keyboard : true
+				});
+			};
+			
+			if ('${alert}' == 'iderror') {
+				//존재하지 않는 회원정보 모달
+				$('#failedIdModal').modal({
+					show : true,
+					backdrop : 'static',
+					keyboard : true
+				});
+			};
+			
+			if ('${alert}' == 'pwerror') {
+				//에러 메시지 모달
+				$('#failedPwModal').modal({
+					show : true,
+					backdrop : 'static',
+					keyboard : true
+				});
+			};
+			
 			//ID찾기 버튼 클릭시
 			$("#findUserIdSubmitBtn").click(function(e) {
 				e.preventDefault();
+				
+				//빈칸 검사
 				if (!formCheck($("#userName"), "이름을", $("#errorMessage1"))) {
 					$("#errorMessage1").removeClass("hide");
 					return;
@@ -225,43 +303,35 @@
 					$("#errorMessage1").removeClass("hide");
 					return;
 				}
-				/* $.ajax({
-					url: "/user/findUserIdForm",
-					type: "POST",
-					data: $("#findUserIdForm").serialize(),
-					error: function() {
-						$("#errorMessageHeader").text("시스템 오류입니다.");
-						$("#errorMessageHeader").show();
-					},
-					success: function(resultData) {
-						if (resultData.message == 'NOT FIND-ID') {
-							$("#errorMessageHeader").text("회원정보가 존재하지 않습니다.");
-							$("#errorMessageHeader").removeClass("hide");
-							$("#userName").focus();
-						} else if (resultData.message == 'FIND-ID') {
-							console.log("FIND SUCCESS!!!");
-							$("#findUserIdForm").submit();
-						} else if (resultData.message == 'ERROR') {
-							$("#errorMessageHeader").text("시스템 오류입니다.");
-							$("#errorMessageHeader").removeClass("hide");
-						}
-					} 
-					}); */
+				
 				
 				$("#findUserIdForm").attr("method", "POST");
 				$("#findUserIdForm").attr("action", "/user/findUserIdForm");
 				$("#findUserIdForm").submit(); 
 				
-				$('#findUserId').modal({
-					show : true,
-					backdrop : 'static',
-					keyboard : true
-				});
 			});
 			
-			//PW확인 버튼 클릭시
-			$("#").click(function(e) {
+			//PW찾기 버튼 클릭시
+			$("#findUserPwSubmitBtn").click(function(e) {
 				e.preventDefault();
+				
+			//빈칸 검사
+				if (!formCheck($("#userId"), "아이디를", $("#errorMessage2"))) {
+					$("#errorMessage2").removeClass("hide");
+					return;
+				}	
+				if (!formCheck($("#userName1"), "이름을", $("#errorMessage2"))) {
+					$("#errorMessage2").removeClass("hide");
+					return;
+				}
+				if (!formCheck($("#userTel1"), "휴대폰 번호를", $("#errorMessage2"))) {
+					$("#errorMessage2").removeClass("hide");
+					return;
+				}
+				
+				$("#findPwForm").attr("method", "POST");
+				$("#findPwForm").attr("action", "/user/findPwForm");
+				$("#findPwForm").submit(); 
 
 			});
 			

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <style type="text/css">
 ol.inline, ol.unstyled, ul.inline, ul.unstyled {
     margin-left: 0;
@@ -80,16 +81,16 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            <ul class="unstyled">
 					                                <li><a href="/user/findInfoForm">ID/PW 찾기</a></li>
 					                                <li><a href="/user/joinAgreeForm">회원 가입</a></li>
-					                                <li><a href="/user/modifyForm/${sessionScope.login.userId}">회원 정보 수정</a></li>
-					                                <li><a href="/user/userLeaveForm/${sessionScope.login.userId}">회원 탈퇴</a></li>
+					                                <li><a href="/user/modifyForm">회원 정보 수정</a></li>
+					                                <li><a href="/user/userLeaveForm">회원 탈퇴</a></li>
 					                            </ul>
 					                            
 					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/mypage/mileachInfo/${sessionScope.login.userId}">마일리지 정보</a></li>
-					                                <li><a href="/mypage/resvInfo/${sessionScope.login.userId}">예매 확인/취소</a></li>
-					                                <li><a href="/mypage/mymovie/${sessionScope.login.userId}">마이무비</a></li>
-					                                <li><a href="/mypage/qnaInfo/${sessionScope.login.userId}">문의 내역</a></li>
+					                                <li><a href="/mypage/mileachInfo">마일리지 정보</a></li>
+					                                <li><a href="/mypage/resvInfo">예매 확인/취소</a></li>
+					                                <li><a href="/mypage/mymovie">마이무비</a></li>
+					                                <li><a href="/mypage/qnaInfo">문의 내역</a></li>
 					                            </ul>
 					                        </div>
 					                    </div>
@@ -130,7 +131,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 			                                <button class="btn btn-lg btn-success btn-block" id="loginButton">로그인</button>
 										</div>
 										<div class="form-group">
-											<a href="/user/findPWForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
+											<a href="/user/findInfoForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
 											<a href="/user/joinAgreeForm" class="btn btn-default col-lg-6 m-t-md"> 회원가입</a>
 										</div>
 									</fieldset>
@@ -178,8 +179,6 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		$(document).ready(function() {
 			   
 			$("#errorMessageHeader").addClass("hide");
-			
-			
 		    
 			if ("${sessionScope.login.userId}" != "") {
 				$("#loginDropdownSpan").addClass("hide");
@@ -197,8 +196,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
 			console.log(parameter);
 			if (parameter == 'login') {
-				alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
-				$("#loginDropDown").prop("aria-expanded", "true");
+				//alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
+				$("#loginDropDown").trigger("click");
 			}
 			
 			
@@ -206,9 +205,11 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				e.preventDefault();
 				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));
 				if (!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader"))) {
+					$("#errorMessageHeader").removeClass("hide");
 					return;
 				}
 				if (!formCheckHeader($("#userPwHeader"), "비밀번호를", $("#errorMessageHeader"))) {
+					$("#errorMessageHeader").removeClass("hide");
 					return;
 				}
 				

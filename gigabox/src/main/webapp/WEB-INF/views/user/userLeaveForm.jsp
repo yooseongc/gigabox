@@ -51,7 +51,8 @@
 					회원 서비스 <small>회원 탈퇴</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/">회원 서비스</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">회원 탈퇴</li>
 				</ol>
 			</div>
@@ -71,8 +72,8 @@
 							<caption>${userInfo.userName }님회원정보</caption>
 							<thead>
 								<tr>
-									<th>이름</th>
 									<th>아이디</th>
+									<th>이름</th>
 									<th>전화번호</th>
 									<th>이메일</th>
 									<th>마일리지</th>
@@ -81,8 +82,8 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>${userInfo.userName }</td>
 									<td>${userInfo.userId }</td>
+									<td>${userInfo.userName }</td>
 									<td>${userInfo.userTel }</td>
 									<td>${userInfo.userEmail }</td>
 									<td>${userInfo.userMileage }</td>
