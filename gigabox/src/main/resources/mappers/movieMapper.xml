@@ -124,6 +124,11 @@
       			ON LIST.MOVIE_NUMBER = REVIEW.MOVIE_NUMBER
 			)
 	</select>
+	
+	<select id="movieList" resultType="movie">
+		select *
+		from tbl_movie
+	</select>
 
 
 </mapper>

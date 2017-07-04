@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gigabox.mapper.BookmarkMapper">
+
+	<resultMap id="bookmarkResultMap" type="bookmark">
+		<result property="bookmarkNumber" column="BOOKMARK_NUMBER" />
+		<result property="movieNumber" column="MOVIE_NUMBER" />
+		<result property="userNumber" column="USER_NUMBER" />
+	</resultMap>
+
+	<select id="bookmarkList" resultType="bookmark" resultMap="bookmarkResultMap">
+		SELECT *
+		from tbl_bookmark
+	</select>
+
+	<!-- <insert id="addBookmark" parameterType="bookmark"> </insert> -->
+
+</mapper>

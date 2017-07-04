@@ -110,8 +110,8 @@
 									<div class="panel panel-default text-center">
 										<div class="panel-heading">
 											<img
-												src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
-												class="img-responsive" width="270" height="376">
+												src="${movieItem.moviePoster }/${movieItem.movieCode}.jpg"
+												class="img-responsive" width="290" height="376">
 										</div>
 										<div class="panel-body">
 											<div>
@@ -441,8 +441,8 @@
 		</div>
 	</div>
 	{{/each}}
-	</script>
-
+	</script> 
+*/
 	<script>
 	// 더보기 카운트
 	var boxofficeReadMoreCount = 0;
@@ -539,7 +539,9 @@
 	});
 	
 	
+	
 	function viewDetail(movieNum) {
+		
 		$.ajax({
 			url : "/movie/movieDetail/"
 					+ movieNum,
@@ -670,7 +672,7 @@
 			},
 			success : function(result) {
 				printDataReadMore(result, target, $("#readMoreTemplate"));
-				if ((count+1)*8 >= totalCount ) {
+				if ((count+1)*4 >= totalCount ) {
 					target2.addClass("hide");
 				}
 				
