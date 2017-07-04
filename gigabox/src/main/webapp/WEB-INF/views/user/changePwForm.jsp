@@ -50,7 +50,8 @@
 					회원 서비스 <small>개인정보 수정</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/">회원 서비스</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">비밀번호 변경</li>
 				</ol>
 			</div>
@@ -152,7 +153,8 @@
 					return;
 				}
 				if ($("#newPw").val() != $("#newPwCheck").val()){
-					alert("새 비밀번호가 일치하지 않습니다");
+					$("#errorMessage").text("새 비밀번호가 일치하지 않습니다.");
+					$("#errorMessage").show();
 					return;
 				}
 				
@@ -171,7 +173,7 @@
 							$("#userPw").val("");
 							$("#userPw").focus();
 						} else if (resultData.message == 'Check-SUCCESS') {
-							console.log("chagne success!!!");
+							console.log("change success!!!");
 							$("#changePwForm").submit();
 							alert("비밀번호가 변경되었습니다.")
 							location.href ="/";

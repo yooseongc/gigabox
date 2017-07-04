@@ -9,12 +9,10 @@ public interface ScheduleService {
 
 	public List<ScheduleVO> scheduleList(ScheduleSearchCriteria ssc);
 	
-	public int scheduleListCount(ScheduleSearchCriteria ssc);
+	public List<ScheduleVO> scheduleBranchList(ScheduleSearchCriteria ssc);
+	
+	public List<ScheduleVO> scheduleMovieList(ScheduleSearchCriteria ssc);
 	
 	public ScheduleVO scheduleDetail(ScheduleVO scheduleVO);
-	
-	public int scheduleInsert(ScheduleVO scheduleVO);
-	
-	public int scheduleUpdate(ScheduleVO scheduleVO);
 	
 }

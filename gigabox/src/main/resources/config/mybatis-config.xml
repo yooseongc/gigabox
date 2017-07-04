@@ -25,6 +25,7 @@
 		
 		<typeAlias type="com.gigabox.movieroom.vo.MovieRoomVO" alias="movieRoom" />
 		<typeAlias type="com.gigabox.schedule.vo.ScheduleVO" alias="schedule" />
+		<typeAlias type="com.gigabox.reservation.vo.ReservationVO" alias="reservation" />
 		
 		<typeAlias type="com.gigabox.bookmark.vo.BookmarkVO" alias="bookmark"/>
 		

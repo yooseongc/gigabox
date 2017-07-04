@@ -47,7 +47,8 @@
 					회원 서비스 <small>회원 가입</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#">회원 서비스</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">회원 가입</li>
 				</ol>
 			</div>
@@ -110,7 +111,7 @@
 									name="userEmail" placeholder="이메일">
 									<span class="input-group-btn">
                                          <button class="btn btn-default" id="userEmailAuthBtn" >
-											<i class="fa fa-check spaceLeft"></i> &nbsp;&nbsp;이메일인증
+											<i class="fa fa-check spaceLeft"></i> &nbsp;&nbsp;이메일확인
 										</button>
                               		</span>
                               	</div>
@@ -324,7 +325,7 @@
 				}
 			});
 			
-			//이메일인증 버튼 클릭시
+			//이메일확인 버튼 클릭시
 				$("#userEmailAuthBtn").click(function(e) {
 				e.preventDefault();
 				var eamilAuth = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -332,7 +333,7 @@
 		            alert("이메일 형식이 올바르지 않습니다.");
 		            return;
 		        } else {
-		        	alert("이메일 형식이 올바릅니다.");
+		        	alert("사용가능한 이메일 입니다.");
 		        }
 				/* else {
 					console.log(!formCheck($("#userId"), "이 메일 형식을", $("#errorMessage")));

@@ -50,7 +50,8 @@
 					회원 서비스 <small>개인정보 수정</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/">회원 서비스</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">개인정보 수정</li>
 				</ol>
 			</div>
@@ -81,7 +82,7 @@
 							<label class="col-sm-3 control-label" for="userId">아이디</label>
 							<div class="col-sm-6">
 									<input class="form-control" id="userId" type="text"
-									name="userId" maxlength="20" value="${userInfo.userId }">
+									name="userId" maxlength="20" value="${userInfo.userId }" readonly="readonly">
 							</div>
 						</div>
 
@@ -349,7 +350,6 @@
 					$("#errorMessage").removeClass("hide");
 					return;
 				}
-				
 				if (!formCheck($("#userEmail"), "이메일을", $("#errorMessage"))) {
 					$("#errorMessage").removeClass("hide");
 					return;

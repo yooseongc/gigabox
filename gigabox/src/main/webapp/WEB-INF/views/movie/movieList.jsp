@@ -53,6 +53,8 @@
     max-height: calc(100% - 120px);
     overflow-y: scroll;
 }
+
+
 </style>
 <script type="text/javascript">
 	var result = '${msg}';
@@ -104,15 +106,18 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
-							</div>
-							<c:forEach items="${movieListRecent}" var="movieItem">
-								<div class="col-md-3 col-sm-6" data-role="movieItem">
+							</div> 
+							<c:forEach items="${movieListRecent}" var="movieItem" varStatus="status">
+								<c:if test="${status.index == 0 or status.index == 4}">
+									<div class="row">
+								</c:if>
+								<div class="col-md-3" data-role="movieItem">
 									<div class="panel panel-default text-center">
 										<div class="panel-heading">
 											<img
-												src="${movieItem.moviePoster }/${movieItem.movieCode}.jpg"
-												class="img-responsive" width="290" height="376">
-										</div>
+												src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+												class="img-responsive" width="230" height="320">
+										</div>  
 										<div class="panel-body">
 											<div>
 												<h4 style="width: 100%; height:1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
@@ -128,6 +133,9 @@
 										</div>
 									</div>
 					        	</div>
+					        	<c:if test="${status.index == 3 or status.index == 7}">
+									</div>
+								</c:if>
 							</c:forEach>
 						</div>
 						<!-- ./row -->
@@ -149,12 +157,15 @@
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
 							</div>
-							<c:forEach items="${movieListTobe}" var="movieItem">
-								<div class="col-md-3 col-sm-6" data-role="movieItem">
+							<c:forEach items="${movieListTobe}" var="movieItem" varStatus="status">
+								<c:if test="${status.index == 0 or status.index == 4}">
+									<div class="row">
+								</c:if>
+								<div class="col-md-3" data-role="movieItem">
 									<div class="panel panel-default text-center">
 										<div class="panel-heading">
 											<img
-												src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
+												src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
 												class="img-responsive" width="270" height="376">
 										</div>
 										<div class="panel-body">
@@ -172,6 +183,9 @@
 										</div>
 									</div>
 								</div>
+								<c:if test="${status.index == 3 or status.index == 7}">
+									</div>
+								</c:if>
 							</c:forEach>
 						</div>
 						<!-- ./row -->
@@ -211,7 +225,7 @@
 							<div class="col-md-4">
 								<img
 									src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
-									class="img-responsive" width="270" height="376">
+									class="img-responsive" data-id="moviePoster" width="270" height="376">
 							</div>
 							<div class="col-md-8">
 							
@@ -253,7 +267,8 @@
 										</div>
 										
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-primary" role="button" id="resvButton">
+											<button type="button" class="btn btn-primary" 
+												role="button" id="resvButton">
 												<i class="glyphicon glyphicon-time"></i> 예매하기
 											</button>
 										</div>
@@ -418,11 +433,14 @@
 	
 	<script id="readMoreTemplate" type="text/x-handlerbars-template">
 	{{#each .}}
-	<div class="col-md-3 col-sm-6">
+	{{#ifRowStart @index}}
+		<div class="row">
+	{{/ifRowStart}}
+	<div class="col-md-3">
 		<div class="panel panel-default text-center">
 			<div class="panel-heading">
 				<img
-					src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
+					src="{{moviePoster}}/{{movieCode}}.jpg"
 					class="img-responsive" width="270" height="376">
 			</div>
 			<div class="panel-body">
@@ -440,6 +458,9 @@
 			</div>
 		</div>
 	</div>
+	{{#ifRowEnd @index}}
+		</div>
+	{{/ifRowEnd}}
 	{{/each}}
 	</script> 
 */
@@ -529,6 +550,21 @@
 		return accum;
 	});
 	
+	Handlebars.registerHelper('ifRowStart', function (index, options) {
+	   if(index == 0 || index == 4){
+	      return options.fn(this);
+	   } else {
+	      return options.inverse(this);
+	   }
+	});
+	Handlebars.registerHelper('ifRowEnd', function (index, options) {
+	   if(index == 3 || index == 7){
+	      return options.fn(this);
+	   } else {
+	      return options.inverse(this);
+	   }
+	});
+	
 	Handlebars.registerHelper("prettifyDate", function(timeValue) {
 		var dateObj = new Date(timeValue);
 		return getTimeStamp(dateObj);
@@ -567,6 +603,7 @@
 				$("div[data-id=movieGenre]").html(makeGenreTag(data.movieGenre));
 				$("div[data-id=movieStoryline]").html(data.movieStoryline);
 				$("div[data-id=movieEngname]").text(data.movieEngname);
+				$("img[data-id=moviePoster]").attr("src", data.moviePoster + "/" + data.movieCode + ".jpg");
 				
 				$("#reviewStarRating").rating('refresh', {
 					showClear: false,
@@ -866,6 +903,12 @@
 			 $('#myTab > li:eq(1) > a').trigger("click"); 
 			 
 		}
+		
+		// 예매하기 클릭
+		$("#resvButton").click(function(e) {
+			e.preventDefault();
+			location.href = "/reservation/resvMain";
+		});
 		
 		// 별점 초기화
 		$("#starRating").rating('refresh', {
