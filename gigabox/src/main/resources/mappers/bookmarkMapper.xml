@@ -15,6 +15,9 @@
 		from tbl_bookmark
 	</select>
 
-	<!-- <insert id="addBookmark" parameterType="bookmark"> </insert> -->
+	<insert id="addBookmark" parameterType="bookmark"> 
+		insert into tbl_bookmark (bookmark_number,movie_number,user_number)
+		values(seq_bookmark.nextval,#{movieNumber},user_number))
+	</insert>
 
 </mapper>

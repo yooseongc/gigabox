@@ -160,15 +160,6 @@
 								</div>
 							</c:if>
 						</c:forEach>
-						<!--	<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/46yha3jfh/item_6_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAJICA MAYORAL</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div> -->
 					</div>
 
 					<div id="slider-control">

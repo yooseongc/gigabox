@@ -75,12 +75,12 @@ public class BookmarkController {
 		return "/bookmark/bookmarkList";
 	}
 	
-/*	---- PutCart, POST-----카트에 상품넣기
-	@RequestMapping(value="addBookmark", method = RequestMethod.POST)
+/*	---- PutCart, POST-----카트에 상품넣기 */
+	@RequestMapping(value="/addBookmark", method = RequestMethod.POST)
 	public String add(@ModelAttribute BookmarkVO bVo,
 			          @ModelAttribute("bookmark") List<BookmarkVO> bookmark) {
 		bookmark.add(bVo);
-		return "redirect:/";
-	}*/
+		return "redirect:/bookmark/bookmarkList";
+	}
 	
 }
