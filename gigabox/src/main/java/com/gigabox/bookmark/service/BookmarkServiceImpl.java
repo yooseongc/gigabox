@@ -26,4 +26,14 @@ public class BookmarkServiceImpl implements BookmarkService {
 		dao.addBookmark(vo);
 	}
 
+	@Override
+	public int countBookmark(int mno, int uno) {
+		return dao.countBookmark(mno, uno);
+	}
+
+	@Override
+	public void delete(int bno) {
+		dao.delete(bno);
+	}
+
 }

@@ -15,9 +15,22 @@
 		from tbl_bookmark
 	</select>
 
-	<insert id="addBookmark" parameterType="bookmark"> 
-		insert into tbl_bookmark (bookmark_number,movie_number,user_number)
+	<insert id="addBookmark" parameterType="bookmark">
+		insert into tbl_bookmark
+		(bookmark_number,movie_number,user_number)
 		values(seq_bookmark.nextval,#{movieNumber},user_number))
 	</insert>
 
+	<delete id="deleteBookmark" parameterType="bookmark">
+		DELETE FROM
+		tbl_bookmark
+		WHERE bookmark_number = #{bookmarkNumber}
+	</delete>
+
+	<select id="countBookmark" resultType="int">
+		SELECT COUNT(*)
+		FROM tbl_bookmark
+		WHERE user_numer= #{userNumber}
+		AND movie_number = #{movieNumber}
+	</select>
 </mapper>

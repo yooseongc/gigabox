@@ -261,10 +261,16 @@
 								<div class="list-group-item row">
 									<div class="btn-group btn-group-justified" role="group" aria-label="group button">
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-danger" role="button" id="bookmarkButton">
+										<c:if test="${sessionScope.login == null}">
+										<form method="post" action="/bookmark/addBookmark">
+											<input type="hidden" name="movieNumber" value="${bvo.movieNumber }">
+											<button type="button" class="btn btn-danger" role="button"
+												id="bookmarkButton">
 												<span class="glyphicon glyphicon-heart"></span> 보고싶어
 											</button>
-										</div>
+										</form>
+										</c:if>
+									</div>
 										
 										<div class="btn-group" role="group">
 											<button type="button" class="btn btn-primary" 
@@ -946,6 +952,27 @@
             }
         });
 		
+		$("#bookmarkButton").on("click", function(){
+				// 현재 URL 가져오기
+			    var url = location.href;
+
+			    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
+			    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
+				console.log(parameter);
+				if (parameter == 'emailAuthOK') {
+					 $('#emailAuthOKModal').modal({
+				        show: true, 
+				        backdrop: 'static',
+				        keyboard: true
+				     });
+				} else if (parameter == 'emailAuthError') {
+					 $('#emailAuthErrorModal').modal({
+				        show: true, 
+				        backdrop: 'static',
+				        keyboard: true
+				     });
+				}			
+		});
 		
 	});
 	</script>
