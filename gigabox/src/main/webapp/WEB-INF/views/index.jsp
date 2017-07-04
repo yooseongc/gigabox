@@ -118,93 +118,49 @@
 	<div class="container">
 		<div class="row" id="slider-text">
 			<div class="col-md-6">
-				<h2>NEW COLLECTION</h2>
+				<h2>NEW MOVIES</h2>
 			</div>
 		</div>
 	</div>
 
 	<!-- Item slider-->
 	<div class="container-fluid">
-
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<div class="carousel carousel-showmanymoveone slide" id="itemslider">
 					<div class="carousel-inner">
 
-						<div class="item active">
-							<c:forEach items="${movieListRecent}" var="movieItem">
-								<div class="col-md-3 col-sm-6" data-role="movieItem">
-									<div class="panel panel-default text-center">
-										<div class="panel-heading">
-											<img
-												src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
-												class="img-responsive" width="270" height="376">
-										</div>
-										<div class="panel-body">
-											<div>
-												<h4
-													style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-													<tag:rating rating="${movieItem.movieRating}" />
-													${movieItem.movieTitle}
-												</h4>
-												<div class="rating">
-													<input id="starRating" value="${movieItem.reviewStarscore}"
-														type="number" data-show-clear="false"
-														data-show-caption="false" class="rating" min=0 max=10
-														step=0.1 data-size="xs" disabled="disabled">
-												</div>
-												<button class="btn btn-primary"
-													onclick="viewDetail('${movieItem.movieNumber}')"
-													data-id="${movieItem.movieNumber}">상세보기</button>
-											</div>
+						<c:forEach items="${movieList}" var="movieItem" varStatus="status">
+							<c:if test="${status.index == 0}">
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="http://localhost:8080/movie/movieList"><img src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+											class="img-responsive center-block" width="180" height="200"></a>
+										<div>
+											<h4 class="text-center">
+												<tag:rating rating="${movieItem.movieRating}" />
+												${movieItem.movieTitle}
+											</h4>
 										</div>
 									</div>
 								</div>
-							</c:forEach>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAYORAL KOŠULJA</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/dawwajl0d/item_3_180x200.png"
-									class="img-responsive center-block"></a> <span class="badge">10%</span>
-								<h4 class="text-center">PANTALONE TERI 2</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-								<h6 class="text-center">5000,00 RSD</h6>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/5w7ki5z4t/item_4_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">CVETNA HALJINA</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/e2zk9qp7h/item_5_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAJICA FOTO</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
+							</c:if>
+							<c:if test="${status.index > 0}">
+								<div class="item">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="http://localhost:8080/movie/movieList"><img src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+											class="img-responsive center-block" width="180" height="200"></a>
+										<div>
+											<h4 class="text-center">
+												<tag:rating rating="${movieItem.movieRating}" />
+												${movieItem.movieTitle}
+											</h4>
+										</div>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+						<!--	<div class="item">
 							<div class="col-xs-12 col-sm-6 col-md-2">
 								<a href="#"><img
 									src="https://s12.postimg.org/46yha3jfh/item_6_180x200.png"
@@ -212,8 +168,7 @@
 								<h4 class="text-center">MAJICA MAYORAL</h4>
 								<h5 class="text-center">4000,00 RSD</h5>
 							</div>
-						</div>
-
+						</div> -->
 					</div>
 
 					<div id="slider-control">

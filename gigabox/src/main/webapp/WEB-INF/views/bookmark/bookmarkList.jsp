@@ -580,7 +580,7 @@ function viewDetail(movieNum) {
 									<div class="panel panel-default text-center">
 										<div class="panel-heading">
 											<img
-												src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
+												src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
 												class="img-responsive" width="270" height="376">
 										</div>
 										<div class="panel-body">
@@ -604,7 +604,7 @@ function viewDetail(movieNum) {
 								</div>
 							</c:forEach>
 						</div>
-						<c:if test="${rowEnd < movieListCountRecent}">
+						<%-- <c:if test="${rowEnd < movieListCountRecent}">
 							<div class="row">
 								<div class="col-lg-12">
 									<button type="button" class="btn btn-outline btn-primary btn-lg btn-block"
@@ -613,7 +613,7 @@ function viewDetail(movieNum) {
 								</div>
 							</div>
 							<!-- ./row -->
-						</c:if>
+						</c:if> --%>
 					</div>
 					<div class="tab-pane fade" id="doner">
 						<div class="text-center">
