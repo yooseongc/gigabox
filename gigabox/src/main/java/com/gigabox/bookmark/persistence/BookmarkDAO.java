@@ -9,4 +9,8 @@ public interface BookmarkDAO {
 	public List<BookmarkVO> bookmarkList();
 	
 	public void addBookmark(BookmarkVO vo);
+	
+	public int countBookmark(int mno, int uno);
+	
+	public void delete(int bno);
 }
