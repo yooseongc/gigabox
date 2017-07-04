@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/movieRatingTag.tld"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true"%>
 <!DOCTYPE html>
 <html>
@@ -70,6 +71,9 @@
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 			<li data-target="#myCarousel" data-slide-to="1"></li>
 			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+			<li data-target="#myCarousel" data-slide-to="4"></li>
+			<li data-target="#myCarousel" data-slide-to="5"></li>
 		</ol>
 
 		<!-- Wrapper for slides -->
@@ -100,7 +104,44 @@
                     </video> -->
 				</div>
 				<div class="carousel-caption">
-					<h2></h2>
+					<strong>좋아하게 되는 그 순간을<em>Moment You Fall In Love: Confess Your Love Committee</em></strong>
+		                    <span>지금 좋아하게 돼! 모두가 첫사랑 진행중♥</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="fill"
+					style="background-image: url(http://image2.megabox.co.kr/mop/home/ad/1600x600/170630_bre_1600x600.jpg);">
+					<!-- <video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
+                        <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
+                    </video> -->
+				</div>
+				<div class="carousel-caption">
+					<strong>2017 브레겐츠 페스티벌 - 카르멘<em>Bregenz Festival CARMEN</em></strong>
+		                    <span>오스트리아 호수 위 환상적인 오페라 페스티벌<br>7월 30일 오후 2시</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="fill"
+					style="background-image: url(http://image2.megabox.co.kr/mop/home/ad/1600x600/170627_spi_1600x600.jpg);">
+					<!-- <video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
+                        <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
+                    </video> -->
+				</div>
+				<div class="carousel-caption">
+					 <strong>스파이더맨: 홈커밍<em>Spider-Man: Homecoming</em></strong>
+		                    <span>마블에서 새로 태어난 스파이더맨의 완벽한 컴백!</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="fill"
+					style="background-image: url(http://image2.megabox.co.kr/mop/home/ad/1600x600/170627_park_1600x600.jpg);">
+					<!-- <video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
+                        <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
+                    </video> -->
+				</div>
+				<div class="carousel-caption">
+					 <strong>박열<em>Anarchist from Colony</em></strong>
+		                    <span>대한민국이 기억해야 할 뜨거운 실화</span>
 				</div>
 			</div>
 		</div>
@@ -118,102 +159,48 @@
 	<div class="container">
 		<div class="row" id="slider-text">
 			<div class="col-md-6">
-				<h2>NEW COLLECTION</h2>
+				<h2>NEW MOVIES</h2>
 			</div>
 		</div>
 	</div>
 
 	<!-- Item slider-->
 	<div class="container-fluid">
-
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<div class="carousel carousel-showmanymoveone slide" id="itemslider">
 					<div class="carousel-inner">
 
-						<div class="item active">
-							<c:forEach items="${movieListRecent}" var="movieItem">
-								<div class="col-md-3 col-sm-6" data-role="movieItem">
-									<div class="panel panel-default text-center">
-										<div class="panel-heading">
-											<img
-												src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
-												class="img-responsive" width="270" height="376">
-										</div>
-										<div class="panel-body">
-											<div>
-												<h4
-													style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-													<tag:rating rating="${movieItem.movieRating}" />
-													${movieItem.movieTitle}
-												</h4>
-												<div class="rating">
-													<input id="starRating" value="${movieItem.reviewStarscore}"
-														type="number" data-show-clear="false"
-														data-show-caption="false" class="rating" min=0 max=10
-														step=0.1 data-size="xs" disabled="disabled">
-												</div>
-												<button class="btn btn-primary"
-													onclick="viewDetail('${movieItem.movieNumber}')"
-													data-id="${movieItem.movieNumber}">상세보기</button>
-											</div>
+						<c:forEach items="${movieList}" var="movieItem" varStatus="status">
+							<c:if test="${status.index == 0}">
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="/movie/movieList"><img src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+											class="img-responsive center-block" width="180" height="200"></a>
+										<div>
+											<h4 class="text-center">
+												<tag:rating rating="${movieItem.movieRating}" />
+												${movieItem.movieTitle}
+											</h4>
 										</div>
 									</div>
 								</div>
-							</c:forEach>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/41uq0fc4d/item_2_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAYORAL KOŠULJA</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/dawwajl0d/item_3_180x200.png"
-									class="img-responsive center-block"></a> <span class="badge">10%</span>
-								<h4 class="text-center">PANTALONE TERI 2</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-								<h6 class="text-center">5000,00 RSD</h6>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/5w7ki5z4t/item_4_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">CVETNA HALJINA</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/e2zk9qp7h/item_5_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAJICA FOTO</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="col-xs-12 col-sm-6 col-md-2">
-								<a href="#"><img
-									src="https://s12.postimg.org/46yha3jfh/item_6_180x200.png"
-									class="img-responsive center-block"></a>
-								<h4 class="text-center">MAJICA MAYORAL</h4>
-								<h5 class="text-center">4000,00 RSD</h5>
-							</div>
-						</div>
-
+							</c:if>
+							<c:if test="${status.index > 0}">
+								<div class="item">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="/movie/movieList"><img src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+											class="img-responsive center-block" width="180" height="200"></a>
+										<div>
+											<h4 class="text-center">
+												<tag:rating rating="${movieItem.movieRating}" />
+												${movieItem.movieTitle}
+											</h4>
+										</div>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
 					</div>
 
 					<div id="slider-control">
@@ -232,6 +219,54 @@
 	<!-- Item slider end-->
 	<!-- /.container -->
 
+	<!-- 공지사항 -->
+	<br><br>
+	<div class="container">
+		<div class="row" >
+			<div class="col-md-12"> 
+				<h2> 공지사항 <button class="btn btn-md btn-success pull-right" 
+					onclick="javascript:location.href='/cc/notice/noticeList';">더보기</button></h2>
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th style="text-align: center;">NO</th>
+							<th style="text-align: center;">지점</th>
+							<th style="text-align: center;">제목</th>
+							<th style="text-align: center;">등록일</th>
+						</tr>
+					</thead>
+					<tbody id="noticeListTableBody">
+						<c:forEach var="noticeItem" items="${noticeList}">
+							<tr data-id="${noticeItem.noticeNumber}">
+								<td style="text-align: center;">${noticeItem.noticeNumber}</td>
+								<td style="text-align: center;">${noticeItem.noticeBranchname}</td>
+								<c:if test="${noticeItem.noticeStatus == '중요'}">
+									<td style="font-weight: bold;"><span
+										class="label label-danger">공지</span>&nbsp;&nbsp;<a
+										href="/cc/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
+										title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
+								</c:if>
+								<c:if test="${noticeItem.noticeStatus == '일반'}">
+									<td><a
+										href="/cc/notice/noticeRead?noticeNumber=${noticeItem.noticeNumber}"
+										title="공지사항 상세보기">${noticeItem.noticeTitle}</a></td>
+								</c:if>
+								<td style="text-align: center;"><fmt:formatDate
+										value="${noticeItem.noticeRegisterdate}" pattern="yyyy-MM-dd" /></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
 	<!-- Footer -->
 	<c:import url="/templates/footer.jsp" />
 

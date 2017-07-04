@@ -10,5 +10,7 @@ public interface BookmarkService {
 	
 	public void addBookmark(BookmarkVO vo);
 	
+	public int countBookmark(int mno, int uno);
 	
+	public void delete(int bno);
 }

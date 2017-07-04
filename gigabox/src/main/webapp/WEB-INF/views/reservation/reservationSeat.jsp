@@ -159,12 +159,14 @@
 							</div>
 								<input type="hidden" id="scheduleNumber" name="scheduleNumber" value="${scheduleNumber}">
 								<input type="hidden" id="userNumber" name="userNumber" value="${sessionScope.login.userNumber}">
+								<input type="hidden" id="movieroomNumber" name="movieroomNumber" value="${movieroomNumber}">
 								<input type="hidden" id="seat1" name="reservationSeat1">
 								<input type="hidden" id="seat2" name="reservationSeat2">
 								<input type="hidden" id="seat3" name="reservationSeat3">
 								<input type="hidden" id="seat4" name="reservationSeat4">
 								<input type="hidden" id="seat5" name="reservationSeat5">
 								<input type="hidden" id="seat6" name="reservationSeat6">
+								<input type="hidden" id="reservationPayamount" name="reservationPayamount" />
 							</form>
 							<br>
 							<script>
@@ -275,10 +277,11 @@
 			console.log(resvSeat);	
 			for (var i = 0; i < resvSeat.length; i++) {
 				var each = resvSeat[i];
-				var col = parseInt(each.charAt(1));
+				var col = parseInt(each.substring(1));
 				var row = each.charCodeAt(0)-64;
 				var id = row + "_" + col;
-				sc.get(id).status('unavailable');
+				console.log(id);
+				sc.status(id,'unavailable');
 			}
 		}
 		
@@ -387,6 +390,7 @@
 				alert("좌석을 선택해 주세요.");
 				return;
 			}
+			$("#reservationPayamount").val($("#total").text());
 			$("#seatForm").attr("method", "POST");
 			$("#seatForm").attr("action", "/reservation/resvPayment");
 			$("#seatForm").submit();
