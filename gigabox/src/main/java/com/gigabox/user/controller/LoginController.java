@@ -53,6 +53,7 @@ public class LoginController {
 		// 1. 탈퇴 여부 체크
 		UserVO statusCheckUserVO = new UserVO();
 		statusCheckUserVO.setUserId(loginDTO.getUserId());
+		statusCheckUserVO.setUserStatus("탈퇴회원");
 		int statusCheckResult = loginService.statusCheck(statusCheckUserVO);
 		logger.info("statusCheck= " + statusCheckResult);
 		if (statusCheckResult == 1){
@@ -62,10 +63,35 @@ public class LoginController {
 			resultMap.put("message", "LEAVE-MEMBER");
 
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}
+		
+		// 2. 블라인드 여부
+		statusCheckUserVO.setUserStatus("블라인드");
+		statusCheckResult = loginService.statusCheck(statusCheckUserVO);
+		logger.info("statusCheck= " + statusCheckResult);
+		if (statusCheckResult == 1){
+			logger.info("ACCOUNT (" + loginDTO.getUserStatus() + ") BLIND MEMBER.");
+			resultMap.put("statusCheckResult", statusCheckResult);
+			resultMap.put("message", "BLIND-MEMBER");
+
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 
 		}
 		
-		// 2. 아이디 존재 체크
+		// 3. 승인대기 여부
+		statusCheckUserVO.setUserStatus("승인대기");
+		statusCheckResult = loginService.statusCheck(statusCheckUserVO);
+		logger.info("statusCheck= " + statusCheckResult);
+		if (statusCheckResult == 1){
+			logger.info("ACCOUNT (" + loginDTO.getUserStatus() + ") WAIT MEMBER.");
+			resultMap.put("statusCheckResult", statusCheckResult);
+			resultMap.put("message", "WAIT-MEMBER");
+
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+
+		}
+		
+		// 4. 아이디 존재 체크
 		UserVO idCheckUserVO = new UserVO();
 		idCheckUserVO.setUserId(loginDTO.getUserId());
 		idCheckUserVO.setUserPw(loginDTO.getUserPw());
@@ -81,7 +107,7 @@ public class LoginController {
 
 		} else {
 			// 해당 계정이 존재.
-			// 3. 비밀번호 확인
+			// 5. 비밀번호 확인
 			logger.info("ACCOUNT (" + loginDTO.toString() + ") EXISTS.");
 			logger.info("PASSWORD CHECKING PROCEED...");
 

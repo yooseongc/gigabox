@@ -62,7 +62,7 @@
 					<div class="page-header">
 						<h1>GigaBox 회원 가입</h1>
 					</div>
-					<form class="form-horizontal" id="joinForm">
+					<form class="form-horizontal" id="joinForm" name="frm">
 						<fieldset>
 						
 							<div class="alert alert-danger center-block hide" style="width: 400px;" id="errorMessage"></div>
@@ -88,8 +88,11 @@
 							<label class="col-sm-3 control-label" for="userPw">비밀번호</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userPw"
-									name="userPw" type="password" placeholder="비밀번호" maxlength="12">
-								<p class="help-block">영문소문자, 숫자 8자 이상</p>
+									name="userPw" type="password" placeholder="비밀번호" maxlength="12"
+									onkeypress="caps_lock(event)"/>
+								<p class="help-block">영어 소문자,숫자를 혼합하여 6 ~ 12자 이내</p>
+								<p id="capslock" style="display:none">
+								&nbsp;<b>CapsLock</b> 키가 눌려있습니다.&nbsp;</p>
 							</div>
 						</div>
 
@@ -100,6 +103,8 @@
 								<input class="form-control" id="userPasswordCheck"
 									name="userPasswordCheck" type="password" placeholder="비밀번호 확인" maxlength="12">
 								<p class="help-block">비밀번호를 한번 더 입력해주세요.</p>
+								<p id="capslock" style="display:none">
+								&nbsp;<b>CapsLock</b> 키가 눌려있습니다.&nbsp;</p>
 							</div>
 						</div>
 
@@ -127,9 +132,23 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label" for="userBirthday">생년월일</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="userBirthday" type="text"
-									name="userBirthday" placeholder="생년월일">
+							<div class="col-sm-2">
+								<input class="form-control" id="userBirthdayYear" type="number"
+									name="userBirthday1" placeholder="년" maxlength="4" 
+									onkeyup="if(this.value.length==4)frm.userBirthday2.focus()"
+									onkeypress="return digit_check(event)"/>
+									<p class="help-block">숫자만 입력해 주세요.</p>
+									</div>
+									<div class="col-sm-2">
+								<input class="form-control" id="userBirthdayMonth" type="number"
+									name="userBirthday2" placeholder="월" maxlength="2"
+									onkeyup="if(this.value.length==2)frm.userBirthday3.focus()"/>
+									</div>
+									<div class="col-sm-2">
+								<input class="form-control" id="userBirthdayDay" type="number"
+									name="userBirthday3" placeholder="일" maxlength="2"
+									oninput="maxLengthCheck(this)"/>
+								<input type="hidden" name="userBirthday" id="userBirthday">
 							</div>
 						</div>
 						<div class="form-group">
@@ -145,7 +164,8 @@
 							<label class="col-sm-3 control-label" for="userTel">휴대폰번호</label>
 							<div class="col-sm-6">
 								<input type="tel" class="form-control" id="userTel"
-									name="userTel" placeholder="- 없이 입력해 주세요" maxlength="11"/>
+									name="userTel" placeholder="- 없이 숫자만 입력해 주세요" maxlength="11"
+									onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)"/>
 							</div>
 						</div>
 						
@@ -266,7 +286,9 @@
   <!-- /.modal -->
 	
 	<script type="text/javascript">
-		 function formCheck(v_item, v_name, e_item) {
+		 
+	//빈칸 체크
+	function formCheck(v_item, v_name, e_item) {
 			if (v_item.val().replace(/\s/g, "") == "") {
 				
 				e_item.text(v_name + " 확인해 주세요.");
@@ -278,8 +300,71 @@
 				return true;
 			}
 		}
+	//숫자만 입력(생년월일)
+	function digit_check(evt){
+		     var code = evt.which?evt.which:event.keyCode;
+		     if(code < 48 || code > 57){
+		         return false;
+		     }
+		 }
 	
-		$(document).ready(function() {
+	//숫자만 입력(휴대전화)
+	function onlyNumber(event){
+		event = event || window.event;
+		var keyID = (event.which) ? event.which : event.keyCode;
+		if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+			return;
+		else
+			return false;
+	}
+	function removeChar(event) {
+		event = event || window.event;
+		var keyID = (event.which) ? event.which : event.keyCode;
+		if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+			return;
+		else
+			event.target.value = event.target.value.replace(/[^0-9]/g, "");
+	}
+		 
+	//maxlength 체크
+	function maxLengthCheck(object){
+		if (object.value.length > object.maxLength){
+			object.value = object.value.slice(0, object.maxLength);
+  	 		}    
+  		}
+	
+	//비밀번호 유효성 검사(영문,숫자 혼합하여 6~20자리 이내)
+	function chkPwd(str){
+		var reg_pwd = /^.*(?=.{6,12})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+		if(!reg_pwd.test(str)){
+			return false;
+			}
+		return true;
+		}
+				
+	//capslock 체크
+	function caps_lock(e){
+		var keyCode = 0;
+		var shiftKey = false;
+		keyCode = e.keyCode;
+		shiftKey = e.shiftKey;
+		if(((keyCode >= 65 && keyCode <= 90)&& !shiftKey)||((keyCode >= 97 && keyCode <= 122)&& shiftKey))
+		{
+            show_caps_lock();
+            setTimeout("hide_caps_lock()", 3500);
+        } else {
+            hide_caps_lock();
+        }
+    }
+
+	function show_caps_lock() {
+     $("#capslock").show();
+	}
+	function hide_caps_lock() {
+     $("#capslock").hide();
+	}
+	
+	$(document).ready(function() {
 			
 			var recaptchaConfirm = false;
 			
@@ -454,11 +539,10 @@
 	           	} 
 		    });
 		 	
-		   
-		 	
 		 	//회원가입 버튼 클릭시
 		 	$("#joinSubmitBtn").click(function(e) {
 		 		e.preventDefault();
+				
 		 		console.log(!formCheck($("#userId"), "아이디를", $("#errorMessage")));
 				if (!formCheck($("#userId"), "아이디를", $("#errorMessage"))) {
 					$("#errorMessage").removeClass("hide");
@@ -495,6 +579,21 @@
 					return;
 				}
 				
+				if(!chkPwd( $.trim($("#userPw").val()))){ 
+
+					alert("비밀번호를 확인하세요.\n(영문,숫자를 혼합하여 6~20자 이내)");    
+
+					$("#userPw").val('');
+					$("#userPw").focus(); 
+					return false;
+				}
+				
+				var userBirthdayYear = $("#userBirthdayYear").val();
+				var userBirthdayMonth = $("#userBirthdayMonth").val();
+				var userBirthdayDay = $("#userBirthdayDay").val();
+				$("#userBirthday").val(userBirthdayYear
+						+ userBirthdayMonth + userBirthdayDay);
+				
 				var userAddressNumber = $("#userAddressNumber").val().replace(/\s/g,"");
 				var userAddressBasic = $("#userAddressBasic").val();
 				var userAddressDetail = $("#userAddressDetail").val();
@@ -504,7 +603,7 @@
 				$("#joinForm").attr("method", "POST");
 				$("#joinForm").attr("action", "/user/joinForm");
 				$("#joinForm").submit();
-		 		
+		 		alert("이메일 인증을 해서 가입을 완료해 주세요.");
 		 	});
 		    
 		});
