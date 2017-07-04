@@ -156,7 +156,7 @@
 		VALUES ( SEQ_RESERVATION.NEXTVAL, #{scheduleNumber}, #{userNumber}, 
 				SYSDATE, 1, 
 				#{reservationAdultnum}, #{reservationYouthnum}, #{reservationChildnum}, #{reservationPreferencenum},  
-				0, 0, '미결제', SYSDATE, 
+				0, #{reservationPayamount}, '미결제', SYSDATE, 
 				#{reservationSeat1}, #{reservationSeat2}, #{reservationSeat3}, #{reservationSeat4}, 
 				#{reservationSeat5}, #{reservationSeat6}, #{reservationCode}
 			) 
