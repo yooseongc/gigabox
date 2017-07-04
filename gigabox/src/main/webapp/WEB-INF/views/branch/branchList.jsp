@@ -180,20 +180,23 @@
 				<div class="tabs-left">
 			        <ul class="nav nav-tabs">
 			        	<li class="active"><a href="#선택" data-toggle="tab">지역</a></li>
-			            <li><a href="#서울" data-toggle="tab">서울</a></li>
+			        	<c:forEach items="${location}" var="loc">
+			        		<li><a href="#${loc}" data-toggle="tab">${loc}</a></li>
+			        	</c:forEach>
+			           <!--  <li><a href="#서울" data-toggle="tab">서울</a></li>
 			            <li><a href="#경기" data-toggle="tab">경기</a></li>
-			            <li><a href="#a" data-toggle="tab">인천</a></li>
-			            <li><a href="#a" data-toggle="tab">충청</a></li>
-			            <li><a href="#a" data-toggle="tab">대전</a></li>
-			            <li><a href="#a" data-toggle="tab">세종</a></li>
-			            <li><a href="#a" data-toggle="tab">전라</a></li>
-			            <li><a href="#a" data-toggle="tab">광주</a></li>
-			            <li><a href="#a" data-toggle="tab">경상</a></li>
-			            <li><a href="#a" data-toggle="tab">대구</a></li>
-			            <li><a href="#a" data-toggle="tab">울산</a></li>
-			            <li><a href="#a" data-toggle="tab">부산</a></li>
-			            <li><a href="#a" data-toggle="tab">강원</a></li>
-			            <li><a href="#a" data-toggle="tab">제주</a></li>
+			            <li><a href="#인천" data-toggle="tab">인천</a></li>
+			            <li><a href="#충청" data-toggle="tab">충청</a></li>
+			            <li><a href="#대전" data-toggle="tab">대전</a></li>
+			            <li><a href="#세종" data-toggle="tab">세종</a></li>
+			            <li><a href="#전라" data-toggle="tab">전라</a></li>
+			            <li><a href="#광주" data-toggle="tab">광주</a></li>
+			            <li><a href="#경상" data-toggle="tab">경상</a></li>
+			            <li><a href="#대구" data-toggle="tab">대구</a></li>
+			            <li><a href="#울산" data-toggle="tab">울산</a></li>
+			            <li><a href="#부산" data-toggle="tab">부산</a></li>
+			            <li><a href="#강원" data-toggle="tab">강원</a></li>
+			            <li><a href="#제주" data-toggle="tab">제주</a></li> -->
 			        </ul>
 			        <div class="tab-content">
 			        	<div class="tab-pane active" id="선택">

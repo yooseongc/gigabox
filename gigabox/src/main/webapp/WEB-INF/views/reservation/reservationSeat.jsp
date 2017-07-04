@@ -367,8 +367,8 @@
 			};
 			
 			$.ajax({
-				//url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/" + $("#movieroomNumber").val() + "/seatdata",
-				url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/1/seatdata",
+				url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/" + $("#movieroomNumber").val() + "/seatdata",
+				//url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/1/seatdata",
 				type: "GET",
 				error: function() {
 					console.log("좌석 정보 로딩 실패");

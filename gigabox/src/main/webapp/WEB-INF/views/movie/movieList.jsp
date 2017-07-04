@@ -253,7 +253,8 @@
 										</div>
 										
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-primary" role="button" id="resvButton">
+											<button type="button" class="btn btn-primary" 
+												role="button" id="resvButton">
 												<i class="glyphicon glyphicon-time"></i> 예매하기
 											</button>
 										</div>
@@ -864,6 +865,12 @@
 			 $('#myTab > li:eq(1) > a').trigger("click"); 
 			 
 		}
+		
+		// 예매하기 클릭
+		$("#resvButton").click(function(e) {
+			e.preventDefault();
+			location.href = "/reservation/resvMain";
+		});
 		
 		// 별점 초기화
 		$("#starRating").rating('refresh', {
