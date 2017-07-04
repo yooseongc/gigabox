@@ -223,7 +223,7 @@
 					<input type="hidden" value="${branchDetail.branchNumber}">
 					<br>
                     <div class="jumbotron" id="branchPictureView"
-                         style="height: 200px; background-image: url(http://image2.megabox.co.kr/mop/cinema/2017/C0/503678-694F-4E73-B6D5-A798E2B142E4.jpg); background-size: 100% auto;">
+                         style="height: 200px; background-image: url(http://choiys3574.cafe24.com/upload/gigabox/branch/${branchDetail.branchNumber}/${branchDetail.branchNumber}.jpg); background-size: 100% auto;">
 					</div>
                     <div class="list-group">
                         <div class="list-group-item row">
