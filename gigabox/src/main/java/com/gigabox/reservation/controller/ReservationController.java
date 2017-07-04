@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,18 +35,6 @@ public class ReservationController {
 
 	@Inject 
 	private ReservationService resvService;
-	
-	/*@Inject
-	private BranchService branchService;
-	
-	@Inject
-	private MovieRoomService movieRoomService;
-	
-	@Inject 
-	private UserService userService;
-	
-	@Inject
-	private MovieService movieService;*/
 	
 	@Inject
 	private ScheduleService scheduleService;
@@ -74,7 +63,7 @@ public class ReservationController {
 	
 	
 	@RequestMapping(value="/resvPayment", method=RequestMethod.POST) 
-	public String reservationPaymentPOST(Model model, ReservationVO resvVO) {
+	public String reservationPaymentPOST(HttpSession session, Model model, ReservationVO resvVO) {
 		logger.info("RESERVATION PAYMENT PAGE LOAD...");
 		logger.info("RESERVATION VO=" + resvVO.toString());
 		ScheduleVO scheduleVO = new ScheduleVO();
@@ -88,8 +77,26 @@ public class ReservationController {
 				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm"));
 
 		int result = resvService.reservationSeatInsert(resvVO);
+		resvVO.setReservationNumber(13);
+		ReservationThreadUtil thread = new ReservationThreadUtil();
+		thread.setResvVO(resvVO);
+		session.setAttribute("resvThread", thread);
+		thread.start();
+		
 		logger.info("result= " + result);
 		return "/reservation/reservationPayment";
+	}
+	
+	@RequestMapping(value="/resvComplete", method=RequestMethod.POST) 
+	public String reservationCompletePOST(HttpSession session, Model model, ReservationVO resvVO) {
+		logger.info("RESERVATION COMPLETE PAGE LOAD...");
+		logger.info("RESERVATION VO=" + resvVO.toString());
+		ReservationThreadUtil thread = (ReservationThreadUtil) session.getAttribute("resvThread");
+		if (thread != null) {
+			thread.stop();
+		}
+		
+		return "/reservation/reservationComplete";
 	}
 	
 	// 좌석 예약 정보 받아오기

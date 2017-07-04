@@ -35,6 +35,9 @@
 	<logger name="com.gigabox.reservation.controller">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.mypage.controller">
+		<level value="info" />
+	</logger>
 	<logger name="com.gigabox.interceptor">
 		<level value="info" />
 	</logger>

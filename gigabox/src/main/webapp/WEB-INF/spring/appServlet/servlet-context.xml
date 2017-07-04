@@ -45,6 +45,7 @@
 			<mapping path="/reservation/resvMain"/>
 			<mapping path="/reservation/resvSeat"/>
 			<mapping path="/reservation/resvPayment"/>
+			<mapping path="/mypage/**"/>
 			<exclude-mapping path="/user/login"/>
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/logout"/>
