@@ -303,7 +303,7 @@
 	//숫자만 입력(생년월일)
 	function digit_check(evt){
 		     var code = evt.which?evt.which:event.keyCode;
-		     if(code < 48 || code > 57){
+		     if(code<48||code>57){
 		         return false;
 		     }
 		 }

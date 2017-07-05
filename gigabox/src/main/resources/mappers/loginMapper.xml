@@ -13,6 +13,7 @@
 			<result property="userTel" column="USER_TEL" />
 			<result property="userAddr" column="USER_ADDR" />
 			<result property="userStatus" column="USER_STATUS"/>
+			<result property="userMileage" column="USER_MILEAGE"/>
 		</resultMap>
 
 	<select id="statusCheck" parameterType="login" resultType="int">
