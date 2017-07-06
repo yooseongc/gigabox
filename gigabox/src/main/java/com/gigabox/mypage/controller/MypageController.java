@@ -74,6 +74,7 @@ public class MypageController {
 		return "/mypage/mymovie";
 	}
 
+	//북마크 추가
 	@ResponseBody
 	@RequestMapping(value = "/addBookmark", method = RequestMethod.POST)
 	public int addBookmark(@RequestBody BookmarkVO bvo) {
@@ -89,6 +90,7 @@ public class MypageController {
 		return result;
 	}
 
+	//북마크 삭제
 	@ResponseBody
 	@RequestMapping(value = "/bookmarkDelete", method = RequestMethod.POST)
 	public int delete(@RequestBody BookmarkVO bookmarkNumber) {

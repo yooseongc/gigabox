@@ -998,7 +998,7 @@
 						success : function(data) {
 							if(data==0){
 								 if(confirm("마이무비에 영화가 추가 되었습니다. 마이무비 페이지로 이동하시겠습니까?")) {
-									location.href ="/mypage/mymovie?listType=4";
+									location.href ="/mypage/mymovie?listType=2";
 								}
 								 return;
 							}else{

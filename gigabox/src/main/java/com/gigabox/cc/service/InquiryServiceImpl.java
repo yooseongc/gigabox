@@ -50,10 +50,9 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 삭제
 	@Override
-	public int inquiryDelete(int inquiryNumber) {
-		int result = 0;
-		result = inquiryDao.inquiryDelete(inquiryNumber);
-		return result;
+	public int inquiryDelete(InquiryVO inquiryNumber) {
+		return inquiryDao.inquiryDelete(inquiryNumber);
+		 
 	}
 
 	// 관리자쪽

@@ -67,8 +67,7 @@
 		alert("처리가 완료되었습니다.");
 	}
 </script>
-<script>	
-
+<script>
 	// 더보기 카운트
 	var boxofficeReadMoreCount = 0;
 	var recentReadMoreCount = 0;
@@ -339,7 +338,7 @@
 				} else if (parameter == '3') {
 					$("#pageType, #pageType2").text("문의 내역");
 					$('#myTab > li:eq(2) > a').trigger("click");
-				} 
+				}
 
 				// 별점 초기화
 				$("#starRating").rating('refresh', {
@@ -532,13 +531,13 @@
 				});
 
 	}
-
 </script>
 
 <style type="text/css">
 .nav-tabs {
 	text-align: center;
 }
+
 .nav-tabs li {
 	float: none;
 	display: inline-block;
@@ -575,15 +574,15 @@
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
 				<div class="board-inner">
 					<ul class="nav nav-tabs" id="myTab">
-					
-						<li class="active"><a href="#resvInfo" data-toggle="tab" title="예매 확인/취소"> 
-							<span class="round-tabs one"> <i
+
+						<li class="active"><a href="#resvInfo" data-toggle="tab"
+							title="예매 확인/취소"> <span class="round-tabs one"> <i
 									class="glyphicon glyphicon-user"></i>
 							</span>
 						</a></li>
 
-						<li><a href="#mymovie" data-toggle="tab" title="마이무비">
-								<span class="round-tabs two"> <i
+						<li><a href="#mymovie" data-toggle="tab" title="마이무비"> <span
+								class="round-tabs two"> <i
 									class="glyphicon glyphicon-film"></i>
 							</span>
 						</a></li>
@@ -597,10 +596,8 @@
 				</div>
 
 				<div class="tab-content">
-					<div class="tab-pane fade in active" id="resvInfo">
-						예매 확인/취소
-					</div>
-					
+					<div class="tab-pane fade in active" id="resvInfo">예매 확인/취소</div>
+
 					<div class="tab-pane fade" id="mymovie">
 						<div class="row">
 							<div class="col-lg-12">
@@ -643,202 +640,200 @@
 									</div>
 								</div>
 								<c:if test="${status.index % 4 == 3}">
+						</div>
+						</c:if>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="qnaInfo">문의 내역 확인</div>
+		</div>
+
+
+	</div>
+	</div>
+	</div>
+
+
+	<!-- 영화상세 모달  -->
+	<div class="modal fade" id="movieDetailModal">
+		<div class="modal-dialog modal-large">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="#" data-dismiss="modal" class="class pull-right"><span
+						class="glyphicon glyphicon-remove"></span></a>
+					<div style="font-size: 28px; font-weight: board;" class="col-lg-10"
+						data-id="movieTitle"></div>
+					<div
+						style="font-size: 15px; font-weight: board; color: grey; margin-top: 18px;"
+						class="col-lg-10" data-id="movieEngname"></div>
+					<input type="hidden" id="movieNumber" name="movieNumber">
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<img
+								src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
+								class="img-responsive" data-id="moviePoster" width="270"
+								height="376">
+						</div>
+						<div class="col-md-8">
+
+							<div class="rating">
+								<input id="detailStarRating" value="" type="number"
+									data-show-clear="false" data-show-caption="true" class="rating"
+									min=0 max=10 step=0.1 data-size="md" disabled="disabled">
+
+							</div>
+							<div class="list-group-item row">
+								<div class="col-sm-3">타입 :</div>
+								<div class="col-sm-9" data-id="movieType"></div>
+							</div>
+							<div class="list-group-item row">
+								<div class="col-sm-3">개봉일 :</div>
+								<div class="col-sm-9" data-id="movieReleasedate"></div>
+							</div>
+							<div class="list-group-item row">
+								<div class="col-sm-3">감독 :</div>
+								<div class="col-sm-9" data-id="movieDirector"></div>
+							</div>
+							<div class="list-group-item row">
+								<div class="col-sm-3">출연진 :</div>
+								<div class="col-sm-9" data-id="movieCast"></div>
+							</div>
+							<div class="list-group-item row">
+								<div class="col-md-3">장르 :</div>
+								<div class="col-md-9" data-id="movieGenre"></div>
+							</div>
+							<div class="list-group-item row">
+								<div class="col-md-3">상영시간 :</div>
+								<div class="col-md-9" data-id="movieScreentime"></div>
+							</div>
+
+							<div class="list-group-item row">
+								<div class="btn-group btn-group-justified" role="group"
+									aria-label="group button">
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-danger" role="button"
+											id="bookmarkButton" disabled>
+											<span class="glyphicon glyphicon-heart"></span> 보고싶어
+										</button>
+									</div>
+
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-primary" role="button"
+											id="resvButton">
+											<i class="glyphicon glyphicon-time"></i> 예매하기
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="well">
+								<h3 style="text-align: left; font-weight: 800; color: grey;">
+									줄거리</h3>
+								<br>
+								<div style="min-height: 150px; font-size: 1.1em;"
+									data-id="movieStoryline"></div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="well">
+								<div>
+									<h3 style="display: inline;">한줄평</h3>
+								</div>
+								<br>
+								<c:if test="${sessionScope.login == null}">
+									<div class="input-group">
+										<textarea name="reviewContent" class="form-control"
+											readonly="readonly" style="resize: none; height: 78.73px;"
+											placeholder="로그인 후 작성할 수 있습니다."></textarea>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" data-num=""
+												disabled="disabled" style="padding: 2.05em;">
+												<span class="glyphicon glyphicon-search"></span> 등록
+											</button>
+										</span>
+									</div>
+									<div class="rating input-group">
+										<input name="reviewRating" value="0" type="number"
+											class="rating input-group" min=0 max=10 step=1 data-size="sm"
+											disabled="disabled">
 									</div>
 								</c:if>
-							</c:forEach>
-							</div>
-						</div></div>
-						<div class="tab-pane fade" id="qnaInfo">
-							문의 내역 확인
-						</div>
-					</div>
-					
-					
-				</div>
-			</div>
-		</div>
-
-
-		<!-- 영화상세 모달  -->
-		<div class="modal fade" id="movieDetailModal">
-			<div class="modal-dialog modal-large">
-				<div class="modal-content">
-					<div class="modal-header">
-						<a href="#" data-dismiss="modal" class="class pull-right"><span
-							class="glyphicon glyphicon-remove"></span></a>
-						<div style="font-size: 28px; font-weight: board;"
-							class="col-lg-10" data-id="movieTitle"></div>
-						<div
-							style="font-size: 15px; font-weight: board; color: grey; margin-top: 18px;"
-							class="col-lg-10" data-id="movieEngname"></div>
-						<input type="hidden" id="movieNumber" name="movieNumber">
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-4">
-								<img
-									src="http://image2.megabox.co.kr/mop/poster/2017/D0/FE777E-E4C3-4606-8EA1-987449753072.large.jpg"
-									class="img-responsive" data-id="moviePoster" width="270"
-									height="376">
-							</div>
-							<div class="col-md-8">
-
-								<div class="rating">
-									<input id="detailStarRating" value="" type="number"
-										data-show-clear="false" data-show-caption="true"
-										class="rating" min=0 max=10 step=0.1 data-size="md"
-										disabled="disabled">
-
-								</div>
-								<div class="list-group-item row">
-									<div class="col-sm-3">타입 :</div>
-									<div class="col-sm-9" data-id="movieType"></div>
-								</div>
-								<div class="list-group-item row">
-									<div class="col-sm-3">개봉일 :</div>
-									<div class="col-sm-9" data-id="movieReleasedate"></div>
-								</div>
-								<div class="list-group-item row">
-									<div class="col-sm-3">감독 :</div>
-									<div class="col-sm-9" data-id="movieDirector"></div>
-								</div>
-								<div class="list-group-item row">
-									<div class="col-sm-3">출연진 :</div>
-									<div class="col-sm-9" data-id="movieCast"></div>
-								</div>
-								<div class="list-group-item row">
-									<div class="col-md-3">장르 :</div>
-									<div class="col-md-9" data-id="movieGenre"></div>
-								</div>
-								<div class="list-group-item row">
-									<div class="col-md-3">상영시간 :</div>
-									<div class="col-md-9" data-id="movieScreentime"></div>
-								</div>
-
-								<div class="list-group-item row">
-									<div class="btn-group btn-group-justified" role="group"
-										aria-label="group button">
-										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-danger" role="button"
-												id="bookmarkButton" disabled>
-												<span class="glyphicon glyphicon-heart"></span> 보고싶어
+								<c:if test="${sessionScope.login != null}">
+									<div class="input-group">
+										<textarea name="reviewContent" class="form-control"
+											style="resize: none; height: 78.73px;" id="newReviewContent"
+											placeholder="감상평을 입력하세요."></textarea>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												id="reviewAddBtn" data-num="" onclick="reviewWrite(this);"
+												style="padding: 2.05em;">
+												<span class="glyphicon glyphicon-search"></span> 등록
 											</button>
-										</div>
-
-										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-primary" role="button"
-												id="resvButton">
-												<i class="glyphicon glyphicon-time"></i> 예매하기
-											</button>
-										</div>
+										</span>
 									</div>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="well">
-									<h3 style="text-align: left; font-weight: 800; color: grey;">
-										줄거리</h3>
-									<br>
-									<div style="min-height: 150px; font-size: 1.1em;"
-										data-id="movieStoryline"></div>
-								</div>
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="well">
-									<div>
-										<h3 style="display: inline;">한줄평</h3>
+									<div class="rating input-group">
+										<input id="reviewStarRating" name="reviewStarscore" value="5"
+											type="number" class="rating input-group" min=0 max=10 step=1
+											data-size="sm">
 									</div>
-									<br>
-									<c:if test="${sessionScope.login == null}">
-										<div class="input-group">
-											<textarea name="reviewContent" class="form-control"
-												readonly="readonly" style="resize: none; height: 78.73px;"
-												placeholder="로그인 후 작성할 수 있습니다."></textarea>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default" data-num=""
-													disabled="disabled" style="padding: 2.05em;">
-													<span class="glyphicon glyphicon-search"></span> 등록
-												</button>
-											</span>
-										</div>
-										<div class="rating input-group">
-											<input name="reviewRating" value="0" type="number"
-												class="rating input-group" min=0 max=10 step=1
-												data-size="sm" disabled="disabled">
-										</div>
-									</c:if>
-									<c:if test="${sessionScope.login != null}">
-										<div class="input-group">
-											<textarea name="reviewContent" class="form-control"
-												style="resize: none; height: 78.73px;" id="newReviewContent"
-												placeholder="감상평을 입력하세요."></textarea>
-											<span class="input-group-btn">
-												<button type="button" class="btn btn-default"
-													id="reviewAddBtn" data-num="" onclick="reviewWrite(this);"
-													style="padding: 2.05em;">
-													<span class="glyphicon glyphicon-search"></span> 등록
-												</button>
-											</span>
-										</div>
-										<div class="rating input-group">
-											<input id="reviewStarRating" name="reviewStarscore" value="5"
-												type="number" class="rating input-group" min=0 max=10 step=1
-												data-size="sm">
-										</div>
-									</c:if>
-									<!-- /.input-group -->
-								</div>
-								<!-- 댓글 -->
-								<div>
-									<div id="review"></div>
-								</div>
+								</c:if>
+								<!-- /.input-group -->
+							</div>
+							<!-- 댓글 -->
+							<div>
+								<div id="review"></div>
 							</div>
 						</div>
 					</div>
-					<!-- ./modal-body -->
 				</div>
+				<!-- ./modal-body -->
 			</div>
 		</div>
+	</div>
 
-		<!-- 감상평 모달 -->
-		<div class="modal fade" id="reviewUpdateModal">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<a href="#" data-dismiss="modal" class="class pull-right"><span
-							class="glyphicon glyphicon-remove"></span></a>
-						<div style="font-size: 28px; font-weight: board;"
-							class="col-lg-12">감상평 수정</div>
+	<!-- 감상평 모달 -->
+	<div class="modal fade" id="reviewUpdateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="#" data-dismiss="modal" class="class pull-right"><span
+						class="glyphicon glyphicon-remove"></span></a>
+					<div style="font-size: 28px; font-weight: board;" class="col-lg-12">감상평
+						수정</div>
+				</div>
+				<div class="modal-body">
+					<div class="input-group">
+						<textarea name="reviewContent" class="form-control"
+							style="resize: none; height: 78.73px;" id="reviewUpdateContent"
+							placeholder="감상평을 입력하세요."></textarea>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								id="reviewUpdateBtn" data-num=""
+								onclick="reviewUpdateExec(this);" style="padding: 2.05em;">
+								<span class="glyphicon glyphicon-search"></span> 수정
+							</button>
+						</span>
 					</div>
-					<div class="modal-body">
-						<div class="input-group">
-							<textarea name="reviewContent" class="form-control"
-								style="resize: none; height: 78.73px;" id="reviewUpdateContent"
-								placeholder="감상평을 입력하세요."></textarea>
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-default"
-									id="reviewUpdateBtn" data-num=""
-									onclick="reviewUpdateExec(this);" style="padding: 2.05em;">
-									<span class="glyphicon glyphicon-search"></span> 수정
-								</button>
-							</span>
-						</div>
-						<div class="rating input-group">
-							<input id="reviewUpdateStarscore" name="reviewStarscore" value=""
-								type="number" class="rating input-group" min=0 max=10 step=1
-								data-size="sm">
+					<div class="rating input-group">
+						<input id="reviewUpdateStarscore" name="reviewStarscore" value=""
+							type="number" class="rating input-group" min=0 max=10 step=1
+							data-size="sm">
 
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 
@@ -984,7 +979,6 @@
 			});
 
 		}
-
 	</script>
 </body>
 </html>

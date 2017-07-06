@@ -21,7 +21,7 @@ public interface InquiryService {
 	public int inquiryUpdate(InquiryVO ivo);
 
 	// 삭제
-	public int inquiryDelete(int inquiryNumber);
+	public int inquiryDelete(InquiryVO ivo);
 
 	// 관리자쪽
 	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO);

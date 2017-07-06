@@ -87,9 +87,10 @@
 		<div class="container">
 			<div class="pull-right">
 				<%-- <c:if test="${sessionScope.login.userId}"> --%>
-				<input type="button" class="btn btn-primary btn-sm"
-					id="qnaUpdateBtn" value="수정"> <input type="button"
-					class="btn btn-primary btn-sm" id="qnaDeleteBtn" value="삭제">
+				<a href="/cc/qna/qnaUpdateForm?inquiryNumber=${inquiryRead.inquiryNumber}" class="btn btn-primary btn-sm"
+					>수정</a>
+				<button class="btn btn-primary btn-sm"
+					onclick="qnaDeleteBtn('${inquiryRead.inquiryNumber}')">삭제</button>
 				<%-- </c:if> --%>
 				<a href="/cc/qna/qnaList"><button class="btn btn-primary btn-sm">목록</button></a>
 			</div>
@@ -102,19 +103,34 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			//삭제 버튼 크릭시 이벤트
-			$("#qnaDeleteBtn").click(function(e) {
-				e.preventDefault();
-				$("#qnaDeleteForm").attr({
-					method : "POST",
-					action : "/user/qnaDelete"
+		//삭제 버튼클릭 이벤트
+		function qnaDeleteBtn(inquiryNumber) {
+			console.log(inquiryNumber);
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					url : "/cc/qna/qnaDelete",
+					type : "POST",
+					headers : {
+						"Content-Type" : "application/json",
+					},
+					dataType : 'text',
+					data : JSON.stringify({
+						inquiryNumber : inquiryNumber
+					}),
+					success : function(data) {
+						location.href = "/cc/qna/qnaList";
+					}
 				});
-				$("#qnaDeleteForm").submit();
-			});
-		});
+			}
 
-		//수정 버튼클릭 시 이벤트
+		}
+
+		//수정 버튼클릭 이벤트
+/* 
+		function qnaUpdateBtn(inquiryNumber) {
+			
+			});
+		} */
 	</script>
 </body>
 </html>

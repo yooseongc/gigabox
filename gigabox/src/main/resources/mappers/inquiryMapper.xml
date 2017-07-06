@@ -80,7 +80,7 @@
 	<select id="inquiryRead" parameterType="inquiry" resultType="inquiry"
 		resultMap="inquiryResultMap">
 	<![CDATA[
-	 SELECT INQUIRY_TITLE
+	 SELECT INQUIRY_TITLE ,INQUIRY_NUMBER
 	,INQUIRY_REGISTERDATE
 	,INQUIRY_CONTENT, USER_NUMBER  
 	FROM TBL_INQUIRY 
@@ -99,13 +99,17 @@
 		</selectKey>
 		INSERT INTO TBL_INQUIRY
 		(
-		INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
+		INQUIRY_NUMBER, INQUIRY_TITLE,
+		INQUIRY_CONTENT,
 		INQUIRY_REGISTERDATE,
-		INQUIRY_GROUPNUMBER, INQUIRY_QORA, USER_NUMBER)
+		INQUIRY_GROUPNUMBER,
+		INQUIRY_QORA, USER_NUMBER)
 		VALUES (
-		SEQ_INQUIRY.NEXTVAL, #{inquiryTitle}, #{inquiryContent},
+		SEQ_INQUIRY.NEXTVAL,
+		#{inquiryTitle}, #{inquiryContent},
 		SYSDATE,
-		#{inquiryGroupnumber}, 'Q', #{userNumber}
+		#{inquiryGroupnumber}, 'Q',
+		#{userNumber}
 		)
 	</insert>
 
@@ -151,7 +155,8 @@
 		UPDATE TBL_INQUIRY
 		SET
 		INQUIRY_TITLE='삭제된 글입니다.'
-		WHERE INQUIRY_NUMBER=#{inquiryNumber}
+		WHERE
+		INQUIRY_NUMBER=#{inquiryNumber}
 	</update>
 
 	<!-- <delete id="inquiryDelete" parameterType="inquiry"> DELETE FROM TBL_INQUIRY 

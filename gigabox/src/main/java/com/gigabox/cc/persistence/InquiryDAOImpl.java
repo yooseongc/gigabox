@@ -73,8 +73,8 @@ public class InquiryDAOImpl implements InquiryDAO {
 
 	// 삭제
 	@Override
-	public int inquiryDelete(int inquiryNumber) {
-		return sqlSession.delete(namespace + ".inquiryDelete", inquiryNumber);
+	public int inquiryDelete(InquiryVO inquiryNumber) {
+		return sqlSession.update(namespace + ".inquiryDelete", inquiryNumber);
 	}
 }
 
