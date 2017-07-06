@@ -87,9 +87,9 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            
 					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/mypage/resvInfo?listType=1">예매 확인/취소</a></li>
+					                                <li><a href="/mypage/mymovie?listType=1">예매 확인/취소</a></li>
 					                                <li><a href="/mypage/mymovie?listType=2">마이무비</a></li>
-					                                <li><a href="/mypage/qnaInfo?listType=3">문의 내역</a></li>
+					                                <li><a href="/mypage/mymovie?listType=3">문의 내역</a></li>
 					                            </ul>
 					                        </div>
 					                    </div>
