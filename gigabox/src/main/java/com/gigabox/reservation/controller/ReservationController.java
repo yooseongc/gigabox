@@ -69,21 +69,20 @@ public class ReservationController {
 		ScheduleVO scheduleVO = new ScheduleVO();
 		scheduleVO.setScheduleNumber(resvVO.getScheduleNumber());
 		ScheduleVO info = scheduleService.scheduleDetail(scheduleVO);
-		// 예매 코드 TR-(영화5자리)-(영화관3자리)-(상영관2자리)-(1706280630;시작시간)
+		// 예매 코드 TR-(영화5자리)-(영화관3자리)-(상영관2자리)-(1706280630;시작시간)-(회원코드)
 		logger.info(info.toString());
 		resvVO.setReservationCode("TR-" + info.getMovieNumber() + 
 				"-" + info.getBranchNumber() + "-" 
 				+ info.getMovieroomNumber() + "-" 
-				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm"));
+				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm") 
+				+ resvVO.getUserNumber());
 
-		int result = resvService.reservationSeatInsert(resvVO);
-		resvVO.setReservationNumber(13);
-		ReservationThreadUtil thread = new ReservationThreadUtil();
-		thread.setResvVO(resvVO);
+		int resvNumber = resvService.reservationSeatInsert(resvVO);
+		resvVO.setReservationNumber(resvNumber);
+		ReservationThreadUtil thread = new ReservationThreadUtil(resvVO, resvService);
 		session.setAttribute("resvThread", thread);
 		thread.start();
 		
-		logger.info("result= " + result);
 		return "/reservation/reservationPayment";
 	}
 	
@@ -93,7 +92,7 @@ public class ReservationController {
 		logger.info("RESERVATION VO=" + resvVO.toString());
 		ReservationThreadUtil thread = (ReservationThreadUtil) session.getAttribute("resvThread");
 		if (thread != null) {
-			thread.stop();
+			thread.interrupt();
 		}
 		
 		return "/reservation/reservationComplete";

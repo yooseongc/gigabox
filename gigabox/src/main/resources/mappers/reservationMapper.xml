@@ -145,6 +145,9 @@
 	</select>
 	
 	<insert id="reservationSeatInsert" parameterType="reservation">
+		<selectKey keyProperty="reservationNumber" resultType="int" order="BEFORE">
+			SELECT SEQ_RESERVATION.NEXTVAL FROM DUAL 
+		</selectKey>
 		INSERT INTO TBL_RESERVATION ( RESERVATION_NUMBER, SCHEDULE_NUMBER, USER_NUMBER, 
 				RESERVATION_REGISTERDATE, RESERVATION_STATUS, 
 				RESERVATION_ADULTNUM, RESERVATION_YOUTHNUM, RESERVATION_CHILDNUM, RESERVATION_PREFERENCENUM, 
@@ -153,7 +156,7 @@
 				RESERVATION_SEAT4, RESERVATION_SEAT5, RESERVATION_SEAT6, 
 				RESERVATION_CODE 
 			) 
-		VALUES ( SEQ_RESERVATION.NEXTVAL, #{scheduleNumber}, #{userNumber}, 
+		VALUES ( #{reservationNumber}, #{scheduleNumber}, #{userNumber}, 
 				SYSDATE, 1, 
 				#{reservationAdultnum}, #{reservationYouthnum}, #{reservationChildnum}, #{reservationPreferencenum},  
 				0, #{reservationPayamount}, '미결제', SYSDATE, 

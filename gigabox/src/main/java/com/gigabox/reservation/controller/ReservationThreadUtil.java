@@ -1,12 +1,19 @@
 package com.gigabox.reservation.controller;
 
 import com.gigabox.reservation.service.ReservationService;
-import com.gigabox.reservation.service.ReservationServiceImpl;
 import com.gigabox.reservation.vo.ReservationVO;
 
 public class ReservationThreadUtil extends Thread {
 	
 	private ReservationVO resvVO;
+	private ReservationService resvService;
+	
+	public ReservationThreadUtil(ReservationVO resvVO, ReservationService resvService) {
+		this.resvVO = resvVO;
+		this.resvService = resvService;
+	}
+	
+	
 	
 	public ReservationVO getResvVO() {
 		return resvVO;
@@ -16,8 +23,6 @@ public class ReservationThreadUtil extends Thread {
 		this.resvVO = resvVO;
 	}
 
-	ReservationService resvService = new ReservationServiceImpl();
-	
 	public void init() {
 		this.start();
 	}
@@ -25,10 +30,8 @@ public class ReservationThreadUtil extends Thread {
 	@Override
 	public void run() {
 		for(int i = 0; i < 10; i++){
-			System.out.println(resvVO.toString());
 			try{
-				System.out.println("Thread is running : " + (i)*30 + " seconds");
-				Thread.sleep(3000); // 30초
+				Thread.sleep(30000); // 30초
 			} catch(Exception e){
 				
 				e.printStackTrace();
