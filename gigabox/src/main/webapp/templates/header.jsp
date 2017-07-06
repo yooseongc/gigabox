@@ -186,9 +186,9 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 			{
 				$("#errorMessageHeader").text("Caps Lock 키가 눌려있습니다.");
 				$("#errorMessageHeader").removeClass("hide");
-	        } else {
+	        } /* else {
 	            $("#errorMessageHeader").hide();
-	        }
+	        } */
 	    }
 
 		$(document).ready(function() {
@@ -215,7 +215,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				$("#loginDropDown").trigger("click");
 			}
 			
-			
+			//로그인버튼 클릭
 			$("#loginButton").click(function(e) {
 				e.preventDefault();
 				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));

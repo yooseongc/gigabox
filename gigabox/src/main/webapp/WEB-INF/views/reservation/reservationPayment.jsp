@@ -24,6 +24,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 
 
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -48,343 +49,194 @@
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>
 					<li>예매</li>
-					<li class="active">빠른 예매</li>
+					<li class="active">결제</li>
 				</ol>
 			</div>
 		</div>
 		<!-- /.row -->
 
-		<div class="row" style="height: 50px; margin-left: 5%; margin-right: 5%;">
-            <div class="col-md-12">
-            	<span class="label label-info label-md pull-left" style="font-size: 1.2em;">
-            		<i class="fa fa-info-circle"></i>결제 수단을 선택해 주세요. (최대 6석)</span>
-            	<button onclick="location.href='/reservation/resvMain';" class="btn btn-md btn-outline btn-primary pull-right">
-            		<i class="glyphicon glyphicon-repeat"></i> 다시 예매</button>
-            	<button onclick="location.href='/'" class="btn btn-md btn-outline btn-danger pull-right">
-            		<i class="glyphicon glyphicon-home"></i> 메인으로</button>
-            	<button id="nextStep" class="btn btn-md btn-outline btn-success pull-right">
-            		<i class="glyphicon glyphicon-ok"></i>결제</button>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-
 		<!-- Content Row -->
 		<div class="row">
-			
 			<div class="col-md-8">
-				
-				<!-- 날짜 선택 -->
-				<div class="col-md-12">
-					<div class="panel panel-danger" data-role="resv-seatSelect-panel">
+				<!-- 결제 방법 선택 -->
+				<div class="col-md-5">
+					<div class="panel panel-info" data-role="resv-seatSelect-panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">좌석 선택</h3>
+							<h1 class="panel-title">
+								결제방법<small> &nbsp;&nbsp;결제방법을 선택해 주세요.</small>
+							</h1>
 						</div>
-						<div class="panel-body" style="height: 700px;">
-							<div id="seat-map">
-								<div class="front-indicator">스&nbsp;&nbsp;&nbsp;크&nbsp;&nbsp;&nbsp;린</div>
-							</div>
-							<div id="legend"></div>
+						<div class="panel-body" style="height: 500px;">
+							<ul class="nav nav-list bs-docs-sidenav">
+								<li><a href="#">신용카드</a></li>
+								<li><a href="#">휴대전화</a></li>
+								<li><a href="#">무통장 입금</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
-				
+
+				<!-- 마일리지 선택 -->
+				<div class="col-md-7">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h1 class="panel-title">
+								마일리지<small> &nbsp;&nbsp;사용 할 마일리지를 확인해주세요.</small>
+							</h1>
+						</div>
+						<div class="panel-body" style="height: 500px;">
+							<form id="payMentForm">
+								<div class="form-group">
+									<label class="col-sm-6 control-label" for="">사용가능한 마일리지</label>
+									<div>
+										<div class="input-group col-sm-5">
+											<input class="form-control" id="userMileage" name="" type="number"
+												value="${sessionScope.login.userMileage}"
+												readonly="readonly">
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<label class="col-sm-6 control-label" for="">사용 마일리지</label>
+									<div>
+										<div class="input-group col-sm-5">
+											<input class="form-control" min="0" max="99999" id="useMileage" name=""
+												type="number" value="" maxlength="5"
+												oninput="maxLengthCheck(this)" />
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<label class="col-sm-6 control-label" for="">잔여 마일리지</label>
+									<div>
+										<div class="input-group col-sm-5">
+											<input class="form-control" id="restMileage" name="" type="number"
+												value="" readonly="readonly">
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="row"
+									style="height: 50px; margin-left: 5%; margin-right: 5%;">
+									<div class="col-md-12">
+										<button class="btn btn-md btn-outline btn-primary pull-right"
+											id="mileageCal">
+											<i class="glyphicon glyphicon-ok"></i> 적용
+										</button>
+										<button class="btn btn-md btn-outline btn-danger pull-right"
+											type="reset">
+											<i class="glyphicon glyphicon-repeat"></i> 초기화
+										</button>
+									</div>
+									<!-- /.col-lg-12 -->
+								</div>
+								<!-- /.row -->
+							</form>
+
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- /.col-md-8 -->
-			
+
 			<div class="col-md-4">
-			
-				<!-- 상영 일정 선택 -->
-				<div class="col-md-12">
-					<div class="panel panel-success" data-role="resv-seatInfo-panel">
-						<div class="panel-heading">
-							<h3 class="panel-title">예약 선택</h3>
-						</div>
-						<div class="panel-body" style="height: 700px;">
-							<form id="seatForm">
+				<!-- 결제 내역 -->
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">결제 내역</h3>
+					</div>
+					<div class="panel-body" style="height: 500px;">
+						<form id="payMentForm">
 							<div class="form form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-3 control-label" for="reservationAdultnum">성인</label>
-									<div class="col-sm-9">
-										<div class="input-group col-sm-9">
-											<input class="form-control" min="0" max="6" data-role="people"
-												id="reservationAdultnum" name="reservationAdultnum" type="number" value="0">
-										</div>
+									<div>
+										<label class="col-sm-10 control-label" for="">상영정보-포스터,
+											영화제목, 극장, 상영관, 상영시간(년월일 요일 시간),인원수, 인원속성, 좌석정보</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-4 control-label" for="">결제 금액</label>
+									<div class="input-group col-sm-6">
+										<input class="form-control" id="" name="" type="number"
+											value="" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label" for="reservationYouthnum">청소년</label>
-									<div class="col-sm-9">
-										<div class="input-group col-sm-9">
-											<input class="form-control" min="0" max="6" data-role="people"
-												id="reservationYouthnum" name="reservationYouthnum" type="number" value="0">
-										</div>
+									<label class="col-sm-4 control-label" for="">마일리지</label>
+									<div class="input-group col-sm-6">
+										<input class="form-control" id="resvMileage" name="" type="number"
+											value="0" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label" for="reservationChildnum">아동</label>
-									<div class="col-sm-9">
-										<div class="input-group col-sm-9">
-											<input class="form-control" min="0" max="6" data-role="people"
-												id="reservationChildnum" name="reservationChildnum" type="number" value="0">
-										</div>
+									<label class="col-sm-4 control-label" for="">총 결제 금액</label>
+									<div class="input-group col-sm-6">
+										<input class="form-control" id="" name="" type="number"
+											value="" readonly="readonly">
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-sm-3 control-label" for="reservationPreferencenum">우대</label>
-									<div class="col-sm-9">
-										<div class="input-group col-sm-9">
-											<input class="form-control" min="0" max="6" data-role="people"
-												id="reservationPreferencenum" name="reservationPreferencenum" type="number" value="0">
-										</div>
+								<hr>
+								<div class="row"
+									style="height: 50px; margin-left: 5%; margin-right: 5%;">
+									<div class="col-md-12">
+										<button id="nextStep"
+											class="btn btn-md btn-outline btn-success pull-right">
+											<i class="glyphicon glyphicon-ok"></i>결제
+										</button>
+										<button onclick="location.href='/'"
+											class="btn btn-md btn-outline btn-danger pull-right">
+											<i class="glyphicon glyphicon-home"></i> 메인
+										</button>
+
 									</div>
+									<!-- /.col-lg-12 -->
 								</div>
+								<!-- /.row -->
 							</div>
-								<input type="hidden" id="scheduleNumber" name="scheduleNumber" value="${scheduleNumber}">
-								<input type="hidden" id="userNumber" name="userNumber" value="${sessionScope.login.userNumber}">
-								<input type="hidden" id="movieroomNumber" name="movieroomNumber" value="${movieroomNumber}">
-								<input type="hidden" id="seat1" name="reservationSeat1">
-								<input type="hidden" id="seat2" name="reservationSeat2">
-								<input type="hidden" id="seat3" name="reservationSeat3">
-								<input type="hidden" id="seat4" name="reservationSeat4">
-								<input type="hidden" id="seat5" name="reservationSeat5">
-								<input type="hidden" id="seat6" name="reservationSeat6">
-								<input type="hidden" id="reservationPayamount" name="reservationPayamount" />
-							</form>
-							<br>
-							<script>
-								$(document).ready(function() {
-									$("input[data-role='people']").on("change", function() {
-										var total = 
-											parseInt($("#reservationAdultnum").val()) +
-											parseInt($("#reservationYouthnum").val()) +
-													parseInt($("#reservationChildnum").val()) +
-											parseInt($("#reservationPreferencenum").val());
-										if (total > 6) {
-											alert("6명 이상 선택할 수 없습니다.");
-											$(this).val($(this).val()-1);
-											return false;
-										}
-										if ((sc.find('selected').length+1) > total) {
-											sc.find('selected').each(function() {
-												$(this).trigger("click");
-											});
-											return false;
-										}
-									});
-								});
-							</script>
-							<div class="booking-details" style="padding-top: 30px;">
-								<h3>
-									선택된 좌석 (<span id="counter">0</span>석):
-								</h3>
-								<ul id="selected-seats" style="height: 300px; list-style: decimal;">
-								</ul>
-								<p class="well well-md well-info">
-									합계 : <b><span id="total">0</span>원</b>							
-								</p>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 			<!-- /.col-md-4 -->
+		
 		</div>
 		<!-- /.row -->
-		
 	</div>
 	<!-- /.container -->
 
-	
-	<script type="text/javascript">
-		
-		function transformMap(beforeMap) {
-			map = beforeMap
-			var colCount = map[0].length;
-			var rowCount = map.length;
-			for (var i = 0; i < map.length; i++) {
-				map[i] = map[i].replace(/w/gi,"_");
-			}
-			console.log(map);
-			return map;
-		}
-	
-		function mapLoad(loadmap, loadseats) {
-			map = loadmap;
-			seats = loadseats;
-			var colCount = map[0].length;
-			var rowCount = map.length;
-			$('.seatCharts-row').remove();
-			$('.seatCharts-legendItem').remove();
-			$('#seat-map,#seat-map *').unbind().removeData();
-			sc = $("#seat-map").seatCharts({
-				map: transformMap(map), 
-				seats: seats,
-				naming: naming,
-				legend: legend,
-				click: click
-			});
-			$("#seat-map").css("width", 22*(parseInt(colCount)+1));
-			//$("#seat-map").css("height", 22*(parseInt(rowCount)+5));
-			
-			var resvSeat = new Array();
-			// 기존에 예약된 좌석
-			$.ajax({
-				url: '/reservation/resvList',
-				type: 'GET',
-				data: {scheduleNumber: $("#scheduleNumber").val()},
-				async: false,
-				dataType: 'json'
-			}).success(function(data) {
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].reservationSeat1 != null) {
-						resvSeat.push(data[i].reservationSeat1);
-					}
-					if (data[i].reservationSeat2 != null) {
-						resvSeat.push(data[i].reservationSeat2);
-					}
-					if (data[i].reservationSeat3 != null) {
-						resvSeat.push(data[i].reservationSeat3);
-					}
-					if (data[i].reservationSeat4 != null) {
-						resvSeat.push(data[i].reservationSeat4);
-					}
-					if (data[i].reservationSeat5 != null) {
-						resvSeat.push(data[i].reservationSeat5);
-					}
-					if (data[i].reservationSeat6 != null) {
-						resvSeat.push(data[i].reservationSeat6);
-					}
-				}
-			});
-			console.log(resvSeat);	
-			for (var i = 0; i < resvSeat.length; i++) {
-				var each = resvSeat[i];
-				var col = parseInt(each.substring(1));
-				var row = each.charCodeAt(0)-64;
-				var id = row + "_" + col;
-				console.log(id);
-				sc.status(id,'unavailable');
-			}
-		}
-		
-		function recalculateTotal(sc) {
-			var total = 0;
-		
-			//basically find every selected seat and sum its price
-			sc.find('selected').each(function () {
-				console.log(this.data().price);
-				total += parseInt(this.data().price);
-			});
-			
-			return parseInt(total);
-		}
-	
-		$(document).ready(function() { 
-			var $cart = $('#selected-seats');
-			var $counter = $('#counter');
-			var $total = $('#total');
-			naming = {
-				top : false,
-				getLabel : function (character, row, column) {
-					/* if (row == 1 && column == 1) {
-						firstSeatLabel = 1;
-					}
-					return firstSeatLabel++; */
-					// A 아스키 코드 : 65 
-					return String.fromCharCode(64 + row) + column;
-				}
-			};
-			legend = {
-				node : $('#legend'),
-			    items : [
-					[ 's', 'available', 'Standard Zone' ],
-					[ 'p', 'available', 'Prime Zone'],
-					[ 'd', 'available', '장애인석']
-			    ]					
-			};
-			click = function() {
-				if (this.status() == 'available') {
-					//let's create a new <li> which we'll add to the cart items
-					var totalCount = 
-						parseInt($("#reservationAdultnum").val()) +
-						parseInt($("#reservationYouthnum").val()) +
-								parseInt($("#reservationChildnum").val()) +
-						parseInt($("#reservationPreferencenum").val());
-					if(parseInt($counter.text()) >= totalCount) {
-						alert("더 이상 선택하실 수 없습니다.");
-						return 'available';
-					}
-					$('<li>'+this.data().category+' 좌석 '+this.settings.label+': <b>'+this.data().price+'원</b> <a href="#" class="cancel-cart-item label label-danger">취소</a></li>')
-						.attr('id', 'cart-item-'+this.settings.id)
-						.data('seatId', this.settings.id)
-						.appendTo($cart);
-					
-					/*
-					 * Lets update the counter and total
-					 *
-					 * .find function will not find the current seat, because it will change its stauts only after return
-					 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-					 */
-					$counter.text(sc.find('selected').length+1);
-					$total.text(recalculateTotal(sc)+parseInt(this.data().price));
-					$("#seat"+$counter.text()).val(this.settings.label);
-					
-					return 'selected';
-				} else if (this.status() == 'selected') {
-					//update the counter
-					$("#seat"+$counter.text()).removeAttr("value");
-					$counter.text(sc.find('selected').length-1);
-					//and total
-					$total.text(recalculateTotal(sc)-this.data().price);
-				
-					//remove the item from our cart
-					$('#cart-item-'+this.settings.id).remove();
-					
-					
-					//seat has been vacated
-					return 'available';
-				} else if (this.status() == 'unavailable') {
-					//seat has been already booked
-					return 'unavailable';
-				} else {
-					return this.style();
-				}
-			};
-			
-			$.ajax({
-				url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/" + $("#movieroomNumber").val() + "/seatdata",
-				//url: "http://choiys3574.cafe24.com/upload/gigabox/movieroom/1/seatdata",
-				type: "GET",
-				error: function() {
-					console.log("좌석 정보 로딩 실패");
-				},
-				success: function(data) {
-					map = data.map;
-					seats = data.seats;
-					mapLoad(map, seats);
-				}
-		});
-			
-			
-		$("#nextStep").click(function(e) {
-			e.preventDefault();
-			if (parseInt($("#counter").text()) <= 0) {
-				alert("좌석을 선택해 주세요.");
-				return;
-			}
-			$("#reservationPayamount").val($("#total").text());
-			$("#seatForm").attr("method", "POST");
-			$("#seatForm").attr("action", "/reservation/resvPayment");
-			$("#seatForm").submit();
-		});
-	});
-	</script>	
 
+	<script type="text/javascript">
+		//maxlength 체크
+		function maxLengthCheck(object) {
+			if (object.value.length > object.maxLength) {
+				object.value = object.value.slice(0, object.maxLength);
+			}
+		}
+		
+		//마일리지 차감
+		$(document).ready(function() {
+			$("#mileageCal").click(function(e) {
+				e.preventDefault();
+				if (parseInt($("#userMileage").val()) >= parseInt($("#useMileage").val())){
+				var sub = parseInt($("#userMileage").val()) - parseInt($("#useMileage").val())
+				$("#restMileage").val(sub);
+				$("#resvMileage").val($("#useMileage").val());
+				}else{
+					alert("사용가능한 마일리지를 초과하였습니다.")
+					$("#useMileage").val('');
+					$("#restMileage").val('');
+					$("#resvMileage").val('');
+				}
+			});
+		});
+	</script>
+	
+	
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
-
-	
 
 </body>
 </html>
