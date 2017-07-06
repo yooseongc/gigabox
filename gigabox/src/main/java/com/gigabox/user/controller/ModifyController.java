@@ -36,16 +36,16 @@ public class ModifyController {
 	private ModifyService modifyService;
 
 	// 회원정보 수정 폼 출력
-	@RequestMapping(value = "/modifyForm/{userId}", method = RequestMethod.GET)
-	public String modifyFormGET(Model model, HttpSession session, HttpServletRequest request,
-			@PathVariable String userId) {
+	@RequestMapping(value = "/modifyForm", method = RequestMethod.GET)
+	public String modifyFormGET(Model model, HttpSession session, 
+			HttpServletRequest request) {
 		logger.info("MODIFYFORM PAGE LOADING...");
-
-		logger.info("userId= " + userId);
+		
+		UserVO sessionVO = (UserVO) session.getAttribute("login");
+		logger.info("userId= " + sessionVO.getUserId());
 
 		UserVO userVO = new UserVO();
-		userVO.setUserId(userId);
-		userVO = modifyService.userDetail(userVO);
+		userVO = modifyService.userDetail(sessionVO);
 
 		model.addAttribute("userInfo", userVO);
 
@@ -149,7 +149,7 @@ public class ModifyController {
 					e.printStackTrace();
 				}
 
-				// 새 비밀번호로 업데이트
+				// 새 비밀번호로 변경
 				modifyService.changePw(userVO);
 
 				return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
@@ -170,15 +170,18 @@ public class ModifyController {
 	}
 
 	// 회원탈퇴 폼 출력
-	@RequestMapping(value = "/userLeaveForm/{userId}", method = RequestMethod.GET)
-	public String userLeaveFormGET(Model model, HttpSession session, HttpServletRequest request,
-			@PathVariable String userId) {
+	@RequestMapping(value = "/userLeaveForm", method = RequestMethod.GET)
+	public String userLeaveFormGET(Model model, HttpSession session,
+			HttpServletRequest request) {
 		logger.info("USERLEAVE FORM LOADING... ");
-		logger.info("userId= " + userId);
 
+		UserVO sessionVO = (UserVO) session.getAttribute("login");
+		logger.info("userId= " + sessionVO.getUserId());
+		
 		UserVO userVO = new UserVO();
-		userVO.setUserId(userId);
-		userVO = modifyService.userDetail(userVO);
+		userVO.setUserId(sessionVO.getUserId());
+		
+		userVO = modifyService.userDetail(sessionVO);
 
 		model.addAttribute("userInfo", userVO);
 

@@ -61,7 +61,8 @@ p.error { /* 에러메시지 */
 					회원 서비스 <small>회원 가입</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#">회원 서비스</a></li>
+					<li>GIGABOX</li>
+					<li>회원 서비스</li>
 					<li class="active">이용약관 동의</li>
 				</ol>
 			</div>

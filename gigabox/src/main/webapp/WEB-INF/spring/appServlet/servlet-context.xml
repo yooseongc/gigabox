@@ -43,8 +43,13 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/user"/>
-			<mapping path="/user/**"/>
+			<mapping path="/user/**" />
 			<mapping path="/cc/qna/qnaWriteForm"/>
+			<mapping path="/cc/qna/qnaUpdateForm"/>
+			<mapping path="/reservation/resvMain"/>
+			<mapping path="/reservation/resvSeat"/>
+			<mapping path="/reservation/resvPayment"/>
+			<mapping path="/mypage/**"/>
 			<exclude-mapping path="/user/login"/>
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/logout"/>
@@ -64,11 +69,10 @@
 			<exclude-mapping path="/user/zipcode/list"/>
 			<exclude-mapping path="/user/zipcode/list.do"/>
 			<exclude-mapping path="/user/emailAuth/*"/>
-			<exclude-mapping path="/user/userLeaveForm"/>
 			<exclude-mapping path="/user/findInfoForm"/>
 			<exclude-mapping path="/user/findUserIdForm"/>
-			
-			
+			<exclude-mapping path="/user/findPwForm"/>
+			<exclude-mapping path="/user/findUserPwForm"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

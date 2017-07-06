@@ -32,6 +32,12 @@
 	<logger name="com.gigabox.branch.controller">
 		<level value="info" />
 	</logger>
+	<logger name="com.gigabox.reservation.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.gigabox.mypage.controller">
+		<level value="info" />
+	</logger>
 	<logger name="com.gigabox.interceptor">
 		<level value="info" />
 	</logger>
@@ -50,27 +56,27 @@
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- Database Logger -->
-	<logger name="java.sqlonly" additivity="false">
+	<!-- <logger name="java.sqlonly" additivity="false">
 		<level value="DEBUG"/>
 	</logger>
 	<logger name="java.resultsettable" additivity="false">
 		<level value="DEBUG"/>
-	</logger>
+	</logger> -->
 	
 	<!-- log4jdbc option  log the jdbc results as a table --> 
 
-	<logger name="jdbc.sqltiming" additivity="false"> 
+	<!-- <logger name="jdbc.sqltiming" additivity="false"> 
 		<level value="debug" /> 
 		<appender-ref ref="console" /> 
-	</logger>
+	</logger> -->
 	
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 

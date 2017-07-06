@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <style type="text/css">
 ol.inline, ol.unstyled, ul.inline, ul.unstyled {
     margin-left: 0;
@@ -38,7 +39,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
                         <a href="/cinema/branchList" style="height: 60px; width: 170px;">영화관</a>
                     </li>
                     <li>
-                        <a href="javascript:loadReservationModal();" style="height: 60px; width: 170px;">빠른 예매</a>
+                        <a href="/reservation/resvMain" style="height: 60px; width: 170px;">빠른 예매</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width: 170px;">전체 메뉴 <b class="caret"></b></a>
@@ -64,7 +65,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            <h4 class="title  margin-top-20"><i class="fa fa-ticket"></i> 예매</h4>
 					                            <ul class="unstyled">
 					                                <li><a href="/reservation/resvInfo">예매 안내</a></li>
-					                                <li><a href="/?pageAction=resv">빠른 예매</a></li>
+					                                <li><a href="/reservation/resvMain">빠른 예매</a></li>
 					                            </ul>
 												
 												<h4 class="title margin-top-20"><i class="fa fa-info-circle"></i> 고객센터</h4>
@@ -80,16 +81,16 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            <ul class="unstyled">
 					                                <li><a href="/user/findInfoForm">ID/PW 찾기</a></li>
 					                                <li><a href="/user/joinAgreeForm">회원 가입</a></li>
-					                                <li><a href="/user/modifyForm/${sessionScope.login.userId}">회원 정보 수정</a></li>
-					                                <li><a href="/user/userLeaveForm/${sessionScope.login.userId}">회원 탈퇴</a></li>
+					                                <li><a href="/user/modifyForm">회원 정보 수정</a></li>
+					                                <li><a href="/user/userLeaveForm">회원 탈퇴</a></li>
 					                            </ul>
 					                            
 					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
 					                            <ul class="unstyled">
-					                                <li><a href="/mypage/mileachInfo/${sessionScope.login.userId}">마일리지 정보</a></li>
-					                                <li><a href="/mypage/resvInfo/${sessionScope.login.userId}">예매 확인/취소</a></li>
-					                                <li><a href="/mypage/mymovie/${sessionScope.login.userId}">마이무비</a></li>
-					                                <li><a href="/mypage/qnaInfo/${sessionScope.login.userId}">문의 내역</a></li>
+					                                <li><a href="/mypage/mileageInfo">마일리지 정보</a></li>
+					                                <li><a href="/mypage/resvInfo">예매 확인/취소</a></li>
+					                                <li><a href="/mypage/mymovie">마이무비</a></li>
+					                                <li><a href="/mypage/qnaInfo">문의 내역</a></li>
 					                            </ul>
 					                        </div>
 					                    </div>
@@ -123,14 +124,14 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 										<div class="form-group">
 											<label for="userPw">비밀번호</label> <input name="userPw"
 												id="userPwHeader" value='' placeholder="Password" type="password"
-												class="form-control" />
+												class="form-control" onkeypress="caps_lock(event)"/>
 										</div>
 										<div class="form-group">
 												<!-- Change this to a button or input when using this as a form -->
 			                                <button class="btn btn-lg btn-success btn-block" id="loginButton">로그인</button>
 										</div>
 										<div class="form-group">
-											<a href="/user/findPWForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
+											<a href="/user/findInfoForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
 											<a href="/user/joinAgreeForm" class="btn btn-default col-lg-6 m-t-md"> 회원가입</a>
 										</div>
 									</fieldset>
@@ -174,12 +175,25 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				return true;
 			}
 		}
+		
+		//capslock 체크
+		function caps_lock(e){
+			var keyCode = 0;
+			var shiftKey = false;
+			keyCode = e.keyCode;
+			shiftKey = e.shiftKey;
+			if(((keyCode >= 65 && keyCode <= 90)&& !shiftKey)||((keyCode >= 97 && keyCode <= 122)&& shiftKey))
+			{
+				$("#errorMessageHeader").text("Caps Lock 키가 눌려있습니다.");
+				$("#errorMessageHeader").removeClass("hide");
+	        } /* else {
+	            $("#errorMessageHeader").hide();
+	        } */
+	    }
 
 		$(document).ready(function() {
 			   
 			$("#errorMessageHeader").addClass("hide");
-			
-			
 		    
 			if ("${sessionScope.login.userId}" != "") {
 				$("#loginDropdownSpan").addClass("hide");
@@ -197,18 +211,20 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
 			console.log(parameter);
 			if (parameter == 'login') {
-				/* alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요."); */
+				//alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
 				$("#loginDropDown").trigger("click");
 			}
-			
-			
+
+			//로그인버튼 클릭
 			$("#loginButton").click(function(e) {
 				e.preventDefault();
 				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));
 				if (!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader"))) {
+					$("#errorMessageHeader").removeClass("hide");
 					return;
 				}
 				if (!formCheckHeader($("#userPwHeader"), "비밀번호를", $("#errorMessageHeader"))) {
+					$("#errorMessageHeader").removeClass("hide");
 					return;
 				}
 				
@@ -234,6 +250,18 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 							$("#userPwHeader").focus();
 						} else if (resultData.message == 'LEAVE-MEMBER') {
 							$("#errorMessageHeader").text("탈퇴된 회원입니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
+						} else if (resultData.message == 'BLIND-MEMBER') {
+							$("#errorMessageHeader").text("블라인드된 회원입니다.\n관리자에게 문의해 주세요.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
+						} else if (resultData.message == 'WAIT-MEMBER') {
+							$("#errorMessageHeader").text("인증 대기중입니다.\n이메일을 확인해 주세요.");
 							$("#errorMessageHeader").removeClass("hide");
 							$("#userIdHeader").val("");
 							$("#userPwHeader").val("");

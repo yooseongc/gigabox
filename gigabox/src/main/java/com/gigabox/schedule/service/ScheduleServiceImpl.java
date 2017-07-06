@@ -22,23 +22,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public int scheduleListCount(ScheduleSearchCriteria ssc) {
-		return scheduleDAO.scheduleListCount(ssc);
+	public List<ScheduleVO> scheduleBranchList(ScheduleSearchCriteria ssc) {
+		return scheduleDAO.scheduleBranchList(ssc);
 	}
 
+	@Override
+	public List<ScheduleVO> scheduleMovieList(ScheduleSearchCriteria ssc) {
+		return scheduleDAO.scheduleMovieList(ssc);
+	}
+	
 	@Override
 	public ScheduleVO scheduleDetail(ScheduleVO scheduleVO) {
 		return scheduleDAO.scheduleDetail(scheduleVO);
 	}
 
-	@Override
-	public int scheduleInsert(ScheduleVO scheduleVO) {
-		return scheduleDAO.scheduleInsert(scheduleVO);
-	}
-
-	@Override
-	public int scheduleUpdate(ScheduleVO scheduleVO) {
-		return scheduleDAO.scheduleUpdate(scheduleVO);
-	}
+	
 
 }

@@ -13,12 +13,13 @@
 			<result property="userTel" column="USER_TEL" />
 			<result property="userAddr" column="USER_ADDR" />
 			<result property="userStatus" column="USER_STATUS"/>
+			<result property="userMileage" column="USER_MILEAGE"/>
 		</resultMap>
 
 	<select id="statusCheck" parameterType="login" resultType="int">
 		SELECT COUNT(*) 
 		FROM TBL_USER 
-		WHERE USER_STATUS = '탈퇴회원' AND USER_ID = #{userId}
+		WHERE USER_STATUS = #{userStatus} AND USER_ID = #{userId}
 	</select>
 	
 	<select id="idCheck" parameterType="login" resultType="int">

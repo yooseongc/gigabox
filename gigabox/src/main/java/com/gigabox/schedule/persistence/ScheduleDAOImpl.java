@@ -22,10 +22,15 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	public List<ScheduleVO> scheduleList(ScheduleSearchCriteria ssc) {
 		return sqlSession.selectList(namespace + ".scheduleList", ssc);
 	}
-
+	
 	@Override
-	public int scheduleListCount(ScheduleSearchCriteria ssc) {
-		return sqlSession.selectOne(namespace + ".scheduleListCount", ssc);
+	public List<ScheduleVO> scheduleBranchList(ScheduleSearchCriteria ssc) {
+		return sqlSession.selectList(namespace + ".scheduleBranchList", ssc);
+	}
+	
+	@Override
+	public List<ScheduleVO> scheduleMovieList(ScheduleSearchCriteria ssc) {
+		return sqlSession.selectList(namespace + ".scheduleMovieList", ssc);
 	}
 
 	@Override
@@ -33,14 +38,5 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		return sqlSession.selectOne(namespace + ".scheduleDetail", scheduleVO);
 	}
 
-	@Override
-	public int scheduleInsert(ScheduleVO scheduleVO) {
-		return sqlSession.insert(namespace + ".scheduleInsert", scheduleVO);
-	}
-
-	@Override
-	public int scheduleUpdate(ScheduleVO scheduleVO) {
-		return sqlSession.update(namespace + ".scheduleUpdate", scheduleVO);
-	}
 
 }
