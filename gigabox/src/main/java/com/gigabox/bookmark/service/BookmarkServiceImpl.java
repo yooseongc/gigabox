@@ -17,8 +17,8 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	
 	@Override
-	public List<BookmarkVO> BookmarkList() {
-		return dao.bookmarkList();
+	public List<BookmarkVO> BookmarkList(BookmarkVO vo) {
+		return dao.bookmarkList(vo);
 	}
 
 	@Override

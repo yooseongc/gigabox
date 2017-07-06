@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,18 +35,6 @@ public class ReservationController {
 
 	@Inject 
 	private ReservationService resvService;
-	
-	/*@Inject
-	private BranchService branchService;
-	
-	@Inject
-	private MovieRoomService movieRoomService;
-	
-	@Inject 
-	private UserService userService;
-	
-	@Inject
-	private MovieService movieService;*/
 	
 	@Inject
 	private ScheduleService scheduleService;
@@ -74,22 +63,39 @@ public class ReservationController {
 	
 	
 	@RequestMapping(value="/resvPayment", method=RequestMethod.POST) 
-	public String reservationPaymentPOST(Model model, ReservationVO resvVO) {
+	public String reservationPaymentPOST(HttpSession session, Model model, ReservationVO resvVO) {
 		logger.info("RESERVATION PAYMENT PAGE LOAD...");
 		logger.info("RESERVATION VO=" + resvVO.toString());
 		ScheduleVO scheduleVO = new ScheduleVO();
 		scheduleVO.setScheduleNumber(resvVO.getScheduleNumber());
 		ScheduleVO info = scheduleService.scheduleDetail(scheduleVO);
-		// 예매 코드 TR-(영화5자리)-(영화관3자리)-(상영관2자리)-(1706280630;시작시간)
+		// 예매 코드 TR-(영화5자리)-(영화관3자리)-(상영관2자리)-(1706280630;시작시간)-(회원코드)
 		logger.info(info.toString());
 		resvVO.setReservationCode("TR-" + info.getMovieNumber() + 
 				"-" + info.getBranchNumber() + "-" 
 				+ info.getMovieroomNumber() + "-" 
-				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm"));
+				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm") 
+				+ resvVO.getUserNumber());
 
-		int result = resvService.reservationSeatInsert(resvVO);
-		logger.info("result= " + result);
+		int resvNumber = resvService.reservationSeatInsert(resvVO);
+		resvVO.setReservationNumber(resvNumber);
+		ReservationThreadUtil thread = new ReservationThreadUtil(resvVO, resvService);
+		session.setAttribute("resvThread", thread);
+		thread.start();
+		
 		return "/reservation/reservationPayment";
+	}
+	
+	@RequestMapping(value="/resvComplete", method=RequestMethod.POST) 
+	public String reservationCompletePOST(HttpSession session, Model model, ReservationVO resvVO) {
+		logger.info("RESERVATION COMPLETE PAGE LOAD...");
+		logger.info("RESERVATION VO=" + resvVO.toString());
+		ReservationThreadUtil thread = (ReservationThreadUtil) session.getAttribute("resvThread");
+		if (thread != null) {
+			thread.interrupt();
+		}
+		
+		return "/reservation/reservationComplete";
 	}
 	
 	// 좌석 예약 정보 받아오기

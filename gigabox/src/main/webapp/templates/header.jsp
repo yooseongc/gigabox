@@ -87,11 +87,9 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 					                            
 					                            <h4 class="title margin-top-20"><i class="fa fa-user"></i> 마이페이지</h4>
 					                            <ul class="unstyled">
-					                            	<li><a href="/maypage/mainMypage?ListType=1">마이페이지</a>
-					                                <li><a href="/mypage/mileachInfo?listType=2">마일리지 정보</a></li>
-					                                <li><a href="/mypage/resvInfo?listType=3">예매 확인/취소</a></li>
-					                                <li><a href="/mypage/mymovie?listType=4">마이무비</a></li>
-					                                <li><a href="/mypage/qnaInfo?listType=5">문의 내역</a></li>
+					                                <li><a href="/mypage/resvInfo?listType=1">예매 확인/취소</a></li>
+					                                <li><a href="/mypage/mymovie?listType=2">마이무비</a></li>
+					                                <li><a href="/mypage/qnaInfo?listType=3">문의 내역</a></li>
 					                            </ul>
 					                        </div>
 					                    </div>
@@ -125,7 +123,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 										<div class="form-group">
 											<label for="userPw">비밀번호</label> <input name="userPw"
 												id="userPwHeader" value='' placeholder="Password" type="password"
-												class="form-control" />
+												class="form-control" onkeypress="caps_lock(event)"/>
 										</div>
 										<div class="form-group">
 												<!-- Change this to a button or input when using this as a form -->
@@ -176,6 +174,21 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				return true;
 			}
 		}
+		
+		//capslock 체크
+		function caps_lock(e){
+			var keyCode = 0;
+			var shiftKey = false;
+			keyCode = e.keyCode;
+			shiftKey = e.shiftKey;
+			if(((keyCode >= 65 && keyCode <= 90)&& !shiftKey)||((keyCode >= 97 && keyCode <= 122)&& shiftKey))
+			{
+				$("#errorMessageHeader").text("Caps Lock 키가 눌려있습니다.");
+				$("#errorMessageHeader").removeClass("hide");
+	        } /* else {
+	            $("#errorMessageHeader").hide();
+	        } */
+	    }
 
 		$(document).ready(function() {
 			   
@@ -200,8 +213,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 				//alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
 				$("#loginDropDown").trigger("click");
 			}
-			
-			
+
+			//로그인버튼 클릭
 			$("#loginButton").click(function(e) {
 				e.preventDefault();
 				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));
@@ -236,6 +249,18 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 							$("#userPwHeader").focus();
 						} else if (resultData.message == 'LEAVE-MEMBER') {
 							$("#errorMessageHeader").text("탈퇴된 회원입니다.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
+						} else if (resultData.message == 'BLIND-MEMBER') {
+							$("#errorMessageHeader").text("블라인드된 회원입니다.\n관리자에게 문의해 주세요.");
+							$("#errorMessageHeader").removeClass("hide");
+							$("#userIdHeader").val("");
+							$("#userPwHeader").val("");
+							$("#userIdHeader").focus();
+						} else if (resultData.message == 'WAIT-MEMBER') {
+							$("#errorMessageHeader").text("인증 대기중입니다.\n이메일을 확인해 주세요.");
 							$("#errorMessageHeader").removeClass("hide");
 							$("#userIdHeader").val("");
 							$("#userPwHeader").val("");

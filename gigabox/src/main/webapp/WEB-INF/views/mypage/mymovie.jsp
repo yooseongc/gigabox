@@ -67,7 +67,8 @@
 		alert("처리가 완료되었습니다.");
 	}
 </script>
-<script>
+<script>	
+
 	// 더보기 카운트
 	var boxofficeReadMoreCount = 0;
 	var recentReadMoreCount = 0;
@@ -328,24 +329,17 @@
 				// get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
 				var parameter = (url.slice(url.indexOf('?listType=') + 10,
 						url.length));
-				if (parameter == '4') {
+				if (parameter == '2') {
 					$("#pageType, #pageType2").text("마이무비");
-					$('#myTab > li:eq(3) > a').trigger("click");
+					$('#myTab > li:eq(1) > a').trigger("click");
 				} else if (parameter == '1') {
-					$("#pageType, #pageType2").text("마이페이지");
+					$("#pageType, #pageType2").text("예매 확인/취소");
 					$('#myTab > li:eq(0) > a').trigger("click");
 
 				} else if (parameter == '3') {
-					$("#pageType, #pageType2").text("예매 확인/취소");
-					$('#myTab > li:eq(2) > a').trigger("click");
-
-				} else if (parameter == '5') {
 					$("#pageType, #pageType2").text("문의 내역");
-					$('#myTab > li:eq(4) > a').trigger("click");
-				} else if (parameter == '2') {
-					$("#pageType, #pageType2").text("마일리지 정보");
-					$('#myTab > li:eq(1) > a').trigger("click");
-				}
+					$('#myTab > li:eq(2) > a').trigger("click");
+				} 
 
 				// 별점 초기화
 				$("#starRating").rating('refresh', {
@@ -538,7 +532,18 @@
 				});
 
 	}
+
 </script>
+
+<style type="text/css">
+.nav-tabs {
+	text-align: center;
+}
+.nav-tabs li {
+	float: none;
+	display: inline-block;
+}
+</style>
 
 </head>
 <body>
@@ -570,81 +575,40 @@
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
 				<div class="board-inner">
 					<ul class="nav nav-tabs" id="myTab">
-						<li class="active"><a href="#home" data-toggle="tab"
-							title="welcome"> <span class="round-tabs one"> <i
+					
+						<li class="active"><a href="#resvInfo" data-toggle="tab" title="예매 확인/취소"> 
+							<span class="round-tabs one"> <i
 									class="glyphicon glyphicon-user"></i>
 							</span>
 						</a></li>
 
-						<li><a href="#profile" data-toggle="tab" title="profile">
+						<li><a href="#mymovie" data-toggle="tab" title="마이무비">
 								<span class="round-tabs two"> <i
-									class="glyphicon glyphicon-usd"></i>
-							</span>
-						</a></li>
-						<li><a href="#messages" data-toggle="tab"
-							title="bootsnipp goodies"> <span class="round-tabs three">
-									<i class="glyphicon glyphicon-credit-card"></i>
-							</span>
-						</a></li>
-
-						<li><a href="#settings" data-toggle="tab" title="blah blah">
-								<span class="round-tabs four"> <i
 									class="glyphicon glyphicon-film"></i>
 							</span>
 						</a></li>
 
-						<li><a href="#doner" data-toggle="tab" title="completed">
-								<span class="round-tabs five"> <i
+						<li><a href="#qnaInfo" data-toggle="tab" title="문의 내역 확인">
+								<span class="round-tabs three"> <i
 									class="glyphicon glyphicon-comment"></i>
 							</span>
 						</a></li>
-
 					</ul>
 				</div>
 
 				<div class="tab-content">
-					<div class="tab-pane fade in active" id="home">
-					
+					<div class="tab-pane fade in active" id="resvInfo">
+						예매 확인/취소
 					</div>
 					
-					
-					<div class="tab-pane fade" id="profile">
-						<h3 class="head text-center">
-							Create a Bootsnipp<sup>™</sup> Profile
-						</h3>
-						<p class="narrow text-center">Lorem ipsum dolor sit amet, his
-							ea mollis fabellas principes. Quo mazim facilis tincidunt ut,
-							utinam saperet facilisi an vim.</p>
-
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green">
-								create your profile <span style="margin-left: 10px;"
-								class="glyphicon glyphicon-send"></span>
-							</a>
-						</p>
-
-					</div>
-					<div class="tab-pane fade" id="messages">
-						<h3 class="head text-center">Bootsnipp goodies</h3>
-						<p class="narrow text-center">Lorem ipsum dolor sit amet, his
-							ea mollis fabellas principes. Quo mazim facilis tincidunt ut,
-							utinam saperet facilisi an vim.</p>
-
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green">
-								start using bootsnipp <span style="margin-left: 10px;"
-								class="glyphicon glyphicon-send"></span>
-							</a>
-						</p>
-					</div>
-					<div class="tab-pane fade" id="settings">
+					<div class="tab-pane fade" id="mymovie">
 						<div class="row">
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
 							</div>
 							<c:forEach items="${bookmarkList}" var="bookmarkItem"
 								varStatus="status">
-								<c:if test="${status.index == 0 or status.index == 4}">
+								<c:if test="${status.index % 4 == 0}">
 									<div class="row">
 								</c:if>
 								<div class="col-md-3" data-role="bookmarkItem">
@@ -673,28 +637,23 @@
 												<button class="btn btn-danger"
 													onclick="bookmarkDeleteBtn('${bookmarkItem.bookmark.bookmarkNumber}')"
 													data-id="${bookmarkItem.movie.movieNumber}">삭제</button>
+
 											</div>
 										</div>
 									</div>
 								</div>
-								<c:if test="${status.index == 3 or status.index == 7}">
+								<c:if test="${status.index % 4 == 3}">
+									</div>
+								</c:if>
+							</c:forEach>
+							</div>
+						</div></div>
+						<div class="tab-pane fade" id="qnaInfo">
+							문의 내역 확인
 						</div>
-						</c:if>
-						</c:forEach>
 					</div>
-					<div class="tab-pane fade" id="doner">
-						<h3 class="head text-center">Bootsnipp goodies</h3>
-						<p class="narrow text-center">Lorem ipsum dolor sit amet, his
-							ea mollis fabellas principes. Quo mazim facilis tincidunt ut,
-							utinam saperet facilisi an vim.</p>
-
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green">
-								start using bootsnipp <span style="margin-left: 10px;"
-								class="glyphicon glyphicon-send"></span>
-							</a>
-						</p>
-					</div>
+					
+					
 				</div>
 			</div>
 		</div>
@@ -729,6 +688,7 @@
 										data-show-clear="false" data-show-caption="true"
 										class="rating" min=0 max=10 step=0.1 data-size="md"
 										disabled="disabled">
+
 								</div>
 								<div class="list-group-item row">
 									<div class="col-sm-3">타입 :</div>
@@ -779,7 +739,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="well">
-									<h3 style="text-align: left; font-weight: board; color: grey;">
+									<h3 style="text-align: left; font-weight: 800; color: grey;">
 										줄거리</h3>
 									<br>
 									<div style="min-height: 150px; font-size: 1.1em;"
@@ -873,6 +833,7 @@
 							<input id="reviewUpdateStarscore" name="reviewStarscore" value=""
 								type="number" class="rating input-group" min=0 max=10 step=1
 								data-size="sm">
+
 						</div>
 					</div>
 				</div>
@@ -883,7 +844,6 @@
 
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
-
 
 	<!-- 댓글 템플릿 -->
 
@@ -964,6 +924,7 @@
 	</script>
 
 
+
 	<script>
 		// 영화 목록 더보기
 		function readMore(type) {
@@ -1023,6 +984,7 @@
 			});
 
 		}
+
 	</script>
 </body>
 </html>

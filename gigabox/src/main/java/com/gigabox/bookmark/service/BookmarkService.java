@@ -6,7 +6,7 @@ import com.gigabox.bookmark.vo.BookmarkVO;
 
 public interface BookmarkService {
 
-	public List<BookmarkVO> BookmarkList();
+	public List<BookmarkVO> BookmarkList(BookmarkVO vo);
 	
 	public void addBookmark(BookmarkVO vo);
 	

@@ -1,8 +1,6 @@
 package com.gigabox.bookmark.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -20,8 +18,8 @@ public class BookmarkDAOImpl implements BookmarkDAO{
 	private static String namespace = "com.gigabox.mapper.BookmarkMapper";
 	
 	@Override
-	public List<BookmarkVO> bookmarkList() {
-		return sqlSession.selectList(namespace+".bookmarkList");
+	public List<BookmarkVO> bookmarkList(BookmarkVO vo) {
+		return sqlSession.selectList(namespace+".bookmarkList", vo);
 	}
 
 	@Override

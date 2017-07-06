@@ -29,7 +29,9 @@ public class ReservationDAOImpl implements ReservationDAO {
 
 	@Override
 	public int reservationSeatInsert(ReservationVO resvVO) {
-		return sqlSession.insert(namespace + ".reservationSeatInsert", resvVO);
+		sqlSession.insert(namespace + ".reservationSeatInsert", resvVO);
+		System.out.println("resv number= " + resvVO.getReservationNumber());
+		return resvVO.getReservationNumber();
 	}
 
 	@Override

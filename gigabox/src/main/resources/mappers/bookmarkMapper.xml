@@ -12,7 +12,8 @@
 
 	<select id="bookmarkList" resultType="bookmark" resultMap="bookmarkResultMap">
 		SELECT *
-		from tbl_bookmark
+		FROM TBL_BOOKMARK 
+		WHERE USER_NUMBER = #{userNumber} 
 	</select>
 
 	<select id="countBookmark" parameterType="bookmark" resultType="int">

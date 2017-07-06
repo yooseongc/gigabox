@@ -73,13 +73,10 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
-			</div>
-			<!--/.col-lg-12 -->
-			<div class="col-lg-12">
-				<div class="container pull-right">
-					<a href="/cc/qna/qnaList"><button
-							class="btn btn-primary btn-sm">목록</button></a>
+					<form id="qnaDeleteForm">
+						<input type="hidden" name="inquiryNumber" id="inquiryNumber"
+							value="${inquiryRead.inquiryNumber}">
+					</form>
 				</div>
 			</div>
 			<!--/.col-lg-12 -->
@@ -87,7 +84,16 @@
 		<!-- /.row -->
 
 		<hr>
-
+		<div class="container">
+			<div class="pull-right">
+				<%-- <c:if test="${sessionScope.login.userId}"> --%>
+				<input type="button" class="btn btn-primary btn-sm"
+					id="qnaUpdateBtn" value="수정"> <input type="button"
+					class="btn btn-primary btn-sm" id="qnaDeleteBtn" value="삭제">
+				<%-- </c:if> --%>
+				<a href="/cc/qna/qnaList"><button class="btn btn-primary btn-sm">목록</button></a>
+			</div>
+		</div>
 	</div>
 	<!-- /.container -->
 
@@ -95,5 +101,20 @@
 	<c:import url="/templates/footer.jsp" />
 
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//삭제 버튼 크릭시 이벤트
+			$("#qnaDeleteBtn").click(function(e) {
+				e.preventDefault();
+				$("#qnaDeleteForm").attr({
+					method : "POST",
+					action : "/user/qnaDelete"
+				});
+				$("#qnaDeleteForm").submit();
+			});
+		});
+
+		//수정 버튼클릭 시 이벤트
+	</script>
 </body>
 </html>

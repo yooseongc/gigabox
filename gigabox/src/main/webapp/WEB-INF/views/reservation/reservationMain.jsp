@@ -70,7 +70,7 @@
             <div class="col-md-12">
             	<span class="label label-info label-md pull-left" style="font-size: 1.2em;">
             		<i class="fa fa-info-circle"></i> 날짜 > 영화 > 극장 > 상영일정 순서로 클릭해 주세요.</span>
-            	<button onclick="location.reload();" class="btn btn-md btn-outline btn-primary pull-right">
+            	<button onclick="location.href='/reservation/resvMain';" class="btn btn-md btn-outline btn-primary pull-right">
             		<i class="glyphicon glyphicon-repeat"></i> 다시 예매</button>
             	<button onclick="location.href='/'" class="btn btn-md btn-outline btn-danger pull-right">
             		<i class="glyphicon glyphicon-home"></i> 메인으로</button>
@@ -191,7 +191,7 @@
 			
 			$("#nextStep").click(function(e) {
 				e.preventDefault();
-				if ($("#scheduleNumber").val() != '') {
+				if ($("#scheduleNumber").val() != 0) {
 					$("#hiddenData").prop("action", "/reservation/resvSeat");
 					$("#hiddenData").prop("method", "POST");
 					$("#hiddenData").submit();

@@ -146,26 +146,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/* if ('${param.searchType}' != '') {
-				$("#searchType").val('${param.searchType}');
-			}
-			if ('${param.searchKeyword}' != '') {
-				$("#searchKeyword").val('${param.searchKeyword}');
-			}
-
-			$('#noticeSearchButton').on(
-					"click",
-					function(event) {
-						event.preventDefault();
-						var queryString = "/notice/noticeList"
-								+ '${pageMaker.makeQuery(1)}'
-								+ "&searchType="
-								+ $("#searchType").val()
-								+ "&searchKeyword="
-								+ $('#searchKeyword').val();
-
-						self.location = queryString;
-					}); */
+			
 			/* 검색 대상이 변경될 때마다 처리 이벤트 */
 			$("#searchType").change(function() {
 				if ($("#searchType").val() == "all") {
