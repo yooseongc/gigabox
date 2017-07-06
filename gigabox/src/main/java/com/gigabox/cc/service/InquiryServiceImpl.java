@@ -56,6 +56,7 @@ public class InquiryServiceImpl implements InquiryService {
 		return result;
 	}
 
+
 	// 관리자쪽
 	@Override
 	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO) {

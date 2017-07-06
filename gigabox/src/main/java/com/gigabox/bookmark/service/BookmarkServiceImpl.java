@@ -17,8 +17,8 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	
 	@Override
-	public List<BookmarkVO> BookmarkList() {
-		return dao.bookmarkList();
+	public List<BookmarkVO> BookmarkList(BookmarkVO vo) {
+		return dao.bookmarkList(vo);
 	}
 
 	@Override
@@ -27,13 +27,16 @@ public class BookmarkServiceImpl implements BookmarkService {
 	}
 
 	@Override
-	public int countBookmark(int mno, int uno) {
-		return dao.countBookmark(mno, uno);
+	public int countBookmark(BookmarkVO mno) {
+		return dao.countBookmark(mno);
 	}
 
 	@Override
-	public void delete(int bno) {
-		dao.delete(bno);
+	public int delete(BookmarkVO bookmarkNumber) {
+		return dao.delete(bookmarkNumber);
+		
 	}
+
+
 
 }

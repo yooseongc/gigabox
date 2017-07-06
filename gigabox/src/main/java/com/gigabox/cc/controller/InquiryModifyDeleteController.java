@@ -59,7 +59,9 @@ public class InquiryModifyDeleteController {
 		result = inquiryService.inquiryUpdate(ivo);
 		if (result == 1) {
 			url = "/cc/qna/qnaList"; // 수정 후 목록 이동
-			url = "/cc/qna/qnaRead?inquiryNumber=" + ivo.getInquiryNumber(); //수정후 상세페이지 이동
+			url = "/cc/qna/qnaRead?inquiryNumber=" + ivo.getInquiryNumber(); // 수정후
+																				// 상세페이지
+																				// 이동
 		}
 
 		return "redirect: " + url;
@@ -77,9 +79,8 @@ public class InquiryModifyDeleteController {
 		// 이 변수는 입력 성공에 대한 상태값 담는다 (1 or 0)
 		int result = 0;
 		String url = "";
-		
-		
-		result = inquiryService.inquiryDelete(ivo.getInquiryNumber());
+
+		result = inquiryService.inquiryUpdate(ivo);
 		if (result == 1) {
 			url = "/cc/qna/qnaList";
 		}

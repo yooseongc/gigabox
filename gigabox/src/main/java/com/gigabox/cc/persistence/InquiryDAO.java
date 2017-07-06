@@ -32,4 +32,7 @@ public interface InquiryDAO {
 
 	// 삭제
 	public int inquiryDelete(int inquiryNumber);
+
+	
+
 }

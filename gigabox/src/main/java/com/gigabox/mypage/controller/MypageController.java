@@ -6,15 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigabox.bookmark.service.BookmarkService;
 import com.gigabox.bookmark.vo.BookmarkVO;
@@ -38,54 +40,62 @@ public class MypageController {
 	
 	@Inject
 	private MovieService movieService;
-	
-	@RequestMapping(value = "/mileageInfo", method = RequestMethod.GET)
-	public String mileageInfoGET(HttpSession session, Model model) {
-		logger.info("=======================================================");
-		logger.info("MYPAGE - MILEAGE INFO");
-		UserVO loginUser = (UserVO) session.getAttribute("login");
-		
-		model.addAttribute("userInfo", userService.userDetail(loginUser));
-		
-		
-		return "/mypage/mileageInfo";
-	}
+
 	
 	/* 마이무비 리스트 */
 	@RequestMapping(value = "/mymovie", method = RequestMethod.GET)
-	public String bookmarkList(Model model) {
-		//logger.info("bookmarkList.jsp ENTER...");
+	public String bookmarkList(HttpServletRequest request, HttpSession session, Model model) {
+		// logger.info("bookmarkList.jsp ENTER...");
 		
-		List<BookmarkVO> bookmarkList = bookmarkService.BookmarkList();
-		
+		UserVO loginSessionVO = (UserVO) session.getAttribute("login");
+		BookmarkVO userBookmark = new BookmarkVO();
+		userBookmark.setUserNumber(loginSessionVO.getUserNumber());
+		List<BookmarkVO> bookmarkList = bookmarkService.BookmarkList(userBookmark);
+
 		List<Map<String, Object>> bookmarkMapList = new ArrayList<>();
 		for (BookmarkVO eachBookmark : bookmarkList) {
-			
+
 			// 마이무비 정보
 			Map<String, Object> bookmarkMap = new HashMap<>();
 			bookmarkMap.put("bookmark", eachBookmark);
-			
+
 			// 영화 정보
 			int movieNumber = eachBookmark.getMovieNumber();
 			MovieVO initBookmarkMovie = new MovieVO();
 			initBookmarkMovie.setMovieNumber(movieNumber);
 			MovieVO bookmarkMovie = movieService.movieDetail(initBookmarkMovie);
 			bookmarkMap.put("movie", bookmarkMovie);
-			
-			//List에 저장
+
+			// List에 저장
 			bookmarkMapList.add(bookmarkMap);
 		}
 		model.addAttribute("bookmarkList", bookmarkMapList);
-		
+		request.setAttribute("listType", 2);
 		return "/mypage/mymovie";
 	}
-	
-	/*	---- PutCart, POST-----카트에 상품넣기 */
-	@RequestMapping(value="/addBookmark", method = RequestMethod.POST)
-	public String add(@ModelAttribute BookmarkVO bVo,
-			          @ModelAttribute("bookmark") List<BookmarkVO> bookmark) {
-		bookmark.add(bVo);
-		return "redirect:/mypage/mymovie";
+
+	@ResponseBody
+	@RequestMapping(value = "/addBookmark", method = RequestMethod.POST)
+	public int addBookmark(@RequestBody BookmarkVO bvo) {
+		int result = 0;
+		
+		result = bookmarkService.countBookmark(bvo);
+		if(result ==0){
+			bookmarkService.addBookmark(bvo);
+		}else{
+			result= 1;
+		}
+		
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/bookmarkDelete", method = RequestMethod.POST)
+	public int delete(@RequestBody BookmarkVO bookmarkNumber) {
+
+		int result = 0;
+		result = bookmarkService.delete(bookmarkNumber);
+		return result;
 	}
 	
 	/*예매확인/취소 폼 출력*/

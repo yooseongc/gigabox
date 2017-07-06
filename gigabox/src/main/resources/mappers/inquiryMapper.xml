@@ -147,13 +147,6 @@
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
 	</update>
 
-	<update id="inquiryDelete" parameterType="inquiry">
-		UPDATE TBL_INQUIRY
-		SET
-		INQUIRY_TITLE='삭제된 글입니다.'
-		WHERE INQUIRY_NUMBER=#{inquiryNumber}
-	</update>
-
 	<!-- <delete id="inquiryDelete" parameterType="inquiry"> DELETE FROM TBL_INQUIRY 
 		WHERE INQUIRY_NUMBER = #{inquiryNumber} </delete> -->
 </mapper>
