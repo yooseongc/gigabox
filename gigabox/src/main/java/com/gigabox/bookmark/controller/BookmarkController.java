@@ -15,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigabox.bookmark.service.BookmarkService;
 import com.gigabox.bookmark.vo.BookmarkVO;
@@ -28,7 +30,7 @@ import com.gigabox.user.dto.LoginDTO;
 import com.gigabox.user.service.LoginService;
 
 @Controller
-@RequestMapping("/bookmark")
+@RequestMapping("/mypage")
 public class BookmarkController {
 
 	@Inject
@@ -49,7 +51,7 @@ public class BookmarkController {
 	}
 
 	/* 마이무비 리스트 */
-	@RequestMapping(value = "/bookmarkList", method = RequestMethod.GET)
+	@RequestMapping(value = "/mymovie", method = RequestMethod.GET)
 	public String bookmarkList(Model model) {
 		// logger.info("bookmarkList.jsp ENTER...");
 
@@ -74,33 +76,34 @@ public class BookmarkController {
 		}
 		model.addAttribute("bookmarkList", bookmarkMapList);
 
-		return "/bookmark/bookmarkList";
+		return "/mypage/mymovie";
 	}
 
-	@RequestMapping(value = "/addBookmark")
-	public String addBookmark(@ModelAttribute BookmarkVO bvo, HttpSession session, HttpServletResponse response)
-			throws IOException {
-		int userNumber = (int) session.getAttribute("userNumber");
-		bvo.setUserNumber(userNumber);
-
-		int count = bookmarkService.countBookmark(bvo.getMovieNumber(), userNumber);
-		if (session.getAttribute("login") == null) {
-			logger.info("NOT LOGINED");
-			response.sendRedirect("/?pageAction=login");
-			if (count == 0) {
-				bookmarkService.addBookmark(bvo);
-			} else {
-				response.sendRedirect("/?pageAction=login");
-				return "/bookmark/bookmarkList";
-			}
+	@ResponseBody
+	@RequestMapping(value = "/addBookmark", method = RequestMethod.POST)
+	public String addBookmark(@RequestBody BookmarkVO bvo) {
+		System.out.println(bvo.getMovieNumber());
+		int result = 0;
+		
+		result = bookmarkService.countBookmark(bvo);
+		if(result ==0){
+			bookmarkService.addBookmark(bvo);
+		}else{
+			result= 1;
 		}
-		return "redirect:/bookmark/addBookmark";
+		
+		return result+"";
 	}
-	
-	@RequestMapping("delete.do")
-    public String delete(@RequestParam int bookmarkNumber){
-        bookmarkService.delete(bookmarkNumber);
-        return "redirect:/bookmark/bookmarkList";
-    }
+
+	@ResponseBody
+	@RequestMapping(value = "/bookmarkDelete", method = RequestMethod.POST)
+	public String delete(@RequestBody BookmarkVO bookmarkNumber) {
+
+		int result = 0;
+		result = bookmarkService.delete(bookmarkNumber);
+
+		System.out.println(result + "");
+		return result + "";
+	}
 
 }

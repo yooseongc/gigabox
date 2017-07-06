@@ -30,16 +30,13 @@ public class BookmarkDAOImpl implements BookmarkDAO{
 	}
 
 	@Override
-	public int countBookmark(int mno, int uno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-        map.put("movieNumber", mno);
-        map.put("userNumber", uno);
-        return sqlSession.selectOne(namespace+"countBookmark", map);
+	public int countBookmark(BookmarkVO mno) {
+        return sqlSession.selectOne(namespace+".countBookmark", mno);
 	}
 
 	@Override
-	public void delete(int bno) {
-		sqlSession.delete(namespace+"deleteBookmark", bno);
+	public int delete(BookmarkVO bno) {
+		return sqlSession.delete(namespace+".deleteBookmark", bno);
 	}
 
 }
