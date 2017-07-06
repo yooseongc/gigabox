@@ -197,8 +197,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
 			console.log(parameter);
 			if (parameter == 'login') {
-				alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
-				$("#loginDropDown").prop("aria-expanded", "true");
+				/* alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요."); */
+				$("#loginDropDown").trigger("click");
 			}
 			
 			

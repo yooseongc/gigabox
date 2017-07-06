@@ -36,12 +36,15 @@
 		</interceptor>
 	</interceptors>
 	
+	
+	
 	<!-- 인증 확인용 인터셉터 -->
 	<beans:bean id="authInterceptor" class="com.gigabox.interceptor.AuthInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
 			<mapping path="/user"/>
 			<mapping path="/user/**"/>
+			<mapping path="/cc/qna/qnaWriteForm"/>
 			<exclude-mapping path="/user/login"/>
 			<exclude-mapping path="/user/login.do"/>
 			<exclude-mapping path="/user/logout"/>
@@ -64,6 +67,7 @@
 			<exclude-mapping path="/user/userLeaveForm"/>
 			<exclude-mapping path="/user/findInfoForm"/>
 			<exclude-mapping path="/user/findUserIdForm"/>
+			
 			
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>

@@ -43,8 +43,7 @@
 				</h1>
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li class=""><a href="/cc/faq/faqList" class="faq"
-						title="자주묻는질문 바로가기"><i
-							class="fa fa-question"></i>&nbsp;&nbsp;자주묻는질문</a></li>
+						title="자주묻는질문 바로가기"><i class="fa fa-question"></i>&nbsp;&nbsp;자주묻는질문</a></li>
 					<li><a href="/cc/notice/noticeList" class="notice"
 						title="공지사항 바로가기"><i class="fa fa-info"></i>&nbsp;&nbsp;공지사항</a></li>
 					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기"><i
@@ -59,11 +58,6 @@
 			<div class="col-lg-12">
 				<div class="container">
 					<!-- 검색 시작 -->
-					<div class="pull-left">
-						<a hidden="">
-							<button type="button" class="btn btn-danger">글쓰기</button>
-						</a>
-					</div>
 					<div class="pull-right">
 						<form class="form-inline">
 							<div class="input-group">
@@ -105,7 +99,13 @@
 							</c:forEach>
 						</tbody>
 					</table>
+
 					<hr>
+					<div class="pull-right">
+						<input type="button" class="btn btn-danger" id="qnaWrite"
+							value="문의하기" />
+					</div>
+
 					<!-- 페이지 네비게이션  -->
 					<div class="text-center">
 						<ul class="pagination">
@@ -133,26 +133,36 @@
 		</div>
 	</div>
 
-
-
 	<hr>
-	<!-- footer -->
-	<c:import url="/templates/footer.jsp" />
 
 	<script>
 		$(document).ready(
 				function() {
-					/* 검색 대상이 변경될 때마다 처리 이벤트 */
-					$("#search").change(function() {
-						if ($("#"))
-					});
-					/* 검색 버튼 클릭시 처리 이벤트 */
-					$("#qnaSearchBtn").on("click"), function(event) {
-						self.location = "list" + '${pageMaker.makeQuery(1)}'
-								+ "&searchType=" + $("select option:")
-					}
 
+					// 로그인이 안될 시에는 튕겨낸다.
+					$("#qnaWrite").click(function(e) {
+						e.preventDefault();
+						if ('${sessionScope.login.userNumber}' == '') {
+							location.href = '/cc/qna/qnaList?pageAction=login';
+						} else {
+							location.href = '/cc/qna/qnaWriteForm';
+						}
+					});
+					
+					/* 검색 버튼 클릭시 처리 이벤트 */
+					$("#qnaSearchBtn").on(
+							"click",
+							function(event) {
+								self.location = "list"
+										+ '${pageMaker.makeQuery(1)}'
+										+ "&searchType=" + $("select option:")
+
+							});
 				});
 	</script>
+
+	<!-- footer -->
+	<c:import url="/templates/footer.jsp" />
+
 </body>
 </html>
