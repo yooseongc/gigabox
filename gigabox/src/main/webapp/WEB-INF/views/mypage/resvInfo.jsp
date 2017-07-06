@@ -70,17 +70,18 @@
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
 				<div class="board-inner">
 					<ul class="nav nav-tabs" id="myTab">
-						
+
 						<!-- 마일리지 정보 -->
-						<li class="active"><a href="/mypage/mileageInfo" data-toggle="tab" title="마일리지 정보">
-								<span class="round-tabs two"> <i
+						<li><a href="/mypage/mileageInfo" data-toggle="tab"
+							title="마일리지 정보"> <span class="round-tabs two"> <i
 									class="glyphicon glyphicon-usd"></i>
 							</span>
 						</a></li>
 						<!-- 예매 정보 -->
-						<li><a href="/mypage/resvInfo" data-toggle="예매 내역 확인"
-							title="예매 내역 확인/취소"> <span class="round-tabs three">
-									<i class="glyphicon glyphicon-credit-card"></i>
+						<li class="active"><a href="/mypage/resvInfo"
+							data-toggle="예매 내역 확인" title="예매 내역 확인/취소"> <span
+								class="round-tabs three"> <i
+									class="glyphicon glyphicon-credit-card"></i>
 							</span>
 						</a></li>
 						<!-- 마이무비 -->
@@ -101,11 +102,36 @@
 
 				<div class="tab-content">
 					<div class="tab-pane fade in active">
-					
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="h2_mypage">
+							<h3 class="sub_title">예매 확인/취소</h3>
+							<span>예매하신 영화 내역과 취소 내역을 확인할 수 있습니다.</span>
+						</div>
+
+						<ul class="nav nav-tabs mb40">
+							<li class="active"><a href="#tab_list1" data-toggle="tab"
+								title="예매 내역 보기">예매 내역</a></li>
+							<li><a href="#tab_list3" data-toggle="tab"
+								onclick="cancelList()" title="취소 내역 보기">취소 내역</a></li>
+						</ul>
+						<div class="tab-content">
+
+							<!-- tab1 예매내역// -->
+							<div class="tab-pane active" id="tab_list1"></div>
+							<!-- //tab1 예매내역 -->
+
+							<!-- tab2 지난내역// -->
+							<div class="tab-pane" id="tab_list2"></div>
+							<!-- //tab2 지난내역 -->
+
+							<!-- tab3 취소내역// -->
+							<div class="tab-pane" id="tab_list3"></div>
+						</div>
+						<!-- //tab -->
 	</div>
 
 	<!-- footer -->

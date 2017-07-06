@@ -87,4 +87,12 @@ public class MypageController {
 		bookmark.add(bVo);
 		return "redirect:/mypage/mymovie";
 	}
+	
+	/*예매확인/취소 폼 출력*/
+	@RequestMapping(value = "/resvInfo", method = RequestMethod.GET)
+	public String resvInfoGET (HttpSession session, Model model){
+	logger.info("LOADING resvInfo FORM....");
+	
+	return "/mypage/resvInfo";
+	}
 }
