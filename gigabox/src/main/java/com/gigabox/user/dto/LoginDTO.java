@@ -4,6 +4,17 @@ public class LoginDTO {
 	private String userId;
 	private String userPw;
 	private String userStatus;
+	private String userNumber;
+
+	
+	
+	public String getUserNumber() {
+		return userNumber;
+	}
+
+	public void setUserNumber(String userNumber) {
+		this.userNumber = userNumber;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -31,7 +42,10 @@ public class LoginDTO {
 
 	@Override
 	public String toString() {
-		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userStatus=" + userStatus + "]";
+		return "LoginDTO [userId=" + userId + ", userPw=" + userPw + ", userStatus=" + userStatus + ", userNumber="
+				+ userNumber + "]";
 	}
+
+	
 
 }

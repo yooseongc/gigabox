@@ -6,11 +6,11 @@ import com.gigabox.bookmark.vo.BookmarkVO;
 
 public interface BookmarkDAO {
 	
-	public List<BookmarkVO> bookmarkList();
+	public List<BookmarkVO> bookmarkList(BookmarkVO vo);
 	
 	public void addBookmark(BookmarkVO vo);
 	
-	public int countBookmark(int mno, int uno);
+	public int countBookmark(BookmarkVO mno);
 	
-	public void delete(int bno);
+	public int delete(BookmarkVO bno);
 }
