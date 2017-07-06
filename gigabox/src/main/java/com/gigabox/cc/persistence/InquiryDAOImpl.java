@@ -34,6 +34,24 @@ public class InquiryDAOImpl implements InquiryDAO {
 		return sqlSession.selectOne(namespace + ".inquiryRead", ivo);
 	}
 
+	// 글쓰기
+	@Override
+	public int inquiryInsert(InquiryVO ivo) {
+		return sqlSession.insert(namespace + ".inquiryWrite", ivo);
+	}
+
+	// 수정
+	@Override
+	public int inquiryUpdate(InquiryVO ivo) {
+		return sqlSession.update(namespace + ".inquiryUpdate", ivo);
+	}
+
+	// 삭제
+	@Override
+	public int inquiryDelete(int inquiryNumber) {
+		return sqlSession.delete(namespace + ".inquiryDelete", inquiryNumber);
+	}
+
 	@Override
 	public InquiryVO inquiryDetailQ(InquiryVO inquiryVO) {
 		return sqlSession.selectOne(namespace + ".inquiryDetailQ", inquiryVO);
@@ -59,23 +77,6 @@ public class InquiryDAOImpl implements InquiryDAO {
 		return sqlSession.delete(namespace + ".inquiryDeleteA", inquiryVO);
 	}
 
-	// 글쓰기
-	@Override
-	public int inquiryInsert(InquiryVO ivo) {
-		return sqlSession.insert(namespace + ".inquiryWrite", ivo);
-	}
-
-	// 수정
-	@Override
-	public int inquiryUpdate(InquiryVO ivo) {
-		return sqlSession.update(namespace + ".inquiryUpdate", ivo);
-	}
-
-	// 삭제
-	@Override
-	public int inquiryDelete(int inquiryNumber) {
-		return sqlSession.delete(namespace + ".inquiryDelete", inquiryNumber);
-	}
 }
 
 /*

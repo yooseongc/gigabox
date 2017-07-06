@@ -102,6 +102,8 @@
 
 
 	<script type="text/javascript">
+	//수정과 삭제버튼 구별키위한 변수
+	var upDelBtn= 0;
 		$(document).ready(function() {
 			//삭제 버튼 크릭시 이벤트
 			$("#qnaDeleteBtn").click(function(e) {
