@@ -71,7 +71,8 @@
 
 
 							<div class="form-group input-group">
-								<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+								<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  
+									placeholder="검색어를 입력하세요">
 								<div class="input-group-btn">
 									<button class="btn btn-default" type="submit">
 										<i class="glyphicon glyphicon-search"></i>
