@@ -60,8 +60,18 @@
 					<!-- 검색 시작 -->
 					<div class="pull-right">
 						<form class="form-inline">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="검색하세요">
+							<div class="form-group input-group">
+								<select id="searchType" name="searchType"
+									class="btn-default form-control">
+									<option value="t">제목</option>
+									<option value="c">내용</option>
+									<option value="tc">제목+내용</option>
+								</select>
+							</div>
+
+
+							<div class="form-group input-group">
+								<input type="text" class="form-control" placeholder="검색어를 입력하세요">
 								<div class="input-group-btn">
 									<button class="btn btn-default" type="submit">
 										<i class="glyphicon glyphicon-search"></i>
@@ -83,17 +93,35 @@
 						<tbody id="inquiryListTableBody">
 							<c:forEach var="inquiryItem" items="${inquiryList}">
 								<tr>
-									<c:if test="${inquiryItem.inquiry.inquiryQora == 'Q'}">
+									<c:if test="${inquiryItem.inquiry.inquiryTitle != '삭제된 글입니다.'}">
+										<c:if test="${inquiryItem.inquiry.inquiryQora == 'Q'}">
+											<td style="text-align: center;"><i
+												class="fa fa-question-circle"></i></td>
+										</c:if>
+										<c:if test="${inquiryItem.inquiry.inquiryQora == 'A'}">
+											<td style="text-align: right;">└>&nbsp;<i
+												class="glyphicon glyphicon-exclamation-sign"></i></td>
+										</c:if>
+									</c:if>
+									<c:if test="${inquiryItem.inquiry.inquiryTitle == '삭제된 글입니다.'}">
 										<td style="text-align: center;"><i
-											class="fa fa-question-circle"></i></td>
+												class="fa fa-close"></i></td>
 									</c:if>
-									<c:if test="${inquiryItem.inquiry.inquiryQora == 'A'}">
-										<td style="text-align: right;">└>&nbsp;<i
-											class="glyphicon glyphicon-exclamation-sign"></i></td>
-									</c:if>
-									<td><a
+									<c:if test="${inquiryItem.inquiry.inquiryTitle != '삭제된 글입니다.'}">
+										<td><a
 										href="/cc/qna/qnaRead?inquiryNumber=${inquiryItem.inquiry.inquiryNumber}">${inquiryItem.inquiry.inquiryTitle}</a></td>
-									<td style="text-align: center;">${inquiryItem.user.userId }</td>
+									</c:if>
+									<c:if test="${inquiryItem.inquiry.inquiryTitle == '삭제된 글입니다.'}">
+										<td style="font-weight: bold;">${inquiryItem.inquiry.inquiryTitle}</td>
+									</c:if>
+									
+									<c:if test="${inquiryItem.user.userId != null}">
+										<td style="text-align: center;">${inquiryItem.user.userId }</td>
+									</c:if>
+									<c:if test="${inquiryItem.user.userId == null}">
+										<td style="text-align: center;">관리자</td>
+									</c:if>
+									
 									<td style="text-align: center;"><fmt:formatDate
 											value="${inquiryItem.inquiry.inquiryRegisterdate}"
 											pattern="yyyy-MM-dd" /></td>
@@ -138,29 +166,14 @@
 	<hr>
 
 	<script>
-		$(document).ready(
-				function() {
-
-					// 로그인이 안될 시에는 튕겨낸다.
-					$("#qnaWrite").click(function(e) {
-						e.preventDefault();
-						if ('${sessionScope.login.userNumber}' == '') {
-							location.href = '/cc/qna/qnaList?pageAction=login';
-						} else {
-							location.href = '/cc/qna/qnaWriteForm';
-						}
-					});
-					
-					/* 검색 버튼 클릭시 처리 이벤트 */
-					$("#qnaSearchBtn").on(
-							"click",
-							function(event) {
-								self.location = "list"
-										+ '${pageMaker.makeQuery(1)}'
-										+ "&searchType=" + $("select option:")
-
-							});
-				});
+		$(document).ready(function() {
+			if ('${param.searchType}' != '') {
+				$("#searchType").val('${param.searchType}');
+			}
+			if ('${param.searchKeyword}' != '') {
+				$("#searchKeyword").val('${param.searchKeyword}');
+			}
+		});
 	</script>
 
 	<!-- footer -->

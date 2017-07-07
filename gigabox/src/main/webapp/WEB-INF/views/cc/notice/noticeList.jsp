@@ -56,17 +56,20 @@
 					<!-- 검색 시작 -->
 					<div class="pull-right">
 						<form class="form-inline">
-							<div class="form-group">
+							<div class="form-group input-group">
 								<select id="searchType" name="searchType"
-									class="btn-primary form-control">
+									class="btn-default form-control">
 									<option value="t">제목</option>
 									<option value="c">내용</option>
+									<option value="tc">제목+내용</option>
+									<option value="b">지점</option>
 								</select>
 							</div>
 
 
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="검색어 입력하세요">
+							<div class="form-group input-group">
+								<input type="text" id="searchKeyword" name="searchKeyword" 
+									class="form-control" placeholder="검색어를 입력하세요">
 								<div class="input-group-btn">
 									<button class="btn btn-default" type="submit">
 										<i class="glyphicon glyphicon-search"></i>
@@ -147,27 +150,12 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-			/* 검색 대상이 변경될 때마다 처리 이벤트 */
-			$("#searchType").change(function() {
-				if ($("#searchType").val() == "all") {
-					$("#searchKeyword").val("글 목록 전체");
-				} else if ($("#searchType").val() != "all") {
-					$("#searchKeyword")
-					val("");
-					$("#searchKeyword").focus();
-				}
-			});
-
-			/* 검색 버튼 클릭시 처리 이벤트 */
-			$("#noticeSearchBtn").click(function() {
-				if ($("#searchType").val() == "all") {
-					$("#searchKeyword").val("");
-				} else {
-					if (!chkSubmit($('#searchKeyword'), "검색어를"))
-						return;
-				}
-				goPage(1);
-			});
+			if ('${param.searchType}' != '') {
+				$("#searchType").val('${param.searchType}');
+			}
+			if ('${param.searchKeyword}' != '') {
+				$("#searchKeyword").val('${param.searchKeyword}');
+			}
 		});
 	</script>
 </body>

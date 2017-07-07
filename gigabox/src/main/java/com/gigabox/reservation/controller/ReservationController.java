@@ -1,6 +1,5 @@
 package com.gigabox.reservation.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

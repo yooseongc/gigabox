@@ -56,9 +56,10 @@
 		<!-- 검색 시작 -->
 		<div class="pull-right">
 			<form class="form-inline">
-				<div class="form-group">
+				<div class="form-group input-group">
 					<select id="searchType" name="searchType"
-						class="btn-primary form-control">
+						class="btn-default form-control">
+						<option value="전체">전체</option>
 						<option value="mileage">마일리지</option>
 						<option value="reservation">영화예매</option>
 						<option value="payment">결제</option>
@@ -68,7 +69,7 @@
 					</select>
 				</div>
 
-				<div class="input-group">
+				<div class="form-group input-group">
 					<input type="text" id="searchKeyword" name="searchKeyword"
 						class="form-control" placeholder="검색어 입력하세요">
 					<div class="input-group-btn">
@@ -80,7 +81,7 @@
 			</form>
 		</div>
 		<!-- 검색 종료 -->
-		<br>
+		<br><br>
 		<!-- Content Row -->
 		<div class="row">
 			<div class="col-lg-12">
@@ -151,24 +152,12 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/* 검색 대상이 변경될 때마다 처리 이벤트 */
-			$("#searchType").change(function() {
-				if ($("#searchType").val() == "all") {
-					$("#searchKeyword").val("글 목록 전체");
-				} else if ($("#searchType").val() != "all") {
-					$("#searchKeyword").val("");
-					$("#searchKeyword").focus();
-				}
-			});
-			/* 검색 버튼 클릭시 처리 이벤트 */
-			$("#faqSearchBtn").click(function() {
-				if ($("#searchType").val() == "all") {
-					$("#searchKeyword").val("");
-
-					return;
-				}
-				goPage(1);
-			});
+			if ('${param.searchType}' != '') {
+				$("#searchType").val('${param.searchType}');
+			}
+			if ('${param.searchKeyword}' != '') {
+				$("#searchKeyword").val('${param.searchKeyword}');
+			}
 		});
 	</script>
 

@@ -27,13 +27,13 @@
 		FROM TBL_INQUIRY
 		WHERE 1=1
 
-		<if test="searchType == 't'.toString()">
+		<if test="searchType == 't'.toString() and searchKeyword != null">
 			AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
+		<if test="searchType == 'c'.toString() and searchKeyword != null">
 			AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'tc'.toString()">
+		<if test="searchType == 'tc'.toString() and searchKeyword != null">
 			AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 			OR
 			INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )
@@ -60,13 +60,13 @@
 		INQUIRY_GROUPNUMBER, INQUIRY_QORA
 		FROM TBL_INQUIRY
 
-		<if test="searchType == 't'.toString()">
+		<if test="searchType == 't'.toString() and searchKeyword != null">
 			AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'c'.toString()">
+		<if test="searchType == 'c'.toString() and searchKeyword != null">
 			AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'tc'.toString()">
+		<if test="searchType == 'tc'.toString() and searchKeyword != null">
 			AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 			OR
 			INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )
