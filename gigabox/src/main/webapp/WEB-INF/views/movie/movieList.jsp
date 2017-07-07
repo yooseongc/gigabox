@@ -17,7 +17,10 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-
+<!-- still cut CSS -->
+<link href="/resources/custom/css/stillcut.css" rel="stylesheet">
+<!-- still cut js -->
+<script src="/resources/custom/js/stillcut.js"></script>
 <!-- jQuery -->
 <script src="/resources/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
@@ -308,61 +311,180 @@
 							</div>
 						</div>
 					</div>
-					<hr>
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="well">
-								<div>
-									<h3 style="display: inline;">한줄평</h3>
-								</div>
-								<br>
-								<c:if test="${sessionScope.login == null}">
-									<div class="input-group">
-										<textarea name="reviewContent" class="form-control"
-											readonly="readonly" style="resize: none; height: 78.73px;"
-											placeholder="로그인 후 작성할 수 있습니다."></textarea>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default" data-num=""
-												disabled="disabled" style="padding: 2.05em;">
-												<span class="glyphicon glyphicon-search"></span> 등록
-											</button>
-										</span>
-									</div>
-									<div class="rating input-group">
-										<input name="reviewRating" value="0" type="number"
-											class="rating input-group" min=0 max=10 step=1 data-size="sm"
-											disabled="disabled">
-									</div>
-								</c:if>
-								<c:if test="${sessionScope.login != null}">
-									<div class="input-group">
-										<textarea name="reviewContent" class="form-control"
-											style="resize: none; height: 78.73px;" id="newReviewContent"
-											placeholder="감상평을 입력하세요."></textarea>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default"
-												id="reviewAddBtn" data-num="" onclick="reviewWrite(this);"
-												style="padding: 2.05em;">
-												<span class="glyphicon glyphicon-search"></span> 등록
-											</button>
-										</span>
-									</div>
-									<div class="rating input-group">
-										<input id="reviewStarRating" name="reviewStarscore" value="5"
-											type="number" class="rating input-group" min=0 max=10 step=1
-											data-size="sm">
-									</div>
-								</c:if>
-								<!-- /.input-group -->
-							</div>
-							<!-- 댓글 -->
-							<div>
-								<div id="review"></div>
+					
+					<!-- 스틸컷 -->
+					<div class="container">
+						<div class="row" id="slider-text">
+							<div class="col-md-6">
+								<h2>Still Cut</h2>
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- ./modal-body -->
+					<div class="row">
+						<div id='carousel-custom' class='carousel slide'
+							data-ride='carousel'>
+							<div class='carousel-outer'>
+								<!-- me art lab slider -->
+								<div class='carousel-inner '>
+									<div class='item active'>
+										<img
+											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg'
+											alt='' id="zoom_05"
+											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg" />
+									</div>
+									<div class='item' id="zoom_05">
+										<img
+											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg" />
+									</div>
+									<div class='item'>
+										<img
+											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg" />
+									</div>
+
+									<div class='item'>
+										<img
+											src='http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg"
+											id="zoom_05" />
+									</div>
+									<div class='item'>
+										<img
+											src='http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg"
+											id="zoom_05" />
+									</div>
+									<div class='item'>
+										<img
+											src='http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg"
+											id="zoom_05" />
+									</div>
+									<div class='item'>
+										<img
+											src='http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpgg'
+											alt=''
+											data-zoom-image="http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpg"
+											id="zoom_05" />
+									</div>
+								</div>
+
+								<!-- sag sol -->
+								<a class='left carousel-control' href='#carousel-custom'
+									data-slide='prev'> <span
+									class='glyphicon glyphicon-chevron-left'></span>
+								</a> <a class='right carousel-control' href='#carousel-custom'
+									data-slide='next'> <span
+									class='glyphicon glyphicon-chevron-right'></span>
+								</a>
+							</div>
+
+							<!-- thumb -->
+							<ol class='carousel-indicators mCustomScrollbar meartlab'>
+								<li data-target='#carousel-custom' data-slide-to='0'
+									class='active'><img
+									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='1'><img
+									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='2'><img
+									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='3'><img
+									src='http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='4'><img
+									src='http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='5'><img
+									src='http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg'
+									alt='' /></li>
+								<li data-target='#carousel-custom' data-slide-to='6'><img
+									src='http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpg'
+									alt='' /></li>
+
+							</ol>
+						</div>
+					</div>
+					<hr>
+					<!-- 트레일러 -->
+					<div class="container">
+						<div class="row" id="slider-text">
+							<div class="col-md-6">
+								<h2>Trailer</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="vid" style="text-align:center;">
+								<iframe width="700" height="500"
+									src="http://mvod.megabox.co.kr/encodeFile/3550/2017/06/01/a021352a34ab37c5024d242758bab69e_W.mp4"></iframe>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+							<div class="col-lg-12">
+								<div class="well">
+									<div>
+										<h3 style="display: inline;">한줄평</h3>
+									</div>
+									<br>
+									<c:if test="${sessionScope.login == null}">
+										<div class="input-group">
+											<textarea name="reviewContent" class="form-control"
+												readonly="readonly" style="resize: none; height: 78.73px;"
+												placeholder="로그인 후 작성할 수 있습니다."></textarea>
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default" data-num=""
+													disabled="disabled" style="padding: 2.05em;">
+													<span class="glyphicon glyphicon-search"></span> 등록
+												</button>
+											</span>
+										</div>
+										<div class="rating input-group">
+											<input name="reviewRating" value="0" type="number"
+												class="rating input-group" min=0 max=10 step=1
+												data-size="sm" disabled="disabled">
+										</div>
+									</c:if>
+									<c:if test="${sessionScope.login != null}">
+										<div class="input-group">
+											<textarea name="reviewContent" class="form-control"
+												style="resize: none; height: 78.73px;" id="newReviewContent"
+												placeholder="감상평을 입력하세요."></textarea>
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													id="reviewAddBtn" data-num="" onclick="reviewWrite(this);"
+													style="padding: 2.05em;">
+													<span class="glyphicon glyphicon-search"></span> 등록
+												</button>
+											</span>
+										</div>
+										<div class="rating input-group">
+											<input id="reviewStarRating" name="reviewStarscore" value="5"
+												type="number" class="rating input-group" min=0 max=10 step=1
+												data-size="sm">
+										</div>
+									</c:if>
+									<!-- /.input-group -->
+								</div>
+								<!-- 댓글 -->
+								<div>
+									<div id="review"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./modal-body -->
 			</div>
 		</div>
 	</div>
