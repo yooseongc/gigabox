@@ -366,7 +366,7 @@
 	
 	$(document).ready(function() {
 			
-			var recaptchaConfirm = false;
+			var recaptchaConfirm = true;
 			
 			$("#errorMessage").addClass("hide");
 			
