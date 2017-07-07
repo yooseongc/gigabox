@@ -32,6 +32,10 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<script>
+	setTimeout(function() { alert("5분 내로 결제를 완료하지 않으시면 예약이 취소됩니다.") }, 0);
+	setTimeout(function() { alert("예약이 취소됩니다."); location.href = "/";}, 300000);
+</script>
 </head>
 <body>
 
@@ -224,7 +228,7 @@
 				var sub = parseInt($("#userMileage").val()) - parseInt($("#useMileage").val())
 				$("#restMileage").val(sub);
 				$("#resvMileage").val($("#useMileage").val());
-				}else{
+				} else {
 					alert("사용가능한 마일리지를 초과하였습니다.")
 					$("#useMileage").val('');
 					$("#restMileage").val('');

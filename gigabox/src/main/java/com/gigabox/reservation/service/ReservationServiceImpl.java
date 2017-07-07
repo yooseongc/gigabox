@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gigabox.reservation.persistence.ReservationDAO;
 import com.gigabox.reservation.vo.ReservationVO;
@@ -27,7 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int reservationSeatInsert(ReservationVO resvVO) {
+	public int reservationSeatInsert(ReservationVO resvVO)  {
 		return resvDAO.reservationSeatInsert(resvVO);
 	}
 

@@ -1,5 +1,6 @@
 package com.gigabox.reservation.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +77,16 @@ public class ReservationController {
 				+ info.getMovieroomNumber() + "-" 
 				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm") 
 				+ resvVO.getUserNumber());
-
+		
+		ReservationVO already = new ReservationVO();
+		already.setScheduleNumber(resvVO.getScheduleNumber());
+		already.setUserNumber(resvVO.getUserNumber());
+		int alreadyNum = resvService.reservationList(already).size();
+		if (alreadyNum != 0) {
+			return "redirect:/mypage/mymovie?listType=2&popup=already";
+		}
+		
+		
 		int resvNumber = resvService.reservationSeatInsert(resvVO);
 		resvVO.setReservationNumber(resvNumber);
 		ReservationThreadUtil thread = new ReservationThreadUtil(resvVO, resvService);

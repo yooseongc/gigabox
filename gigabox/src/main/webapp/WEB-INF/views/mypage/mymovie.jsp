@@ -1035,16 +1035,13 @@
 		}
 
 		function deleteResv(resvNum) {
+			alert(resvNum);
 			if (confirm("정말 취소하시겠습니까?")) {
 				
 				$.ajax({
 					type : 'POST',
 					url : "/mypage/reservationDelete" ,
-					data : {reservationNumber: resvNum},
-					headers: {
-						"Content-Type": "application/json",
-						"X-HTTP-Method-Override": "POST"
-					},
+					data : { reservationNumber: resvNum},
 					success:function(data){
 						alert(data);
 						if (data == 1) {

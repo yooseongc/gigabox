@@ -88,6 +88,28 @@ footer {
 	  </div>
 	  <!-- /.modal -->
 	  
+	  <!-- Modal -->
+     <div class="modal fade" id="alreadyModal" tabindex="-1" role="dialog" aria-labelledby="alreadyLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="alreadyLabel">영화 예매 오류</h4>
+                 </div>
+                 <div class="modal-body">
+                      <i class="fa fa-fa-exclamation-triangle fa-3x"></i>
+                      <span>이미 동일한 영화가 예약되어있습니다.</span>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" id="alreadyModalCloseButton" class="btn btn-danger" data-dismiss="modal">닫기</button>
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+	      </div>
+	      <!-- /.modal-dialog -->
+	  </div>
+	  <!-- /.modal -->
+	  
 	 <!-- 이메일 인증 안하고 로그인시 모달 -->
 	 <!-- Modal -->
      <!-- <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="emailAuthNotYet" aria-hidden="true">
@@ -114,6 +136,14 @@ footer {
 <script type="text/javascript">
 	
 	$(document).ready(function() {
+		
+		if ('${param.popup}' == 'already') {
+			$('#alreadyModal').modal({
+		        show: true, 
+		        backdrop: 'static',
+		        keyboard: true
+		     });
+		}
 		
 		// 현재 URL 가져오기
 	    var url = location.href;
@@ -143,6 +173,10 @@ footer {
 			e.preventDefault();
 			$("#emailAuthOKModal").modal("hide");
 			$("#loginDropDown").prop("aria-expanded", "true");
+		});
+		$("#alreadyModalCloseButton").on("click", function(e) {
+			e.preventDefault();
+			$("#alreadyModal").modal("hide");
 		});
 		
 	});

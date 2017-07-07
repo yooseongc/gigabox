@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigabox.bookmark.service.BookmarkService;
@@ -113,11 +114,14 @@ public class MypageController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/reservationDelete", method = RequestMethod.POST)
-	public int reservationDeletePOST(ReservationVO reservationVO){
+	public String reservationDeletePOST(@RequestParam("reservationNumber") int reservationNumber){
 		logger.info("SUCCESS RESERVATION_DELETE");
-		int result = reservationService.reservationDelete(reservationVO);
-		logger.info(result + "");
-		return result;
+		logger.info("RESERVATION NUMBER= " + reservationNumber);
+		ReservationVO resvVO = new ReservationVO();
+		resvVO.setReservationNumber(reservationNumber);
+		int result = reservationService.reservationDelete(resvVO);
+		logger.info("DELETE RESULT= " + result);
+		return result + "";
 	}
 	
 }

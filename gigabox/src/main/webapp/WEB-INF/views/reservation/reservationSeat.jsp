@@ -170,6 +170,14 @@
 							</form>
 							<br>
 							<script>
+								function calcTotal() {
+									var bargain = parseInt($("#reservationYouthnum").val())*1000 +
+									parseInt($("#reservationChildnum").val())*2000 +
+									parseInt($("#reservationPreferencenum").val())*2000;
+									$("#bargain").text(bargain);
+									$("#realTotal").text(parseInt($("#total").text()) - parseInt($("#bargain").text()));
+								}
+								
 								$(document).ready(function() {
 									$("input[data-role='people']").on("change", function() {
 										var total = 
@@ -191,14 +199,19 @@
 									});
 								});
 							</script>
-							<div class="booking-details" style="padding-top: 30px;">
+							<div class="booking-details" style="padding-top: 0px;">
 								<h3>
 									선택된 좌석 (<span id="counter">0</span>석):
 								</h3>
-								<ul id="selected-seats" style="height: 300px; list-style: decimal;">
+								<ul id="selected-seats" style="height: 200px; list-style: decimal;">
 								</ul>
 								<p class="well well-md well-info">
-									합계 : <b><span id="total">0</span>원</b>							
+									요금 할인은 청소년 1000원, <br>아동 및 우대 2000원 입니다.					
+								</p>
+								<p class="well well-md well-info">
+									금액 : <b><span id="total">0</span>원</b><br>	
+									할인 : <b><span id="bargain">0</span>원</b><br>
+									적용 금액: <b><span id="realTotal">0</span>원</b>						
 								</p>
 							</div>
 						</div>
@@ -274,13 +287,11 @@
 					}
 				}
 			});
-			console.log(resvSeat);	
 			for (var i = 0; i < resvSeat.length; i++) {
 				var each = resvSeat[i];
 				var col = parseInt(each.substring(1));
 				var row = each.charCodeAt(0)-64;
 				var id = row + "_" + col;
-				console.log(id);
 				sc.status(id,'unavailable');
 			}
 		}
@@ -290,8 +301,8 @@
 		
 			//basically find every selected seat and sum its price
 			sc.find('selected').each(function () {
-				console.log(this.data().price);
 				total += parseInt(this.data().price);
+				
 			});
 			
 			return parseInt(total);
@@ -346,7 +357,7 @@
 					$counter.text(sc.find('selected').length+1);
 					$total.text(recalculateTotal(sc)+parseInt(this.data().price));
 					$("#seat"+$counter.text()).val(this.settings.label);
-					
+					calcTotal();
 					return 'selected';
 				} else if (this.status() == 'selected') {
 					//update the counter
@@ -354,11 +365,11 @@
 					$counter.text(sc.find('selected').length-1);
 					//and total
 					$total.text(recalculateTotal(sc)-this.data().price);
-				
+					
 					//remove the item from our cart
 					$('#cart-item-'+this.settings.id).remove();
 					
-					
+					calcTotal();
 					//seat has been vacated
 					return 'available';
 				} else if (this.status() == 'unavailable') {
@@ -386,11 +397,20 @@
 			
 		$("#nextStep").click(function(e) {
 			e.preventDefault();
+			var total = 
+				parseInt($("#reservationAdultnum").val()) +
+				parseInt($("#reservationYouthnum").val()) +
+						parseInt($("#reservationChildnum").val()) +
+				parseInt($("#reservationPreferencenum").val());
 			if (parseInt($("#counter").text()) <= 0) {
 				alert("좌석을 선택해 주세요.");
 				return;
 			}
-			$("#reservationPayamount").val($("#total").text());
+			if (total != sc.find('selected').length) {
+				alert("인원 수에 맞게 좌석을 선택해 주세요.");
+				return;
+			}
+			$("#reservationPayamount").val($("#realTotal").text());
 			$("#seatForm").attr("method", "POST");
 			$("#seatForm").attr("action", "/reservation/resvPayment");
 			$("#seatForm").submit();
