@@ -609,6 +609,7 @@
 												<th style="text-align: center;">예매번호</th>
 												<th style="text-align: center;">영화명</th>
 												<th style="text-align: center;">영화관</th>
+												<th style="text-align: center;">상영관</th>
 												<th style="text-align: center;">상영일시</th>
 												<th style="text-align: center;">예매일</th>
 												<th style="text-align: center;">예매취소</th>
@@ -620,12 +621,13 @@
 													<td>${resvInfoItem.reservationCode}</td>
 													<td>${resvInfoItem.movieTitle}</td>
 													<td>${resvInfoItem.branchName}</td>
+													<td>${resvInfoItem.movieroomName}</td>
 													<td><fmt:formatDate
 														value="${resvInfoItem.scheduleStart}"
-														pattern="yyyy-MM-dd" /></td>
+														pattern="yyyy-MM-dd kk:ss" /></td>
 													<td><fmt:formatDate
 														value="${resvInfoItem.reservationRegisterdate}"
-														pattern="yyyy-MM-dd" /></td>
+														pattern="yyyy-MM-dd kk:ss" /></td>
 													<td><button onclick="deleteResv(${resvInfoItem.reservationNumber});" class="btn btn-danger">
 													취소</button></td>
 												</tr>

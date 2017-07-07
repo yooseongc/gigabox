@@ -145,7 +145,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 									<br>
 								</div>
 								<hr>
-								<button class="btn btn-md btn-success btn-block" id="myMovieButton">마이무비</button>
+								<button class="btn btn-md btn-success btn-block" 
+									id="myMovieButton" onclick="window.location.href='/mypage/mymovie?listType=2'">마이무비</button>
 								<button class="btn btn-md btn-success btn-block" 
 									id="logoutButton" onclick="window.location.href='/user/logout'">로그아웃</button>
 							</div>
@@ -185,9 +186,9 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 			{
 				$("#errorMessageHeader").text("Caps Lock 키가 눌려있습니다.");
 				$("#errorMessageHeader").removeClass("hide");
-	        } /* else {
-	            $("#errorMessageHeader").hide();
-	        } */
+	        } else {
+	            $("#errorMessageHeader").addClass("hide");
+	        }
 	    }
 
 		$(document).ready(function() {
