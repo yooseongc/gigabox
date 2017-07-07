@@ -71,6 +71,7 @@
 	var tobeReadMoreCount = 0;
 	var reviewReadMoreCount = 0;
 
+	
 	// 관람가 마크
 	function makeRatingTag(value) {
 		if (value == "전체관람가" || value == "전체 관람가") {
@@ -718,7 +719,7 @@
 								</div>
 								<form class="form-horizontal">
 									<table class="table table-striped table-bordered table-hover">
-										<caption>${sessionScope.login.userName }님 예매정보</caption>
+										<caption>${sessionScope.login.userName }님 1:1 문의내역</caption>
 										<thead>   
 											<tr>
 												<th style="text-align: center;">No</th>
@@ -731,7 +732,7 @@
 											<c:forEach items="${inquiryList}" var="qnaItem">
 												<tr style="text-align: center;">
 													<td>${qnaItem.inquiry.inquiryNumber}</td>
-													<td><a
+													<td style="text-align: left;"><a
 										href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.inquiry.inquiryNumber}">${qnaItem.inquiry.inquiryTitle}</a></td>
 													<c:if test="${qnaItem.answerExist == 1}">
 	                                        		<td style="text-align: center;"><span class="label label-primary">답변 완료</span></td>
@@ -1028,6 +1029,14 @@
 
 
 	<script>
+		$(document).ready(function(){
+			// 예매하기 클릭
+			$("#resvButton").click(function(e) {
+				e.preventDefault();
+				location.href = "/reservation/resvMain";
+			});
+		});
+	
 		// 영화 목록 더보기
 		function readMore(type) {
 			if (type = 'recent') {
