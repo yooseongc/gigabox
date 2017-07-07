@@ -159,6 +159,7 @@
 		INQUIRY_NUMBER=#{inquiryNumber}
 	</update>
 
+
 	<!-- <delete id="inquiryDelete" parameterType="inquiry"> DELETE FROM TBL_INQUIRY 
 		WHERE INQUIRY_NUMBER = #{inquiryNumber} </delete> -->
 </mapper>

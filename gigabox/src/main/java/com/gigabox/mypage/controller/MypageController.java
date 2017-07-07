@@ -22,6 +22,8 @@ import com.gigabox.bookmark.service.BookmarkService;
 import com.gigabox.bookmark.vo.BookmarkVO;
 import com.gigabox.movie.service.MovieService;
 import com.gigabox.movie.vo.MovieVO;
+import com.gigabox.reservation.service.ReservationService;
+import com.gigabox.reservation.vo.ReservationVO;
 import com.gigabox.user.service.UserService;
 import com.gigabox.user.vo.UserVO;
 
@@ -40,6 +42,9 @@ public class MypageController {
 	
 	@Inject
 	private MovieService movieService;
+	
+	@Inject
+	private ReservationService reservationService;
 
 	
 	/* 마이무비 리스트 */
@@ -71,6 +76,12 @@ public class MypageController {
 		}
 		model.addAttribute("bookmarkList", bookmarkMapList);
 		request.setAttribute("listType", 2);
+		
+		//예매 확인,취소
+		ReservationVO resvInfoVO = new ReservationVO();
+		resvInfoVO.setUserNumber(loginSessionVO.getUserNumber());
+		List<ReservationVO> resvInfoList = reservationService.reservationList(resvInfoVO);
+		model.addAttribute("resvInfoList", resvInfoList);
 		return "/mypage/mymovie";
 	}
 
@@ -99,4 +110,14 @@ public class MypageController {
 		result = bookmarkService.delete(bookmarkNumber);
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/reservationDelete", method = RequestMethod.POST)
+	public int reservationDeletePOST(ReservationVO reservationVO){
+		logger.info("SUCCESS RESERVATION_DELETE");
+		int result = reservationService.reservationDelete(reservationVO);
+		logger.info(result + "");
+		return result;
+	}
+	
 }

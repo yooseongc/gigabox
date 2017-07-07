@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/movieRatingTag.tld"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
@@ -60,14 +61,10 @@
 	overflow-y: scroll;
 }
 </style>
-<script type="text/javascript">
-	var result = '${msg}';
 
-	if (result == 'SUCCESS') {
-		alert("처리가 완료되었습니다.");
-	}
-</script>
-<script>
+
+<script>	
+
 	// 더보기 카운트
 	var boxofficeReadMoreCount = 0;
 	var recentReadMoreCount = 0;
@@ -596,8 +593,65 @@
 				</div>
 
 				<div class="tab-content">
-					<div class="tab-pane fade in active" id="resvInfo">예매 확인/취소</div>
-
+					<div class="tab-pane fade in active" id="resvInfo">
+						<!-- Content Row -->
+						<div class="row">
+						<article>
+							<div class="col-md-12">
+								<div class="page-header">
+									<h1>예매 확인/취소<small> 예매하신 영화 내역을 확인할 수 있습니다.</small></h1>
+								</div>
+								<form class="form-horizontal">
+									<table class="table table-striped table-bordered table-hover">
+										<caption>${sessionScope.login.userName }님 예매정보</caption>
+										<thead>   
+											<tr>
+												<th style="text-align: center;">예매번호</th>
+												<th style="text-align: center;">영화명</th>
+												<th style="text-align: center;">영화관</th>
+												<th style="text-align: center;">상영일시</th>
+												<th style="text-align: center;">예매일</th>
+												<th style="text-align: center;">예매취소</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${resvInfoList}" var="resvInfoItem">
+												<tr style="text-align: center;">
+													<td>${resvInfoItem.reservationCode}</td>
+													<td>${resvInfoItem.movieTitle}</td>
+													<td>${resvInfoItem.branchName}</td>
+													<td><fmt:formatDate
+														value="${resvInfoItem.scheduleStart}"
+														pattern="yyyy-MM-dd" /></td>
+													<td><fmt:formatDate
+														value="${resvInfoItem.reservationRegisterdate}"
+														pattern="yyyy-MM-dd" /></td>
+													<td><button onclick="deleteResv(${resvInfoItem.reservationNumber});" class="btn btn-danger">
+													취소</button></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</form>
+								<br>
+								<hr>
+								<div class="mypage_box_wrap">
+									<h2>취소및 환불 규정</h2>
+									<ul class="icon_list mypage">
+										<li>현장 취소를 하는 경우 상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.</li>
+										<li>홈페이지 또는 모바일에서 예매한 내역을 취소 할 경우 부분 취소는 불가능합니다.</li>
+										<li>온라인(홈페이지/모바일) 예매 취소는 상영시간 20분전까지 입니다.</li>
+										<li>위탁 예매 사이트 이용 시 취소 및 환불 규정은 해당 사이트 규정을 따릅니다.</li>
+										<li><strong class="c_purple">발권된 티켓은 상영시간 전까지 현장 방문 시에만 취소가 가능합니다.</strong></li>
+									</ul>
+								</div>
+							</div>
+						</article>
+						</div>
+						<!-- /.row -->
+						<hr>
+					</div>
+					
 					<div class="tab-pane fade" id="mymovie">
 						<div class="row">
 							<div class="col-lg-12">
@@ -979,6 +1033,36 @@
 			});
 
 		}
+
+		function deleteResv(resvNum) {
+			if (confirm("정말 취소하시겠습니까?")) {
+				
+				$.ajax({
+					type : 'POST',
+					url : "/mypage/reservationDelete" ,
+					data : {reservationNumber: resvNum},
+					headers: {
+						"Content-Type": "application/json",
+						"X-HTTP-Method-Override": "POST"
+					},
+					success:function(data){
+						alert(data);
+						if (data == 1) {
+							alert("예매가 정상적으로 취소되었습니다.");
+							self.location.reload();
+						} else {
+							alert("예매 취소가 정상적으로 처리되지 않았습니다.\n관리자에게 문의해 주세요.");
+						}
+					},
+					error:function(){
+						alert("오류");
+						console.log("예매 내역 삭제 오류");
+					}
+				});
+			}
+			return false;
+		}
+
 	</script>
 </body>
 </html>

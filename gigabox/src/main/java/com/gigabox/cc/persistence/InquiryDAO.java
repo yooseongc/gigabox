@@ -31,5 +31,6 @@ public interface InquiryDAO {
 	public int inquiryUpdate(InquiryVO ivo);
 
 	// 삭제
-	public int inquiryDelete(InquiryVO inquiryNumber);
+	public int inquiryDelete(InquiryVO ivo);
+
 }

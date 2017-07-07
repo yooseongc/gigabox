@@ -76,16 +76,6 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public int inquiryDelete(InquiryVO inquiryNumber) {
 		return sqlSession.update(namespace + ".inquiryDelete", inquiryNumber);
 	}
+
 }
 
-/*
- * @Override public List<InquiryVO> inquiryList() throws Exception { // TODO
- * Auto-generated method stub return sqlSession.selectList(namespace +
- * ".inquiryList"); }
- * 
- * 
- * 
- * @Override public InquiryVO inquiryRead(InquiryVO ivo) throws Exception { //
- * TODO Auto-generated method stub return sqlSession.selectOne(namespace +
- * ".read", ivo); }
- */

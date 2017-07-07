@@ -64,8 +64,7 @@
 			<article>
 				<div class="col-md-12">
 					<div class="page-header">
-						<h1>회원탈퇴</h1>
-						<h6>*30일간 재가입이 불가능 합니다.</h6>
+						<h1>회원탈퇴 <small>*30일간 재가입이 불가능 합니다.</small></h1>
 					</div>
 					<form class="form-horizontal">
 						<table class="table table-striped table-bordered table-hover">
@@ -184,7 +183,7 @@
 			});
 			
 		});
-		});
+	});
 	</script>
 </body>
 </html>

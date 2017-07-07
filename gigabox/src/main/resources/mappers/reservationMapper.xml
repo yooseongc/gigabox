@@ -23,6 +23,7 @@
 		<result property="reservationSeat4" column="RESERVATION_SEAT4" />
 		<result property="reservationSeat5" column="RESERVATION_SEAT5" />
 		<result property="reservationSeat6" column="RESERVATION_SEAT6" />
+		<result property="reservationCode" column="RESERVATION_CODE" />
 		
 		<result property="userNumber" column="USER_NUMBER" />
 		<result property="userId" column="USER_ID" />
@@ -88,7 +89,7 @@
 					      )  BRANCH ON BRANCH.BRANCH_NUMBER = MOVIEROOM.BRANCH_NUMBER 
 				WHERE 1=1 
 				<if test="userNumber != 0">
-					AND USER.USER_NUMBER = #{userNumber} 
+					AND USER1.USER_NUMBER = #{userNumber} 
 				</if>
 				<if test="branchNumber != 0">
 					AND BRANCH.BRANCH_NUMBER = #{branchNumber} 
@@ -143,6 +144,8 @@
 			      )  BRANCH ON BRANCH.BRANCH_NUMBER = MOVIEROOM.BRANCH_NUMBER 
 		WHERE RESERVATION_NUMBER = #{reservationNumber}  
 	</select>
+	
+	
 	
 	<insert id="reservationSeatInsert" parameterType="reservation">
 		<selectKey keyProperty="reservationNumber" resultType="int" order="BEFORE">

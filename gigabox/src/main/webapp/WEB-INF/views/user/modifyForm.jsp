@@ -75,7 +75,7 @@
 							<div class="text-left">
 								<span class='text-center'>
 								<a href="/user/changePwForm/${sessionScope.login.userId}" class="text-sm">비밀번호 변경/</a>
-								<a href="/user/userLeaveForm/${sessionScope.login.userId}" class="text-sm">회원탈퇴</a></span>
+								<a href="/user/userLeaveForm/" class="text-sm">회원탈퇴</a></span>
 							</div>
 						</div>
 						<div class="form-group">
