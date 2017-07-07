@@ -93,10 +93,10 @@
 						
 						<div class="form-group">
 							<div class="col-sm-12 text-center">
-								<button id="changePwSubmitBtn" class="btn btn-primary" type="submit">
+								<button id="changePwSubmitBtn" class="btn btn-primary">
 									변경완료<i class="fa fa-check spaceLeft"></i>
 								</button>
-								<button id="changePwCancleBtn" class="btn btn-danger" type="submit">
+								<button id="changePwCancleBtn" class="btn btn-danger">
 									변경취소<i class="fa fa-times spaceLeft"></i>
 								</button>
 							</div>
