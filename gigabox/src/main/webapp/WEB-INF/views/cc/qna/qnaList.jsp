@@ -76,6 +76,7 @@
 							<tr>
 								<th style="text-align: center;">구분</th>
 								<th style="text-align: center;">제목</th>
+								<th style="text-align: center;">작성자</th>
 								<th style="text-align: center;">등록일</th>
 							</tr>
 						</thead>
@@ -92,6 +93,7 @@
 									</c:if>
 									<td><a
 										href="/cc/qna/qnaRead?inquiryNumber=${inquiryItem.inquiry.inquiryNumber}">${inquiryItem.inquiry.inquiryTitle}</a></td>
+									<td style="text-align: center;">${inquiryItem.user.userId }</td>
 									<td style="text-align: center;"><fmt:formatDate
 											value="${inquiryItem.inquiry.inquiryRegisterdate}"
 											pattern="yyyy-MM-dd" /></td>

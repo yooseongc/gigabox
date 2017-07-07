@@ -43,9 +43,8 @@ public class InquiryServiceImpl implements InquiryService {
 	// 수정
 	@Override
 	public int inquiryUpdate(InquiryVO ivo) {
-		int result = 0;
-		result = inquiryDao.inquiryUpdate(ivo);
-		return result;
+		return inquiryDao.inquiryUpdate(ivo);
+
 	}
 
 	// 삭제

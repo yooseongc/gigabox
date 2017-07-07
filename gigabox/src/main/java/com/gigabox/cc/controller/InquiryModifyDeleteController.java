@@ -39,8 +39,11 @@ public class InquiryModifyDeleteController {
 	@ResponseBody
 	@RequestMapping(value = "/qnaUpdate", method = RequestMethod.POST)
 	public String inquiryUpdatePOST(@RequestBody InquiryVO ivo) {
-		int result = 0;
+		System.out.println(ivo.getInquiryNumber());
+		System.out.println(ivo.getInquiryContent());
+		System.out.println(ivo.getInquiryTitle());
 		
+		int result = 0;
 		result = inquiryService.inquiryUpdate(ivo);
 		return result + "";
 	}

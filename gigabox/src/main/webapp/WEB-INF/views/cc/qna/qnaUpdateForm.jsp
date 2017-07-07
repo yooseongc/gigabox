@@ -23,10 +23,12 @@
 <script src="/resources/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/js/bootstrap.min.js"></script>
+
 <!-- summernote -->
 <link href="/resources/summernote/summernote.css" rel="stylesheet"/>
 <script type="text/javascript" src="/resources/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -69,11 +71,13 @@
 						<tbody>
 							<tr>
 								<th align="center">제목</th>
-								<td>${inquiryUpdate.inquiryTitle}</td>
+								<td><input type="text" name="inquiryTitle" id="q_title"
+									class="form-control" value="${inquiryUpdate.inquiryTitle}"></td>
 							</tr>
 							<tr>
 								<th align="center">내용</th>
-								<td><input style="min-height: 150px;" value="${inquiryUpdate.inquiryContent}"></td>
+								<td><textarea rows="5" id="q_content" name="inquiryContent"
+										class="form-control" style="resize: none;">${inquiryUpdate.inquiryContent}</textarea></td>
 							</tr>
 						</tbody>
 					</table>
@@ -87,11 +91,13 @@
 
 	<div class="container">
 		<div class="pull-right">
-			<a href="/cc/qna/qnaUpdateForm"><button type="button"
-					id="qnaUpdateBtn" class="btn btn-primary btn-sm"
-					onclick="location.href='/cc/qna/qnaList'">수정</button></a> <a
-				href="/cc/qna/qnaList"><button class="btn btn-primary btn-sm">목록</button></a>
+			<button type="button" id="qnaUpdateBtn" class="btn btn-primary btn-sm"
+			onclick="qnaUpdateBtn('${inquiryUpdate.inquiryNumber}')">저장</button>
+			<a href="/cc/qna/qnaList" class="btn btn-primary btn-sm">목록</a>
 		</div>
+	</div>
+	<div class="container">
+	<h3></h3>
 	</div>
 
 	<!-- footer -->
@@ -100,31 +106,52 @@
 	<script type="text/javascript">
 $(document).ready(function() {
 		
-		$("#q_content").summernote({
-	        height: 400,          // 기본 높이값
-	        minHeight: null,      // 최소 높이값(null은 제한 없음)
-	        maxHeight: null,      // 최대 높이값(null은 제한 없음)
-	        lang: 'ko-KR',        // 한국어 지정(기본값은 en-US)
-	        toolbar: [
-	            ['font', ['bold', 'italic', 'underline']],
-	            ['fontname', ['fontname']],
-	            ['fontsize', ['fontsize']],
-	            ['color', ['color']],
-	            ['para', ['ul', 'ol', 'paragraph']],
-	            ['height', ['height']],
-	            ['table', ['table']],
-	            ['insert', ['hr']],
-	            ['view', ['fullscreen', 'codeview']]
-	          ]
-	    });
-		$(document).ready(function() {
-			/* 수정 버튼 클릭 시 처리 이벤트 */
-			$("#qnaUpdateBtn").click(function() {
-				var title = $("#title").val();
-				var content = $("#content").val();
+	$("#q_content").summernote({
+        height: 400,          // 기본 높이값
+        minHeight: null,      // 최소 높이값(null은 제한 없음)
+        maxHeight: null,      // 최대 높이값(null은 제한 없음)
+        lang: 'ko-KR',        // 한국어 지정(기본값은 en-US)
+        toolbar: [
+            ['font', ['bold', 'italic', 'underline']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['insert', ['hr']],
+            ['view', ['fullscreen', 'codeview']]
+          ]
+    });
+	
+});
 
-			});
+function qnaUpdateBtn(inquiryNumber) {
+	console.log(inquiryNumber);
+/* 	alert($("#q_content").val());
+	alert($("#q_title").val()); */
+	if (confirm("저장 하시겠습니까?")) {
+		$.ajax({
+			url : "/cc/qna/qnaUpdate",
+			type : "POST",
+			headers : {
+				"Content-Type" : "application/json",
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				inquiryNumber : inquiryNumber,
+				inquiryContent : $("#q_content").val(),
+				inquiryTitle : $("#q_title").val()
+			}),
+			success : function(data) {
+				alert(data);
+				alert("수정완료");
+				location.href = "/cc/qna/qnaList";
+			}
 		});
+	}
+
+}
 	</script>
 
 </body>

@@ -86,17 +86,21 @@
 		<hr>
 		<div class="container">
 			<div class="pull-right">
-				<%-- <c:if test="${sessionScope.login.userId}"> --%>
-				<a href="/cc/qna/qnaUpdateForm?inquiryNumber=${inquiryRead.inquiryNumber}" class="btn btn-primary btn-sm"
-					>수정</a>
+				<c:if test="${sessionScope.login.userNumber == inquiryRead.userNumber}">
+				<a
+					href="/cc/qna/qnaUpdateForm?inquiryNumber=${inquiryRead.inquiryNumber}"
+					class="btn btn-primary btn-sm">수정</a>
 				<button class="btn btn-primary btn-sm"
 					onclick="qnaDeleteBtn('${inquiryRead.inquiryNumber}')">삭제</button>
-				<%-- </c:if> --%>
+				</c:if>
 				<a href="/cc/qna/qnaList"><button class="btn btn-primary btn-sm">목록</button></a>
 			</div>
 		</div>
 	</div>
 	<!-- /.container -->
+	<div class="container">
+		<h3></h3>
+	</div>
 
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
@@ -125,12 +129,6 @@
 
 		}
 
-		//수정 버튼클릭 이벤트
-/* 
-		function qnaUpdateBtn(inquiryNumber) {
-			
-			});
-		} */
 	</script>
 </body>
 </html>

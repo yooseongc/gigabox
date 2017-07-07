@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +92,6 @@ public class InquiryController {
 	}
 
 	/* 글 상세보기 구현 */
-
 	@RequestMapping(value = "/qnaRead", method = RequestMethod.GET)
 	public String qnaRead(@ModelAttribute InquiryVO ivo, Model model) {
 		logger.info("qnaRead 호출성공");
@@ -99,10 +99,14 @@ public class InquiryController {
 
 		InquiryVO read = new InquiryVO();
 		read = inquiryService.inquiryRead(ivo);
+		UserVO read1 = new UserVO();
+		read1 = userService.userDetail(read1);
 
 		if (read != null && (!read.equals(""))) {
 			read.setInquiryContent(read.getInquiryContent().toString().replaceAll("\n", "<br>"));
 		}
+		
+		model.addAttribute("userDetail", read1);
 		model.addAttribute("inquiryRead", read);
 		return "/cc/qna/qnaRead";
 	}
