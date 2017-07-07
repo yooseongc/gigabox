@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gigabox.bookmark.service.BookmarkService;
 import com.gigabox.bookmark.vo.BookmarkVO;
+import com.gigabox.cc.service.InquiryService;
+import com.gigabox.cc.vo.InquiryVO;
 import com.gigabox.movie.service.MovieService;
 import com.gigabox.movie.vo.MovieVO;
 import com.gigabox.reservation.service.ReservationService;
@@ -36,7 +38,7 @@ public class MypageController {
 	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Inject
-	private UserService userService;
+	private InquiryService inquiryService;
 	
 	@Inject
 	private BookmarkService bookmarkService;
@@ -46,6 +48,9 @@ public class MypageController {
 	
 	@Inject
 	private ReservationService reservationService;
+	
+	@Inject
+	private UserService userService;
 
 	
 	/* 마이무비 리스트 */
@@ -75,6 +80,7 @@ public class MypageController {
 			// List에 저장
 			bookmarkMapList.add(bookmarkMap);
 		}
+		
 		model.addAttribute("bookmarkList", bookmarkMapList);
 		request.setAttribute("listType", 2);
 		
@@ -83,6 +89,44 @@ public class MypageController {
 		resvInfoVO.setUserNumber(loginSessionVO.getUserNumber());
 		List<ReservationVO> resvInfoList = reservationService.reservationList(resvInfoVO);
 		model.addAttribute("resvInfoList", resvInfoList);
+		
+		//1:1 문의내역
+		InquiryVO inquiryVO = new InquiryVO();
+		inquiryVO.setUserNumber(loginSessionVO.getUserNumber());
+		List<InquiryVO> inquiryList = inquiryService.inquiryListByUser(inquiryVO);
+		model.addAttribute("inquiryListByUser", inquiryList);
+		
+
+		List<Map<String, Object>> inquiryMapList = new ArrayList<>();
+		for (InquiryVO eachInquiry : inquiryList) {
+			
+			// 질문 정보
+			Map<String, Object> inquiryMap = new HashMap<>();
+			inquiryMap.put("inquiry", eachInquiry);
+			
+			// 회원 정보
+			int userNumber = eachInquiry.getUserNumber();
+			UserVO initInquiryUser = new UserVO();
+			initInquiryUser.setUserNumber(userNumber);
+			UserVO inquiryUser = userService.userDetail(initInquiryUser);
+			inquiryMap.put("user", inquiryUser);
+			
+			// 답변 여부
+			InquiryVO answerInquiry = inquiryService.inquiryDetailA(eachInquiry);
+			if (answerInquiry == null) {
+				// 답변이 없으면 0
+				inquiryMap.put("answerExist", new Integer(0));
+			} else {
+				// 답변이 있으면 1
+				inquiryMap.put("answerExist", new Integer(1));
+			}
+			
+			// List에 저장
+			inquiryMapList.add(inquiryMap);
+		}
+		model.addAttribute("inquiryList", inquiryMapList);
+		
+		
 		return "/mypage/mymovie";
 	}
 

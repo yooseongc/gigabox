@@ -703,7 +703,55 @@
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="qnaInfo">문의 내역 확인</div>
+			<div class="tab-pane fade" id="qnaInfo">
+				<div class="row">
+						<article>
+							<div class="col-md-12">
+								<div class="page-header">
+									<h2>나의 문의내역</h2>
+									<ul class="icon_list mypage">
+										<li>고객센터에서 남겨주신 문의내역을 모두 확인하실 수 있습니다.</li>
+										<li>문의하시기 전 FAQ를 확인하시면 궁금증을 더욱 빠르게 해결하실 수 있습니다.</li>
+									</ul>
+								</div>
+								<form class="form-horizontal">
+									<table class="table table-striped table-bordered table-hover">
+										<caption>${sessionScope.login.userName }님 예매정보</caption>
+										<thead>   
+											<tr>
+												<th style="text-align: center;">No</th>
+												<th style="text-align: center;">제목</th>
+												<th style="text-align: center;">답변상태</th>
+												<th style="text-align: center;">등록일</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${inquiryList}" var="qnaItem">
+												<tr style="text-align: center;">
+													<td>${qnaItem.inquiry.inquiryNumber}</td>
+													<td><a
+										href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.inquiry.inquiryNumber}">${qnaItem.inquiry.inquiryTitle}</a></td>
+													<c:if test="${qnaItem.answerExist == 1}">
+	                                        		<td style="text-align: center;"><span class="label label-primary">답변 완료</span></td>
+	                                       			</c:if>
+	                                        		<c:if test="${qnaItem.answerExist == 0}">
+	                                        		<td style="text-align: center"><span class="label label-warning">답변 미완료</span></td>
+	                                        		</c:if>
+													<td style="text-align: center;"><fmt:formatDate
+													value="${qnaItem.inquiry.inquiryRegisterdate}"
+													pattern="yyyy-MM-dd" /></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</form>
+								<br>
+								<hr>
+							</div>
+						</article>
+						</div>
+
+			</div>
 		</div>
 
 

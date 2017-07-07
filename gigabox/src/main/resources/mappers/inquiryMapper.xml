@@ -124,11 +124,11 @@
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
 	</select>
 
-	<!-- <select id="inquiryDetail" parameterType="int" resultType="inquiry" 
+	<select id="inquiryDetailA" parameterType="int" resultType="inquiry" 
 		resultMap="inquiryResultMap"> SELECT INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, 
 		INQUIRY_REGISTERDATE, INQUIRY_GROUPNUMBER, INQUIRY_QORA FROM TBL_INQUIRY 
 		WHERE INQUIRY_GROUPNUMBER = #{inquiryGroupnumber} AND INQUIRY_QORA = 'A' 
-		</select> -->
+	</select>
 
 	<insert id="inquiryInsert" parameterType="inquiry">
 		INSERT INTO
@@ -160,6 +160,23 @@
 	</update>
 
 
-	<!-- <delete id="inquiryDelete" parameterType="inquiry"> DELETE FROM TBL_INQUIRY 
-		WHERE INQUIRY_NUMBER = #{inquiryNumber} </delete> -->
+	<select id="inquiryListByUser" resultType="inquiry" resultMap="inquiryResultMap">
+		SELECT *
+		FROM
+			(
+				SELECT LIST.*, ROWNUM AS RNUM
+				FROM
+				(
+				SELECT INQUIRY_NUMBER,
+				USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT,
+				INQUIRY_REGISTERDATE,
+				INQUIRY_GROUPNUMBER, INQUIRY_QORA
+				FROM TBL_INQUIRY
+				WHERE USER_NUMBER = #{userNumber} 
+				ORDER BY INQUIRY_GROUPNUMBER DESC, INQUIRY_QORA DESC
+			) LIST
+		)
+	</select>
+	
+	
 </mapper>

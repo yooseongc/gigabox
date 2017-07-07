@@ -8,6 +8,8 @@ import com.gigabox.cc.vo.InquiryVO;
 public interface InquiryDAO {
 
 	public List<InquiryVO> inquiryList(InquirySearchCriteria isc);
+	
+	public List<InquiryVO> inquiryListByUser(InquiryVO ivo);
 
 	public int inquiryListCount(InquirySearchCriteria isc);
 

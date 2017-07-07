@@ -8,6 +8,8 @@ import com.gigabox.cc.vo.InquiryVO;
 public interface InquiryService {
 
 	public List<InquiryVO> inquiryList(InquirySearchCriteria isc);
+	
+	public List<InquiryVO> inquiryListByUser(InquiryVO ivo);
 
 	public int inquiryListCount(InquirySearchCriteria isc);
 
@@ -33,6 +35,7 @@ public interface InquiryService {
 	public int inquiryUpdateA(InquiryVO inquiryVO);
 
 	public int inquiryDeleteA(InquiryVO inquiryVO);
+	
 
 	// public List<InquiryVO> inquiryList() throws Exception;
 

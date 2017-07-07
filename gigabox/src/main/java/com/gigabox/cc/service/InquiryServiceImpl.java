@@ -81,6 +81,12 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.inquiryDeleteA(inquiryVO);
 	}
 
+	//1:1 문의내용
+	@Override
+	public List<InquiryVO> inquiryListByUser(InquiryVO ivo) {
+		return inquiryDao.inquiryListByUser(ivo);
+	}
+
 }
 
 /*

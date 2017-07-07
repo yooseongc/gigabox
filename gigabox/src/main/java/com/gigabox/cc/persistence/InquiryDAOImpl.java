@@ -76,6 +76,12 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public int inquiryDelete(InquiryVO inquiryNumber) {
 		return sqlSession.update(namespace + ".inquiryDelete", inquiryNumber);
 	}
+	
+	//1:1문의내역
+	@Override
+	public List<InquiryVO> inquiryListByUser(InquiryVO ivo) {
+		return sqlSession.selectList(namespace + ".inquiryListByUser", ivo);
+	}
 
 }
 
