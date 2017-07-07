@@ -655,10 +655,13 @@
 					<div class="tab-pane fade" id="mymovie">
 						<div class="row">
 							<div class="col-lg-12">
-								<h2 class="page-header"></h2>
 							</div>
+								<c:if test="${bookmarkList.size() == 0}">
+									<h1 class="page-header" style="text-align:center;">추가된 마이무비가 없습니다.</h1>
+								</c:if>
 							<c:forEach items="${bookmarkList}" var="bookmarkItem"
 								varStatus="status">
+								
 								<c:if test="${status.index % 4 == 0}">
 									<div class="row">
 								</c:if>
@@ -1035,13 +1038,16 @@
 		}
 
 		function deleteResv(resvNum) {
-			alert(resvNum);
 			if (confirm("정말 취소하시겠습니까?")) {
 				
 				$.ajax({
 					type : 'POST',
 					url : "/mypage/reservationDelete" ,
-					data : { reservationNumber: resvNum},
+					data : {reservationNumber: resvNum},
+					headers: {
+						"Content-Type": "application/json",
+						"X-HTTP-Method-Override": "POST"
+					},
 					success:function(data){
 						alert(data);
 						if (data == 1) {
