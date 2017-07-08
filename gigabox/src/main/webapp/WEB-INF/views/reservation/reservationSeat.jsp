@@ -235,7 +235,6 @@
 			for (var i = 0; i < map.length; i++) {
 				map[i] = map[i].replace(/w/gi,"_");
 			}
-			console.log(map);
 			return map;
 		}
 	
@@ -392,29 +391,29 @@
 					seats = data.seats;
 					mapLoad(map, seats);
 				}
-		});
+			});
 			
 			
-		$("#nextStep").click(function(e) {
-			e.preventDefault();
-			var total = 
-				parseInt($("#reservationAdultnum").val()) +
-				parseInt($("#reservationYouthnum").val()) +
-						parseInt($("#reservationChildnum").val()) +
-				parseInt($("#reservationPreferencenum").val());
-			if (parseInt($("#counter").text()) <= 0) {
-				alert("좌석을 선택해 주세요.");
-				return;
-			}
-			if (total != sc.find('selected').length) {
-				alert("인원 수에 맞게 좌석을 선택해 주세요.");
-				return;
-			}
-			$("#reservationPayamount").val($("#realTotal").text());
-			$("#seatForm").attr("method", "POST");
-			$("#seatForm").attr("action", "/reservation/resvPayment");
-			$("#seatForm").submit();
-		});
+			$("#nextStep").click(function(e) {
+				e.preventDefault();
+				var total = 
+					parseInt($("#reservationAdultnum").val()) +
+					parseInt($("#reservationYouthnum").val()) +
+							parseInt($("#reservationChildnum").val()) +
+					parseInt($("#reservationPreferencenum").val());
+				if (parseInt($("#counter").text()) <= 0) {
+					alert("좌석을 선택해 주세요.");
+					return;
+				}
+				if (total != sc.find('selected').length) {
+					alert("인원 수에 맞게 좌석을 선택해 주세요.");
+					return;
+				}
+				$("#reservationPayamount").val($("#realTotal").text());
+				$("#seatForm").attr("method", "POST");
+				$("#seatForm").attr("action", "/reservation/resvPayment");
+				$("#seatForm").submit();
+			});
 	});
 	</script>	
 

@@ -75,7 +75,7 @@ public class ReservationController {
 				"-" + info.getBranchNumber() + "-" 
 				+ info.getMovieroomNumber() + "-" 
 				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm") 
-				+ resvVO.getUserNumber());
+				+ "-" + resvVO.getUserNumber());
 		
 		ReservationVO already = new ReservationVO();
 		already.setScheduleNumber(resvVO.getScheduleNumber());

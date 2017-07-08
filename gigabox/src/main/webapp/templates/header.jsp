@@ -145,7 +145,8 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 									<br>
 								</div>
 								<hr>
-								<button class="btn btn-md btn-success btn-block" id="myMovieButton">마이무비</button>
+								<button class="btn btn-md btn-success btn-block" 
+									onclick="window.location.href='/mypage/mymovie?listType=2'" id="myMovieButton">마이무비</button>
 								<button class="btn btn-md btn-success btn-block" 
 									id="logoutButton" onclick="window.location.href='/user/logout'">로그아웃</button>
 							</div>

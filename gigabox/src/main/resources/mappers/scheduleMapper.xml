@@ -69,7 +69,7 @@
 					AND MOVIE.MOVIE_NUMBER = #{movieNumber} 
 				</if>
 				<if test="scheduleType != null and scheduleType != ''">
-					AND SCHEDULE.SCHEDULE_TYPE = #{scheduleType} 
+					AND SCHEDULE.SCHEDULE_TYPE LIKE '%' || #{scheduleType} || '%' 
 				</if>
 				<if test="scheduleStart != null">
 					<![CDATA[
@@ -150,7 +150,7 @@
 					AND MOVIE.MOVIE_NUMBER = #{movieNumber} 
 				</if>
 				<if test="scheduleType != null and scheduleType != ''">
-					AND SCHEDULE.SCHEDULE_TYPE = #{scheduleType} 
+					AND SCHEDULE.SCHEDULE_TYPE LIKE '%' || #{scheduleType} || '%'  
 				</if>
 				<if test="scheduleStart != null">
 					<![CDATA[
@@ -202,7 +202,7 @@
 					AND MOVIE.MOVIE_NUMBER = #{movieNumber} 
 				</if>
 				<if test="scheduleType != null and scheduleType != ''">
-					AND SCHEDULE.SCHEDULE_TYPE = #{scheduleType} 
+					AND SCHEDULE.SCHEDULE_TYPE LIKE '%' || #{scheduleType} || '%' 
 				</if>
 				<if test="scheduleStart != null">
 					<![CDATA[

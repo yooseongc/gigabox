@@ -94,7 +94,7 @@
 						</div>
 						<div class="panel-body" style="height: 260px;">
 							<div class="form-group">
-								<div class="date col-md-6">
+								<div class="date col-md-9 col-md-offset-3"> 
 									<div id="datepicker" data-date-end-date="+4d"
 										data-date-start-date="0d"></div>
 									
@@ -175,19 +175,24 @@
 			});
 			Reservation.init();
 			
-			$("#hiddenForm input[type='text']").on("change", function() {
-				
+			$("#movieSelectCheck").on("change", function() {
+				if ($("#movieSelectCheck").attr("value") == "1" 
+					&& $("#scheduleTypeSelectCheck").attr("value") == "1") {
+				var reqData = $("#hiddenData").serialize();
+				var resData = Reservation.getResData(reqData);
+				Reservation.makeBranchList(resData);
+			}
+			});
+			
+			
+			$("#branchSelectCheck").on("change", function() {
 				if ($("#selectedDate").val() != '' && $("#branchSelectCheck").attr("value") == "1") {
 					var reqData = $("#hiddenData").serialize();
 					var resData = Reservation.getResData(reqData);
 					Reservation.makeScheduleList(resData);
-				} else if ($("#movieSelectCheck").attr("value") == "1" 
-						&& $("#scheduleTypeSelectCheck").attr("value") == "1") {
-					var reqData = $("#hiddenData").serialize();
-					var resData = Reservation.getResData(reqData);
-					Reservation.makeBranchList(resData);
 				}
-			}); 
+			});
+			
 			
 			$("#nextStep").click(function(e) {
 				e.preventDefault();
