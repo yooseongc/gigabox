@@ -71,6 +71,7 @@
 	var tobeReadMoreCount = 0;
 	var reviewReadMoreCount = 0;
 
+	
 	// 관람가 마크
 	function makeRatingTag(value) {
 		if (value == "전체관람가" || value == "전체 관람가") {
@@ -609,6 +610,7 @@
 												<th style="text-align: center;">예매번호</th>
 												<th style="text-align: center;">영화명</th>
 												<th style="text-align: center;">영화관</th>
+												<th style="text-align: center;">상영관</th>
 												<th style="text-align: center;">상영일시</th>
 												<th style="text-align: center;">예매일</th>
 												<th style="text-align: center;">예매취소</th>
@@ -620,12 +622,13 @@
 													<td>${resvInfoItem.reservationCode}</td>
 													<td>${resvInfoItem.movieTitle}</td>
 													<td>${resvInfoItem.branchName}</td>
+													<td>${resvInfoItem.movieroomName}</td>
 													<td><fmt:formatDate
 														value="${resvInfoItem.scheduleStart}"
-														pattern="yyyy-MM-dd" /></td>
+														pattern="yyyy-MM-dd kk:ss" /></td>
 													<td><fmt:formatDate
 														value="${resvInfoItem.reservationRegisterdate}"
-														pattern="yyyy-MM-dd" /></td>
+														pattern="yyyy-MM-dd kk:ss" /></td>
 													<td><button onclick="deleteResv(${resvInfoItem.reservationNumber});" class="btn btn-danger">
 													취소</button></td>
 												</tr>
@@ -716,7 +719,7 @@
 								</div>
 								<form class="form-horizontal">
 									<table class="table table-striped table-bordered table-hover">
-										<caption>${sessionScope.login.userName }님 예매정보</caption>
+										<caption>${sessionScope.login.userName }님 1:1 문의내역</caption>
 										<thead>   
 											<tr>
 												<th style="text-align: center;">No</th>
@@ -729,7 +732,7 @@
 											<c:forEach items="${inquiryList}" var="qnaItem">
 												<tr style="text-align: center;">
 													<td>${qnaItem.inquiry.inquiryNumber}</td>
-													<td><a
+													<td style="text-align: left;"><a
 										href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.inquiry.inquiryNumber}">${qnaItem.inquiry.inquiryTitle}</a></td>
 													<c:if test="${qnaItem.answerExist == 1}">
 	                                        		<td style="text-align: center;"><span class="label label-primary">답변 완료</span></td>
@@ -1026,6 +1029,14 @@
 
 
 	<script>
+		$(document).ready(function(){
+			// 예매하기 클릭
+			$("#resvButton").click(function(e) {
+				e.preventDefault();
+				location.href = "/reservation/resvMain";
+			});
+		});
+	
 		// 영화 목록 더보기
 		function readMore(type) {
 			if (type = 'recent') {
