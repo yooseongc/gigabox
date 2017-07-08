@@ -244,24 +244,27 @@ public class JoinController {
         queryUrl.append("&query=");
         // ex) 세종로 17 로 입력하면 세종로와 17사이의 빈칸 때문에 에러가 발생하기 때문에 빈칸을 없앤다.
         queryUrl.append(URLEncoder.encode(searchTO.getQuery().replaceAll(" ", ""),"EUC-KR"));       // 검색어
+        queryUrl.append("&currentPage=");
+        queryUrl.append("" + searchTO.getCurrentPage());
  
         logger.info("QUERY URL=" + queryUrl.toString());
         
         Document document = Jsoup.connect(queryUrl.toString()).get();
          
         String errorCode = document.select("error_code").text();
-         
+        String totalCount = document.select("totalCount").text();
+        String totalPage = document.select("totalPage").text();
+        
+        
         // 요청 결과가 정상일 경우 내용을 파싱하여 List 에 담는다.
         if (null == errorCode || "".equals(errorCode)) {
             Elements elements = document.select("item");
-             
             List<ZipcodeVO> list = new ArrayList<ZipcodeVO>();
             ZipcodeVO zipcodeVO = null;
              
             for (Element element : elements) {
                 zipcodeVO = new ZipcodeVO();
                 zipcodeVO.setZipcode(element.select("postcd").text());
-                 
                 // 도로명 검색일 경우
                 if (searchTO.getTarget().indexOf("Road") > -1) {
                     zipcodeVO.setAddress(element.select("rnaddress").text());
@@ -276,10 +279,8 @@ public class JoinController {
             }
              
             paramMap.put("addrList", list);
-            for (ZipcodeVO vo : list) {
-            	System.out.println(vo.toString());
-            }
-             
+            paramMap.put("totalCount", totalCount);
+            paramMap.put("totalPage", totalPage);
             // 요청 결과가 정상이 아닐 경우 에러 내용을 담는다.
         } else {
             String errorMessage = document.select("message").text();

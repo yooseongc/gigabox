@@ -31,9 +31,16 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
+<style type="text/css">
+.pagination {
+	display: block;
+	text-align: center;
+}
+.pagination > li > a {
+	float: none;
+}
+</style>
 </head>
 <body>
 	
@@ -204,13 +211,20 @@
 								- 읍/면/동/리 + 지번 (예) 어진동 307-19<br>
 								- 사서함 + 사서함번호 (예) 광화문우체국사서함 45<br>
 								</strong>
-							    <br><br>
 							    <input name="target" value="postNew" type="hidden">
-							    <input name="query" id="query" type="text">
-							    <input value="검색" id="addrSearchBtn" type="button">
+							    <div class="input-group">
+							    	<input class="form-control" name="query" id="query" type="text">
+							    	<span class="input-group-btn">
+	                                  	<button class="btn btn-default" id="addrSearchBtn" >
+											<i class="fa fa-search spaceLeft"></i> &nbsp;&nbsp;검색
+										</button>
+	                                </span>
+							    </div>
+						    	<input type="hidden" value="1" id="addrListPaginationCurPage" name="currentPage">
 							</form>
 							<p>
 							</p>
+							<h5>검색 결과 <span id="addrListCount"></span></h5>
 							<div>
 							    <table id="addrListTable" class="table table-bordered table-hover">
 							        <thead>
@@ -221,6 +235,7 @@
 							        </thead>
 							        <tbody id="zipcodeList"></tbody>
 							    </table>
+							    <ul id="addrListPagination" class="pagination"></ul>
 							</div>
 	                   </div>
 	                   <div class="modal-footer">
@@ -245,6 +260,14 @@
 			} else {
 				return true;
 			}
+		}
+	 	
+	 	function selectPagination(a) {
+			$("#addrListPaginationCurPage").val(a);
+			$("#addrSearchBtn").trigger("click");
+			var selectActiveNum = (a % 10);
+			$("#addrListPagination li").removeClass("active");
+			$("#addrListPagination li:eq("+selectActiveNum+")").addClass("active");
 		}
 	
 		$(document).ready(function() {
@@ -292,7 +315,9 @@
                              
                         } else {
                             var list = result.addrList;
-                             
+                            var totCnt = parseInt(result.totalCount);
+                            var curPageNum = $("#addrListPaginationCurPage").val()==''?1:$("#addrListPaginationCurPage").val();
+                            
                             for(var i = 0; i < list.length ; i++) {
                                 html += '<tr>';
                                 html += '   <td>';
@@ -319,6 +344,35 @@
                                 html += '   </td>';
                                 html += '</tr>';
                             }
+                            
+                        	// 페이징 처리
+        					var totPage = Math.ceil(totCnt / 10);
+        					var curPageEnd = Math.ceil(curPageNum / 10.0 - 0.05) * 10;
+        					var curPageStart = curPageEnd - 9;
+        					if (curPageEnd > totPage) {
+        						var curPageEndFact = totPage;
+        					} else {
+        						var curPageEndFact = curPageEnd;
+        					}
+        					
+        					$("#addrListPagination").html("");
+        					$("#addrListPagination").append('<li id="mislpPrev"><a href="javascript:selectPagination('+(curPageStart-10)+')"><span class="glyphicon glyphicon-chevron-left"></span></a></li>');
+        					for (var i = curPageStart; i <= curPageEndFact; i++) {
+        						$("#addrListPagination").append('<li><a href="javascript:selectPagination('+i+')">'+i+'</a></li>');
+        					}
+        					$("#addrListPagination").append('<li id="mislpNext"><a href="javascript:selectPagination('+(curPageStart+10)+')"><span class="glyphicon glyphicon-chevron-right"></span></a></li>');
+        					
+        					if (curPageStart == 1) {
+        						$("#mislpPrev").addClass("disabled");
+        					} 
+        					if (curPageEnd >= totPage) {
+        						$("#mislpNext").addClass("disabled");
+        					} 
+        					
+        					$("#addrListCount").html("(" +totCnt + "건)");
+       						$("#addrListPagination li").removeClass("active");
+       						$("#addrListPagination li:eq("+((curPageNum%10)!=0?(curPageNum%10):10)+")").addClass("active");
+       						$("#addrListPaginationCurPage").val("");
                         }
                          
                         $("#zipcodeList").append(html); 

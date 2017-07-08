@@ -327,16 +327,24 @@
 				var parameter = (url.slice(url.indexOf('?listType=') + 10,
 						url.length));
 				if (parameter == '2') {
-					$("#pageType, #pageType2").text("마이무비");
 					$('#myTab > li:eq(1) > a').trigger("click");
 				} else if (parameter == '1') {
-					$("#pageType, #pageType2").text("예매 확인/취소");
 					$('#myTab > li:eq(0) > a').trigger("click");
 
 				} else if (parameter == '3') {
-					$("#pageType, #pageType2").text("문의 내역");
 					$('#myTab > li:eq(2) > a').trigger("click");
 				}
+				
+				$("#myTab > li").click("a", function() {
+					if ($(this).index() == 0) {
+						$("#pageType, #pageType2").text("예매 확인/취소");
+					} else if ($(this).index() == 1) {
+						$("#pageType, #pageType2").text("마이무비");
+					} else if ($(this).index() == 2) {
+						$("#pageType, #pageType2").text("문의 내역");
+					}
+				});
+				
 
 				// 별점 초기화
 				$("#starRating").rating('refresh', {
@@ -399,51 +407,88 @@
 	};
 
 	function viewDetail(movieNum) {
-		console.log(movieNum)
-		$
-				.ajax({
-					url : "/movie/movieDetail/" + movieNum,
-					type : "PUT",
+		$.ajax({
+			url : "/movie/movieDetail/" + movieNum,
+			type : "PUT",
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "PUT"
+			},
+			error : function() {
+				alert("시스템 오류입니다.");
+			},
+			success : function(data) {
+				$("#reviewAddBtn").attr("data-num", data.movieNumber);
+				$("div[data-id=movieTitle]").html(makeRatingTag(data.movieRating) + " "+ data.movieTitle);
+				$("div[data-id=movieType]").text(data.movieType);
+				$("div[data-id=movieReleasedate]").text(makeReleasedateFormat(data.movieReleasedate));
+				$("div[data-id=movieDirector]").text(data.movieDirector);
+				$("div[data-id=movieCast]").text(data.movieCast);
+				$("div[data-id=movieScreentime]").text(data.movieScreentime + "분");
+				$("div[data-id=movieGenre]").html(makeGenreTag(data.movieGenre));
+				$("div[data-id=movieStoryline]").html(data.movieStoryline);
+				$("div[data-id=movieEngname]").text(data.movieEngname);
+				$("img[data-id=moviePoster]").attr("src", data.moviePoster + "/" + data.movieCode	+ ".jpg");
+
+				$("#reviewStarRating").rating('refresh', {
+					showClear : false,
+					hoverOnClear : false,
+					starCaptions : function(val) {
+						return val;
+					},
+					starCaptionClasses : function(val) {
+						if (val < 4) {
+							return 'label label-danger';
+						} else if (val < 8) {
+							return 'label label-warning';
+						} else {
+							return 'label label-success';
+						}
+					}
+				});
+				$("#detailStarRating").rating('update', data.reviewStarscore);
+
+				// 댓글 불러오기
+				$.ajax({
+					url : "/review/list/" + data.movieNumber
+							+ "/0",
+					type : "GET",
 					headers : {
 						"Content-Type" : "application/json",
-						"X-HTTP-Method-Override" : "PUT"
 					},
 					error : function() {
-						alert("시스템 오류입니다.");
+						console.log("댓글 불러오기 오류입니다.");
 					},
 					success : function(data) {
+						if (data.length == 0) {
+							$("#review").html("");
+							return;
+						}
+						dataArray = {
+							arr : data,
+							movieNumber : data[0].review.movieNumber
+						};
+						console.log("댓글 불러오기");
+						reviewReadMoreCount = 0;
+						Handlebars.registerHelper("canReadMore", function(movieNumber, block) {
+							var accum = '';
+							if ((reviewReadMoreCount * 10) <= data.length) {
+								accum += block.fn(this);
+							}
+							return accum;
+						});
+						printData(dataArray, $("#review"), $("#replyTemplate"));
 
-						console.log(data.movieNumber);
-						$("#reviewAddBtn").attr("data-num", data.movieNumber);
-
-						$("div[data-id=movieTitle]").html(
-								makeRatingTag(data.movieRating) + " "
-										+ data.movieTitle);
-						$("div[data-id=movieType]").text(data.movieType);
-						$("div[data-id=movieReleasedate]").text(
-								makeReleasedateFormat(data.movieReleasedate));
-						$("div[data-id=movieDirector]")
-								.text(data.movieDirector);
-						$("div[data-id=movieCast]").text(data.movieCast);
-						$("div[data-id=movieScreentime]").text(
-								data.movieScreentime + "분");
-						$("div[data-id=movieGenre]").html(
-								makeGenreTag(data.movieGenre));
-						$("div[data-id=movieStoryline]").html(
-								data.movieStoryline);
-						$("div[data-id=movieEngname]").text(data.movieEngname);
-						$("img[data-id=moviePoster]").attr(
-								"src",
-								data.moviePoster + "/" + data.movieCode
-										+ ".jpg");
-
-						$("#reviewStarRating").rating('refresh', {
+						// 별점 초기화
+						$("#review .rating").rating({
 							showClear : false,
 							hoverOnClear : false,
-							starCaptions : function(val) {
+							starCaptions : function(
+									val) {
 								return val;
 							},
-							starCaptionClasses : function(val) {
+							starCaptionClasses : function(
+									val) {
 								if (val < 4) {
 									return 'label label-danger';
 								} else if (val < 8) {
@@ -453,80 +498,17 @@
 								}
 							}
 						});
-						$("#detailStarRating").rating('update',
-								data.reviewStarscore);
-
-						// 댓글 불러오기
-						$
-								.ajax({
-									url : "/review/list/" + data.movieNumber
-											+ "/0",
-									type : "GET",
-									headers : {
-										"Content-Type" : "application/json",
-									},
-									error : function() {
-										console.log("댓글 불러오기 오류입니다.");
-									},
-									success : function(data) {
-										if (data.length == 0) {
-											$("#review").html("");
-											return;
-
-										}
-										dataArray = {
-											arr : data,
-											movieNumber : data[0].review.movieNumber
-										};
-										console.log("댓글 불러오기");
-										reviewReadMoreCount = 0;
-										Handlebars
-												.registerHelper(
-														"canReadMore",
-														function(movieNumber,
-																block) {
-															var accum = '';
-															if ((reviewReadMoreCount * 10) <= data.length) {
-																accum += block
-																		.fn(this);
-															}
-															return accum;
-														});
-										printData(dataArray, $("#review"),
-												$("#replyTemplate"));
-
-										// 별점 초기화
-										$("#review .rating")
-												.rating(
-														{
-															showClear : false,
-															hoverOnClear : false,
-															starCaptions : function(
-																	val) {
-																return val;
-															},
-															starCaptionClasses : function(
-																	val) {
-																if (val < 4) {
-																	return 'label label-danger';
-																} else if (val < 8) {
-																	return 'label label-warning';
-																} else {
-																	return 'label label-success';
-																}
-															}
-														});
-									}
-								});
-
-						// 모달
-						$('#movieDetailModal').modal({
-							show : true,
-							keyboard : true
-						});
 					}
-
 				});
+
+				// 모달
+				$('#movieDetailModal').modal({
+					show : true,
+					keyboard : true
+				});
+			}
+
+		});
 
 	}
 </script>
@@ -594,6 +576,7 @@
 				</div>
 
 				<div class="tab-content">
+				
 					<div class="tab-pane fade in active" id="resvInfo">
 						<!-- Content Row -->
 						<div class="row">
@@ -657,111 +640,112 @@
 					
 					<div class="tab-pane fade" id="mymovie">
 						<div class="row">
-							<div class="col-lg-12">
+							<div class="page-header">
+								<h1>마이 무비<small> 추가한 관심 영화를 모아 볼 수 있습니다. </small></h1>
 							</div>
+							<div class="col-lg-12">
 								<c:if test="${bookmarkList.size() == 0}">
 									<h1 class="page-header" style="text-align:center;">추가된 마이무비가 없습니다.</h1>
 								</c:if>
-							<c:forEach items="${bookmarkList}" var="bookmarkItem"
-								varStatus="status">
-								
-								<c:if test="${status.index % 4 == 0}">
-									<div class="row">
-								</c:if>
-								<div class="col-md-3" data-role="bookmarkItem">
-									<div class="panel panel-default text-center">
-										<div class="panel-heading">
-											<img
-												src="${bookmarkItem.movie.moviePoster}/${bookmarkItem.movie.movieCode}.jpg"
-												class="img-responsive" width="270" height="376">
-										</div>
-										<div class="panel-body">
-											<div>
-												<h4
-													style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-													<tag:rating rating="${bookmarkItem.movie.movieRating}" />${bookmarkItem.movie.movieTitle}
-												</h4>
-												<div class="rating">
-													<input id="starRating"
-														value="${bookmarkItem.movie.reviewStarscore}"
-														type="number" data-show-clear="false"
-														data-show-caption="false" class="rating" min=0 max=10
-														step=0.1 data-size="xs" disabled="disabled">
+								<c:if test="${bookmarkList.size() != 0}">
+									<fmt:parseNumber var="j" integerOnly="true" value="${bookmarkList.size()/4}"/>
+									<c:forEach var="i" begin="1" end="${bookmarkList.size()%4==0?j:j+1}">
+										<div class="row">
+											<c:forEach items="${bookmarkList}" var="bookmarkItem" begin="${4*(i-1)}" end="${4*(i-1)+3}" step="1">
+												<div class="col-md-3" data-role="bookmarkItem">
+													<div class="panel panel-default text-center">
+														<div class="panel-heading">
+															<img
+																src="${bookmarkItem.movie.moviePoster}/${bookmarkItem.movie.movieCode}.jpg"
+																class="img-responsive" width="270" height="376">
+														</div>
+														<div class="panel-body">
+															<div>
+																<h4
+																	style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+																	<tag:rating rating="${bookmarkItem.movie.movieRating}" />${bookmarkItem.movie.movieTitle}
+																</h4>
+																<div class="rating">
+																	<input id="starRating"
+																		value="${bookmarkItem.movie.reviewStarscore}"
+																		type="number" data-show-clear="false"
+																		data-show-caption="false" class="rating" min=0 max=10
+																		step=0.1 data-size="xs" disabled="disabled">
+																</div>
+																<button class="btn btn-primary"
+																	onclick="viewDetail('${bookmarkItem.movie.movieNumber}')"
+																	data-id="${bookmarkItem.movie.movieNumber}">상세보기</button>
+																<button class="btn btn-danger"
+																	onclick="bookmarkDeleteBtn('${bookmarkItem.bookmark.bookmarkNumber}')"
+																	data-id="${bookmarkItem.movie.movieNumber}">삭제</button>
+				
+															</div>
+														</div>
+													</div>
 												</div>
-												<button class="btn btn-primary"
-													onclick="viewDetail('${bookmarkItem.movie.movieNumber}')"
-													data-id="${bookmarkItem.movie.movieNumber}">상세보기</button>
-												<button class="btn btn-danger"
-													onclick="bookmarkDeleteBtn('${bookmarkItem.bookmark.bookmarkNumber}')"
-													data-id="${bookmarkItem.movie.movieNumber}">삭제</button>
-
-											</div>
+											</c:forEach>
 										</div>
-									</div>
-								</div>
-								<c:if test="${status.index % 4 == 3}">
+									</c:forEach>
+								</c:if>
+							</div>	
 						</div>
-						</c:if>
-						</c:forEach>
+					</div>
+					<!-- ./tab-pane -->
+					
+					<div class="tab-pane fade" id="qnaInfo">
+						<div class="row">
+							<article>
+								<div class="col-md-12">
+									<div class="page-header">
+										<h2>나의 문의내역</h2>
+										<ul class="icon_list mypage">
+											<li>고객센터에서 남겨주신 문의내역을 모두 확인하실 수 있습니다.</li>
+											<li>문의하시기 전 FAQ를 확인하시면 궁금증을 더욱 빠르게 해결하실 수 있습니다.</li>
+										</ul>
+									</div>
+									<form class="form-horizontal">
+										<table class="table table-striped table-bordered table-hover">
+											<caption>${sessionScope.login.userName }님 1:1 문의내역</caption>
+											<thead>   
+												<tr>
+													<th style="text-align: center;">No</th>
+													<th style="text-align: center;">제목</th>
+													<th style="text-align: center;">답변상태</th>
+													<th style="text-align: center;">등록일</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${inquiryList}" var="qnaItem">
+													<tr style="text-align: center;">
+														<td>${qnaItem.inquiry.inquiryNumber}</td>
+														<td style="text-align: left;">
+														<a href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.inquiry.inquiryNumber}">${qnaItem.inquiry.inquiryTitle}</a></td>
+														<c:if test="${qnaItem.answerExist == 1}">
+		                                        		<td style="text-align: center;">
+		                                        			<a href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.answerNumber}">
+		                                        				<span class="label label-primary">답변 보기</span></a></td>
+		                                       			</c:if>
+		                                        		<c:if test="${qnaItem.answerExist == 0}">
+		                                        		<td style="text-align: center"><span class="label label-warning">답변 미완료</span></td>
+		                                        		</c:if>
+														<td style="text-align: center;"><fmt:formatDate
+														value="${qnaItem.inquiry.inquiryRegisterdate}"
+														pattern="yyyy-MM-dd" /></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</form>
+									<br>
+									<hr>
+								</div>
+							</article>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane fade" id="qnaInfo">
-				<div class="row">
-						<article>
-							<div class="col-md-12">
-								<div class="page-header">
-									<h2>나의 문의내역</h2>
-									<ul class="icon_list mypage">
-										<li>고객센터에서 남겨주신 문의내역을 모두 확인하실 수 있습니다.</li>
-										<li>문의하시기 전 FAQ를 확인하시면 궁금증을 더욱 빠르게 해결하실 수 있습니다.</li>
-									</ul>
-								</div>
-								<form class="form-horizontal">
-									<table class="table table-striped table-bordered table-hover">
-										<caption>${sessionScope.login.userName }님 1:1 문의내역</caption>
-										<thead>   
-											<tr>
-												<th style="text-align: center;">No</th>
-												<th style="text-align: center;">제목</th>
-												<th style="text-align: center;">답변상태</th>
-												<th style="text-align: center;">등록일</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach items="${inquiryList}" var="qnaItem">
-												<tr style="text-align: center;">
-													<td>${qnaItem.inquiry.inquiryNumber}</td>
-													<td style="text-align: left;"><a
-										href="/cc/qna/qnaRead?inquiryNumber=${qnaItem.inquiry.inquiryNumber}">${qnaItem.inquiry.inquiryTitle}</a></td>
-													<c:if test="${qnaItem.answerExist == 1}">
-	                                        		<td style="text-align: center;"><span class="label label-primary">답변 완료</span></td>
-	                                       			</c:if>
-	                                        		<c:if test="${qnaItem.answerExist == 0}">
-	                                        		<td style="text-align: center"><span class="label label-warning">답변 미완료</span></td>
-	                                        		</c:if>
-													<td style="text-align: center;"><fmt:formatDate
-													value="${qnaItem.inquiry.inquiryRegisterdate}"
-													pattern="yyyy-MM-dd" /></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</form>
-								<br>
-								<hr>
-							</div>
-						</article>
-						</div>
-
-			</div>
 		</div>
-
-
 	</div>
-	</div>
-	</div>
-
 
 	<!-- 영화상세 모달  -->
 	<div class="modal fade" id="movieDetailModal">

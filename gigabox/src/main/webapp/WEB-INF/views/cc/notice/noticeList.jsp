@@ -34,7 +34,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					공지사항 <small>GIGABOX NEWS</small>
+					고객 센터 <small>공지사항</small>
 				</h1>
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li><a href="/cc/faq/faqList" class="faq" title="자주묻는질문 바로가기"><i

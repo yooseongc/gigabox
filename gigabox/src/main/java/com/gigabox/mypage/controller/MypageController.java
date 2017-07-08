@@ -119,6 +119,7 @@ public class MypageController {
 			} else {
 				// 답변이 있으면 1
 				inquiryMap.put("answerExist", new Integer(1));
+				inquiryMap.put("answerNumber", answerInquiry.getInquiryNumber());
 			}
 			
 			// List에 저장

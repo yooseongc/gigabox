@@ -16,6 +16,7 @@ public class ZipcodeSearchTO {
      
     private String target;
     private String query;
+    private String currentPage;
      
     public String getTarget() {
         return target;
@@ -29,4 +30,10 @@ public class ZipcodeSearchTO {
     public void setQuery(String query) {
         this.query = query;
     }
+	public String getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(String currentPage) {
+		this.currentPage = currentPage;
+	}
 }
