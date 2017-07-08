@@ -110,6 +110,28 @@ footer {
 	  </div>
 	  <!-- /.modal -->
 	  
+	  <!-- Modal -->
+     <div class="modal fade" id="canceledModal" tabindex="-1" role="dialog" aria-labelledby="canceledLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title" id="canceledLabel">영화 예매 오류</h4>
+                 </div>
+                 <div class="modal-body">
+                      <i class="fa fa-fa-exclamation-triangle fa-3x"></i>
+                      <span>취소하신 영화입니다.</span>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" id="canceledModalCloseButton" class="btn btn-danger" data-dismiss="modal">닫기</button>
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+	      </div>
+	      <!-- /.modal-dialog -->
+	  </div>
+	  <!-- /.modal -->
+	  
 	 <!-- 이메일 인증 안하고 로그인시 모달 -->
 	 <!-- Modal -->
      <!-- <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="emailAuthNotYet" aria-hidden="true">
@@ -139,6 +161,12 @@ footer {
 		
 		if ('${param.popup}' == 'already') {
 			$('#alreadyModal').modal({
+		        show: true, 
+		        backdrop: 'static',
+		        keyboard: true
+		     });
+		} else if ('${param.popup}' == 'canceled') {
+			$('#canceledModal').modal({
 		        show: true, 
 		        backdrop: 'static',
 		        keyboard: true
@@ -177,6 +205,10 @@ footer {
 		$("#alreadyModalCloseButton").on("click", function(e) {
 			e.preventDefault();
 			$("#alreadyModal").modal("hide");
+		});
+		$("#canceledModalCloseButton").on("click", function(e) {
+			e.preventDefault();
+			$("#canceledModal").modal("hide");
 		});
 		
 	});

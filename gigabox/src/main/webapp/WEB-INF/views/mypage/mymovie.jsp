@@ -612,7 +612,8 @@
 													<td><fmt:formatDate
 														value="${resvInfoItem.reservationRegisterdate}"
 														pattern="yyyy-MM-dd kk:ss" /></td>
-													<td><button onclick="deleteResv(${resvInfoItem.reservationNumber});" class="btn btn-danger">
+													<td><button onclick="deleteResv(${resvInfoItem.reservationNumber});" 
+														type="button" class="btn btn-danger">
 													취소</button></td>
 												</tr>
 											</c:forEach>
@@ -1086,13 +1087,13 @@
 				$.ajax({
 					type : 'POST',
 					url : "/mypage/reservationDelete" ,
-					data : {reservationNumber: resvNum},
-					headers: {
+					data : {reservationNumber: parseInt(resvNum)},
+					dataType: 'json',
+					/* headers: {
 						"Content-Type": "application/json",
 						"X-HTTP-Method-Override": "POST"
-					},
+					}, */
 					success:function(data){
-						alert(data);
 						if (data == 1) {
 							alert("예매가 정상적으로 취소되었습니다.");
 							self.location.reload();

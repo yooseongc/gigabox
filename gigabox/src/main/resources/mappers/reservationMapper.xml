@@ -87,7 +87,8 @@
 		                SELECT BRANCH_NUMBER, BRANCH_NAME  
 						        FROM TBL_BRANCH 
 					      )  BRANCH ON BRANCH.BRANCH_NUMBER = MOVIEROOM.BRANCH_NUMBER 
-				WHERE 1=1 
+				WHERE 1=1 AND SCHEDULE.SCHEDULE_START > (SYSDATE + 1/72)  
+						AND RESERVATION_STATUS = 2 
 				<if test="userNumber != 0">
 					AND USER1.USER_NUMBER = #{userNumber} 
 				</if>
@@ -112,7 +113,7 @@
 		SELECT RESERVATION.*, 
 			USER1.USER_ID, USER1.USER_NAME, USER1.USER_MILEAGE,  
 		    SCHEDULE.SCHEDULE_TYPE, SCHEDULE.SCHEDULE_START, SCHEDULE.SCHEDULE_END, 
-		    SCHEDULE.MOVIE_NUMBER, SCHEDULE.MOVIEROOM_NUMBER, 
+		    SCHEDULE.MOVIE_NUMBER, SCHEDULE.MOVIEROOM_NUMBER, SCHEDULE.SCHEDULE_START, 
        		MOVIE.MOVIE_TITLE, MOVIE.MOVIE_TYPE, MOVIE.MOVIE_SCREENTIME, MOVIE.MOVIE_RATING, 
             MOVIEROOM.BRANCH_NUMBER, MOVIEROOM.MOVIEROOM_NAME,  
             BRANCH.BRANCH_NAME 
@@ -143,6 +144,8 @@
 				        FROM TBL_BRANCH 
 			      )  BRANCH ON BRANCH.BRANCH_NUMBER = MOVIEROOM.BRANCH_NUMBER 
 		WHERE RESERVATION_NUMBER = #{reservationNumber}  
+			AND SCHEDULE.SCHEDULE_START > (SYSDATE + 1/72)  
+			AND RESERVATION_STATUS = 2 
 	</select>
 	
 	
@@ -178,8 +181,15 @@
 		WHERE RESERVATION_NUMBER = #{reservationNumber} 
 	</update>
 	
-	<delete id="reservationDelete" parameterType="reservation">
-		DELETE FROM TBL_RESERVATION WHERE RESERVATION_NUMBER = #{reservationNumber} 
-	</delete>
+	<update id="reservationDelete" parameterType="reservation">
+		DELETE FROM TBL_RESERVATION 
+		WHERE RESERVATION_NUMBER = #{reservationNumber} 
+	</update>
+	
+	<update id="reservationCancel" parameterType="reservation">
+		UPDATE TBL_RESERVATION 
+		SET RESERVATION_STATUS = 3 
+		WHERE RESERVATION_NUMBER = #{reservationNumber} 
+	</update>
 	
 </mapper>

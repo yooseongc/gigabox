@@ -19,7 +19,7 @@
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 <!-- main CSS -->
-<link href="resources/css/main.css" rel="stylesheet">
+<link href="resources/custom/css/main.css" rel="stylesheet">
 
 <!-- jQuery -->
 <script src="/resources/js/jquery.js"></script>
@@ -104,7 +104,7 @@
                     </video> -->
 				</div>
 				<div class="carousel-caption">
-					<strong>좋아하게 되는 그 순간을<em>Moment You Fall In Love: Confess Your Love Committee</em></strong>
+					<strong>좋아하게 되는 그 순간을<hr><em>Moment You Fall In Love: Confess Your Love Committee</em></strong><br>
 		                    <span>지금 좋아하게 돼! 모두가 첫사랑 진행중♥</span>
 				</div>
 			</div>
@@ -116,7 +116,7 @@
                     </video> -->
 				</div>
 				<div class="carousel-caption">
-					<strong>2017 브레겐츠 페스티벌 - 카르멘<em>Bregenz Festival CARMEN</em></strong>
+					<strong>2017 브레겐츠 페스티벌 - 카르멘<hr><em>Bregenz Festival CARMEN</em></strong><br>
 		                    <span>오스트리아 호수 위 환상적인 오페라 페스티벌<br>7월 30일 오후 2시</span>
 				</div>
 			</div>
@@ -128,7 +128,7 @@
                     </video> -->
 				</div>
 				<div class="carousel-caption">
-					 <strong>스파이더맨: 홈커밍<em>Spider-Man: Homecoming</em></strong>
+					 <strong>스파이더맨: 홈커밍<hr><em>Spider-Man: Homecoming</em></strong><br>
 		                    <span>마블에서 새로 태어난 스파이더맨의 완벽한 컴백!</span>
 				</div>
 			</div>
@@ -140,7 +140,7 @@
                     </video> -->
 				</div>
 				<div class="carousel-caption">
-					 <strong>박열<em>Anarchist from Colony</em></strong>
+					 <strong>박열<hr><em>Anarchist from Colony</em></strong><br>
 		                    <span>대한민국이 기억해야 할 뜨거운 실화</span>
 				</div>
 			</div>
@@ -157,9 +157,13 @@
 
 	<!--Item slider text-->
 	<div class="container">
-		<div class="row" id="slider-text">
+		<div class="row slider-text"> 
 			<div class="col-md-6">
 				<h2>NEW MOVIES</h2>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-sm btn-primary pull-right"  style="margin-top: 30px;"  
+					onclick="javascript:location.href='/movie/movieList';">더보기</button>
 			</div>
 		</div>
 	</div>
@@ -222,13 +226,17 @@
 	<!-- 공지사항 -->
 	<br><br>
 	<div class="container">
-		<div class="row" >
-			<div class="col-md-12"> 
-				<h2> 공지사항 <button class="btn btn-md btn-success pull-right" 
-					onclick="javascript:location.href='/cc/notice/noticeList';">더보기</button></h2>
-				
+		<div class="row slider-text">
+			<div class="col-md-6"> 
+				<h2> NOTICE </h2>
+			</div> 
+			<div class="col-md-6">
+				<button class="btn btn-sm btn-primary pull-right"  style="margin-top: 30px;"  
+					onclick="javascript:location.href='/cc/notice/noticeList';">더보기</button>
 			</div>
 		</div>
+	</div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table">

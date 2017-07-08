@@ -147,7 +147,7 @@ public class MypageController {
 		return result;
 	}
 
-	//북마크 삭제
+	// 북마크 삭제
 	@ResponseBody
 	@RequestMapping(value = "/bookmarkDelete", method = RequestMethod.POST)
 	public int delete(@RequestBody BookmarkVO bookmarkNumber) {
@@ -157,6 +157,7 @@ public class MypageController {
 		return result;
 	}
 	
+	// 예약 취소
 	@ResponseBody
 	@RequestMapping(value = "/reservationDelete", method = RequestMethod.POST)
 	public String reservationDeletePOST(@RequestParam("reservationNumber") int reservationNumber){
@@ -164,7 +165,7 @@ public class MypageController {
 		logger.info("RESERVATION NUMBER= " + reservationNumber);
 		ReservationVO resvVO = new ReservationVO();
 		resvVO.setReservationNumber(reservationNumber);
-		int result = reservationService.reservationDelete(resvVO);
+		int result = reservationService.reservationCancel(resvVO);
 		logger.info("DELETE RESULT= " + result);
 		return result + "";
 	}

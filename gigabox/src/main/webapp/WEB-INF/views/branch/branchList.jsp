@@ -37,8 +37,16 @@
 
 .tabs-left {
   margin-top: 3rem;
-  background-color: black;
   margin-bottom: 3rem;
+}
+
+.tabs-left > ul {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.tabs-left > ul > li {
+  height: 40px;
 }
 
 .nav-tabs {
@@ -70,8 +78,7 @@
   border: 0;
 }
 
-.tab-content {
-  margin-left: 45px;
+.tab-content {  
   height: 610px;
   background-color: white;
   border: 2px solid #efefef;
@@ -83,21 +90,14 @@
 .tab-content .tab-pane {
   display: none;
   background-color: #fff;
-  padding: 1.6rem;
   overflow-y: auto;
 }
 .tab-content .active {
   display: block;
 }
 
-.list-group {
-  width: 100%;
-}
-.list-group .list-group-item {
+.tab-content .tab-pane > ul > li > a {
   height: 40px;
-}
-.list-group .list-group-item h4, .list-group .list-group-item span {
-  line-height: 11px;
 }
 
 </style>
@@ -176,40 +176,30 @@
 		<!-- Content Row -->
 		<div class="row">
 			<!-- Sidebar Column -->
-			<div class="col-md-4">
-				<div class="tabs-left">
-			        <ul class="nav nav-tabs">
+			<div class="col-md-4" style="margin-top: 30px; margin-bottom: 30px;">
+				<div class="tabs-left" style="height: 650px; margin-top: 0px; margin-bottom: 0px;">
+			        <ul class="col-sm-6 nav nav-pills nav-stacked">
 			        	<li class="active"><a href="#선택" data-toggle="tab">지역</a></li>
 			        	<c:forEach items="${location}" var="loc">
-			        		<li><a href="#${loc}" data-toggle="tab">${loc}</a></li>
+			        		<li><a href="#${loc}" data-toggle="tab">${loc}
+			        			<span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
 			        	</c:forEach>
-			           <!--  <li><a href="#서울" data-toggle="tab">서울</a></li>
-			            <li><a href="#경기" data-toggle="tab">경기</a></li>
-			            <li><a href="#인천" data-toggle="tab">인천</a></li>
-			            <li><a href="#충청" data-toggle="tab">충청</a></li>
-			            <li><a href="#대전" data-toggle="tab">대전</a></li>
-			            <li><a href="#세종" data-toggle="tab">세종</a></li>
-			            <li><a href="#전라" data-toggle="tab">전라</a></li>
-			            <li><a href="#광주" data-toggle="tab">광주</a></li>
-			            <li><a href="#경상" data-toggle="tab">경상</a></li>
-			            <li><a href="#대구" data-toggle="tab">대구</a></li>
-			            <li><a href="#울산" data-toggle="tab">울산</a></li>
-			            <li><a href="#부산" data-toggle="tab">부산</a></li>
-			            <li><a href="#강원" data-toggle="tab">강원</a></li>
-			            <li><a href="#제주" data-toggle="tab">제주</a></li> -->
-			        </ul>
-			        <div class="tab-content">
+						
+					</ul>
+			        <div class="tab-content" style="height: 650px; margin-top: 0px; margin-bottom: 0px;">
 			        	<div class="tab-pane active" id="선택">
 			        		
 			        	</div>
 			        	<c:forEach items="${location}" var="loc">
 			        		<div class="tab-pane" id="${loc}">
-			        			<ul class="list-group pull-left">
+			        			<ul class="nav nav-pills nav-stacked">
 					        		<c:forEach items="${branchList}" var="branchItem">
 					        			<c:if test="${fn:contains(branchItem, loc)}">
-						                	 <a href="/cinema/branchDetail/${branchItem.branchNumber}" class="list-group-item list-group-item-action">
-						                	 	${branchItem.branchName}
-						                	 </a>
+					        				<li>
+						                	  <a href="/cinema/branchDetail/${branchItem.branchNumber}" class="list-group-item list-group-item-action">
+						                	  	   ${branchItem.branchName}
+						                	  </a>
+						                	</li>
 					        			</c:if>
 									</c:forEach>
 								</ul>
@@ -218,7 +208,7 @@
 			        </div><!-- /tab-content -->
 			      </div><!-- /tabbable -->
 			</div>
-			<div class="col-md-8 tabs-left tab-content" style="margin-left: 0;">
+			<div class="col-md-8 tabs-left tab-content" style="margin-left: 0; height: 650px;">
 				<c:if test="${branchDetail != null}">
 					<input type="hidden" value="${branchDetail.branchNumber}">
 					<br>

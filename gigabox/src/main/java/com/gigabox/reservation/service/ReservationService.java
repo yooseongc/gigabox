@@ -16,4 +16,6 @@ public interface ReservationService {
 
 	public int reservationDelete(ReservationVO resvVO);
 
+	public int reservationCancel(ReservationVO resvVO);
+	
 }

@@ -1,13 +1,13 @@
 
-#slider-text{
+.slider-text{
   padding-top: 40px;
   display: block;
 }
-#slider-text .col-md-6{
+.slider-text .col-md-6{
   overflow: hidden;
 }
-
-#slider-text h2 {
+ 
+.slider-text h2 {
   font-family: 'Josefin Sans', sans-serif;
   font-weight: 400;
   font-size: 30px;
@@ -15,7 +15,7 @@
   margin: 30px auto;
   padding-left: 40px;
 }
-#slider-text h2::after{
+.slider-text h2::after{
   border-top: 2px solid #c7c7c7;
   content: "";
   position: absolute;
@@ -65,6 +65,19 @@
   padding-top: 70px;
   margin: 0 auto;
 }
+}
+
+.carousel-caption {
+	left: 0;
+	right: 0;
+	font-size: 1.8em;
+	background-color: rgba(0, 0, 0, 0.2);   
+}
+
+.carousel-showmanymoveone .carousel-inner {
+	left: 10%;
+	width: 80%;
+	right: 10%;
 }
 
 .carousel-showmanymoveone .carousel-control {

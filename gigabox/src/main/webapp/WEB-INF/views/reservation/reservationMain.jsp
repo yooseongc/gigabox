@@ -178,10 +178,13 @@
 			$("#movieSelectCheck").on("change", function() {
 				if ($("#movieSelectCheck").attr("value") == "1" 
 					&& $("#scheduleTypeSelectCheck").attr("value") == "1") {
-				var reqData = $("#hiddenData").serialize();
-				var resData = Reservation.getResData(reqData);
-				Reservation.makeBranchList(resData);
-			}
+					
+					$("#branchNumber").val("0");
+					$("#movieroomNumber").val("0");
+					var reqData = $("#hiddenData").serialize();
+					var resData = Reservation.getResData(reqData);
+					Reservation.makeBranchList(resData);
+				}
 			});
 			
 			

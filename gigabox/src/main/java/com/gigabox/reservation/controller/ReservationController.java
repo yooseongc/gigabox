@@ -1,5 +1,6 @@
 package com.gigabox.reservation.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,13 +71,14 @@ public class ReservationController {
 		ScheduleVO scheduleVO = new ScheduleVO();
 		scheduleVO.setScheduleNumber(resvVO.getScheduleNumber());
 		ScheduleVO info = scheduleService.scheduleDetail(scheduleVO);
-		// 예매 코드 TR-(영화5자리)-(영화관3자리)-(상영관2자리)-(1706280630;시작시간)-(회원코드)
+		// 예매 코드 TR-(영화4자리)-(영화관3자리)-(상영관2자리)-(상영번호코드4자리)-(1706280630;시작시간)-(회원코드4자리)
 		logger.info(info.toString());
-		resvVO.setReservationCode("TR-" + info.getMovieNumber() + 
-				"-" + info.getBranchNumber() + "-" 
-				+ info.getMovieroomNumber() + "-" 
+		resvVO.setReservationCode("TR-" + String.format("%04d",info.getMovieNumber()) + 
+				"-" + String.format("%03d", info.getBranchNumber()) + "-" 
+				+ String.format("%02d", info.getMovieroomNumber()) + "-" 
+				+ String.format("%04d", info.getScheduleNumber()) + "-"
 				+ formattedDate(info.getScheduleStart(), "yyMMddHHmm") 
-				+ "-" + resvVO.getUserNumber());
+				+ "-" + String.format("%04d", resvVO.getUserNumber()));
 		
 		ReservationVO already = new ReservationVO();
 		already.setScheduleNumber(resvVO.getScheduleNumber());
@@ -266,6 +269,11 @@ public class ReservationController {
 	public static String formattedDate(Date date, String format) {
 		SimpleDateFormat toFormat = new SimpleDateFormat(format);
 		return toFormat.format(date);
+	}
+	
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	public String handleNullPointerException(SQLIntegrityConstraintViolationException e) {
+		return "redirect:/?popup=canceled";
 	}
 	
 }

@@ -681,13 +681,19 @@
 	    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
 	    var parameter = (url.slice(url.indexOf('?listType=') + 10, url.length));
 		if (parameter == 'recent') {
-			 $("#pageType, #pageType2").text("최신개봉작");
 			 $('#myTab > li:eq(0) > a').trigger("click"); 
 		} else if (parameter == 'tobe') {
-			 $("#pageType, #pageType2").text("상영예정작");
 			 $('#myTab > li:eq(1) > a').trigger("click"); 
 			 
 		}
+		
+		$("#myTab > li").click("a", function() {
+			if ($(this).index() == 0) {
+				$("#pageType, #pageType2").text("최신개봉작");
+			} else if ($(this).index() == 1) {
+				$("#pageType, #pageType2").text("상영예정작");
+			}
+		});
 		
 		// 예매하기 클릭
 		$("#resvButton").click(function(e) {

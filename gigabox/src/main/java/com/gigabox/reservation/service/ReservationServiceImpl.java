@@ -39,5 +39,10 @@ public class ReservationServiceImpl implements ReservationService {
 	public int reservationDelete(ReservationVO resvVO) {
 		return resvDAO.reservationDelete(resvVO);
 	}
+	
+	@Override
+	public int reservationCancel(ReservationVO resvVO) {
+		return resvDAO.reservationCancel(resvVO);
+	}
 
 }

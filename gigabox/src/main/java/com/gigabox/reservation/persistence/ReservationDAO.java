@@ -16,4 +16,5 @@ public interface ReservationDAO {
 	
 	public int reservationDelete(ReservationVO resvVO);
 	
+	public int reservationCancel(ReservationVO resvVO);
 }

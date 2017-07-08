@@ -108,6 +108,7 @@ var Reservation = {
 	    
 	    // 각 패널 초기화
 	    console.log("각 패널을 초기화 합니다...");
+	    $("#hiddenForm").clearForm();
 	    $('div[data-role="resv-cinema-panel"] .panel-body ul').html("");
 	    $('div[data-role="resv-movie-panel"] .panel-body ul').html("");
 	    $('div[data-role="resv-schedule-panel"] .panel-body ul').html("");
@@ -190,9 +191,10 @@ var Reservation = {
 		moviePanel.html(movieTitleList);
 		for (var i = 0; i < resData.movieData.length; i++) {
 			var eachLi = $("<li></li>").append('<a href="#" data-target-id="mn'+ resData.movieData[i].movieNumber
-					+'"><strong class="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'
+					+'" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'
+					+ '<strong style="display: inline-block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 250px; float: left;">'
 					+makeRatingTag(resData.movieData[i].movieRating)+' '+ resData.movieData[i].movieTitle
-					+'</strong><span class="glyphicon glyphicon-chevron-right pull-right"></span></a>');
+					+'</strong><span class="glyphicon glyphicon-chevron-right pull-right" style="display: inline-block;"></span></a>');
 			movieTitleList.append(eachLi);
 			
 			var trim = resData.movieData[i].movieType.replace(" ", "");
@@ -283,9 +285,11 @@ var Reservation = {
 					+'" data-movieroom="'+resData.scheduleData[i].movieroomNumber+'"><strong>'
 					+makeRatingTag(resData.scheduleData[i].movieRating)+' '+ resData.scheduleData[i].movieTitle
 					+'</strong></a>');
-			eachLi.append('<p>' + startStr + ' ~ ' + endStr + '</p>');
-			eachLi.append('<p>' + resData.scheduleData[i].branchName + ' ' + resData.scheduleData[i].movieroomName + '</p>');
-			eachLi.append('<p>' + resvSeat.length + '/' + cnt + '</p>');
+			var eachLi2 = $('<div class="alert alert-info alert-dismissable"></div>');
+			eachLi2.append('&nbsp; <span class="glyphicon glyphicon-time "> ' + startStr + ' ~ ' + endStr + '</span> ');
+			eachLi2.append('&nbsp; <span class="glyphicon glyphicon-home "> ' + resData.scheduleData[i].branchName + ' ' + resData.scheduleData[i].movieroomName + '</span> ');
+			eachLi2.append('&nbsp; <span class="glyphicon glyphicon-user "> ' + resvSeat.length + '/' + cnt + '</span> ');
+			eachLi.append(eachLi2);
 			scheduleList.append(eachLi);
 		}
 		var scheduleSelector = new OneLevelSelector();
