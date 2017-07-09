@@ -175,7 +175,8 @@
 			});
 			Reservation.init();
 			
-			$("#movieSelectCheck").on("change", function() {
+			$("#movieSelectCheck").on("change", function() { 
+				
 				if ($("#movieSelectCheck").attr("value") == "1" 
 					&& $("#scheduleTypeSelectCheck").attr("value") == "1") {
 					

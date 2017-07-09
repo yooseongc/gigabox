@@ -68,6 +68,7 @@ public class ReservationController {
 	public String reservationPaymentPOST(HttpSession session, Model model, ReservationVO resvVO) {
 		logger.info("RESERVATION PAYMENT PAGE LOAD...");
 		logger.info("RESERVATION VO=" + resvVO.toString());
+		
 		ScheduleVO scheduleVO = new ScheduleVO();
 		scheduleVO.setScheduleNumber(resvVO.getScheduleNumber());
 		ScheduleVO info = scheduleService.scheduleDetail(scheduleVO);
@@ -95,6 +96,8 @@ public class ReservationController {
 		session.setAttribute("resvThread", thread);
 		thread.start();
 		
+		model.addAttribute("resvInfo", resvService.reservationDetail(resvVO));
+		
 		return "/reservation/reservationPayment";
 	}
 	
@@ -106,6 +109,9 @@ public class ReservationController {
 		if (thread != null) {
 			thread.interrupt();
 		}
+		resvService.reservationPaymentUpdate(resvVO);
+		
+		model.addAttribute("resvInfo", resvService.reservationDetail(resvVO));
 		
 		return "/reservation/reservationComplete";
 	}

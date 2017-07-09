@@ -144,8 +144,6 @@
 				        FROM TBL_BRANCH 
 			      )  BRANCH ON BRANCH.BRANCH_NUMBER = MOVIEROOM.BRANCH_NUMBER 
 		WHERE RESERVATION_NUMBER = #{reservationNumber}  
-			AND SCHEDULE.SCHEDULE_START > (SYSDATE + 1/72)  
-			AND RESERVATION_STATUS = 2 
 	</select>
 	
 	
@@ -177,7 +175,8 @@
 			RESERVATION_USINGMILEAGE = #{reservationUsingmileage}, 
 			RESERVATION_PAYAMOUNT = #{reservationPayamount}, 
 			RESERVATION_PAYMETHOD = #{reservationPaymethod}, 
-			RESERVATION_PAYMENTDATE = SYSDATE 
+			RESERVATION_PAYMENTDATE = SYSDATE, 
+			RESERVATION_STATUS = 2 
 		WHERE RESERVATION_NUMBER = #{reservationNumber} 
 	</update>
 	

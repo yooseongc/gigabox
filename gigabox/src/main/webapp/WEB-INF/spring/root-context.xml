@@ -17,7 +17,7 @@
 	<context:component-scan base-package="com.gigabox.**"></context:component-scan>
 	
 	<!-- DataSource Setting -->
-	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
 			destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<!-- <property name="url" value="jdbc:oracle:thin:@192.168.0.57:1521:orcl"/> -->
@@ -26,7 +26,7 @@
 		<property name="password" value="gigabox"/>	
 	</bean>
 	
-	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	<!-- <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied"/>
 		<property name="logFormatter">
 			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
@@ -34,7 +34,7 @@
 				<property name="sqlPrefix" value="SQL  :  "/>
 			</bean>
 		</property>
-	</bean>
+	</bean> -->
 	
 	<!-- MyBatis Setting -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

@@ -64,16 +64,16 @@
 			<div class="col-md-8">
 				<!-- 결제 방법 선택 -->
 				<div class="col-md-5">
-					<div class="panel panel-info" data-role="resv-seatSelect-panel">
+					<div class="panel panel-danger">
 						<div class="panel-heading">
 							<h1 class="panel-title">
 								결제방법<small> &nbsp;&nbsp;결제방법을 선택해 주세요.</small>
 							</h1>
 						</div>
 						<div class="panel-body" style="height: 500px;">
-							<ul class="nav nav-list bs-docs-sidenav">
-								<li><a href="#">신용카드</a></li>
-								<li><a href="#">휴대전화</a></li>
+							<ul class="nav nav-pills nav-stacked" id="paymethodSelect">
+								<li><a href="#">신용카드 결제</a></li>
+								<li><a href="#">휴대전화 결제</a></li>
 								<li><a href="#">무통장 입금</a></li>
 							</ul>
 						</div>
@@ -89,7 +89,7 @@
 							</h1>
 						</div>
 						<div class="panel-body" style="height: 500px;">
-							<form id="payMentForm">
+							<form>
 								<div class="form-group">
 									<label class="col-sm-6 control-label" for="">사용가능한 마일리지</label>
 									<div>
@@ -105,8 +105,8 @@
 									<label class="col-sm-6 control-label" for="">사용 마일리지</label>
 									<div>
 										<div class="input-group col-sm-5">
-											<input class="form-control" min="0" max="99999" id="useMileage" name=""
-												type="number" value="" maxlength="5"
+											<input class="form-control" min="0" max="99999" id="useMileage"
+												type="number" value="0" maxlength="5"
 												oninput="maxLengthCheck(this)" />
 										</div>
 									</div>
@@ -116,8 +116,8 @@
 									<label class="col-sm-6 control-label" for="">잔여 마일리지</label>
 									<div>
 										<div class="input-group col-sm-5">
-											<input class="form-control" id="restMileage" name="" type="number"
-												value="" readonly="readonly">
+											<input class="form-control" id="restMileage" type="number"
+												value="${sessionScope.login.userMileage}" readonly="readonly">
 										</div>
 									</div>
 								</div>
@@ -152,34 +152,28 @@
 						<h3 class="panel-title">결제 내역</h3>
 					</div>
 					<div class="panel-body" style="height: 500px;">
-						<form id="payMentForm">
+						<form>
 							<div class="form form-horizontal">
-								<div class="form-group">
-									<div>
-										<label class="col-sm-10 control-label" for="">상영정보-포스터,
-											영화제목, 극장, 상영관, 상영시간(년월일 요일 시간),인원수, 인원속성, 좌석정보</label>
-									</div>
-								</div>
 
 								<div class="form-group">
 									<label class="col-sm-4 control-label" for="">결제 금액</label>
 									<div class="input-group col-sm-6">
-										<input class="form-control" id="" name="" type="number"
-											value="" readonly="readonly">
+										<input class="form-control" type="number" id="paymentBefore"
+											value="${resvInfo.reservationPayamount}" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-4 control-label" for="">마일리지</label>
 									<div class="input-group col-sm-6">
-										<input class="form-control" id="resvMileage" name="" type="number"
+										<input class="form-control" id="resvMileage" type="number"
 											value="0" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-4 control-label" for="">총 결제 금액</label>
 									<div class="input-group col-sm-6">
-										<input class="form-control" id="" name="" type="number"
-											value="" readonly="readonly">
+										<input class="form-control" id="paymentAfter" type="number"
+											value="${resvInfo.reservationPayamount}" readonly="readonly">
 									</div>
 								</div>
 								<hr>
@@ -188,11 +182,11 @@
 									<div class="col-md-12">
 										<button id="nextStep"
 											class="btn btn-md btn-outline btn-success pull-right">
-											<i class="glyphicon glyphicon-ok"></i>결제
+											<i class="glyphicon glyphicon-ok"></i> 결제하기
 										</button>
 										<button onclick="location.href='/'"
 											class="btn btn-md btn-outline btn-danger pull-right">
-											<i class="glyphicon glyphicon-home"></i> 메인
+											<i class="glyphicon glyphicon-home"></i> 메인으로
 										</button>
 
 									</div>
@@ -210,7 +204,14 @@
 		<!-- /.row -->
 	</div>
 	<!-- /.container -->
-
+	
+	
+	<form class="hide" id="paymentForm">
+		<input type="hidden" name="reservationNumber" value="${resvInfo.reservationNumber}">
+		<input type="hidden" id="resvPaymethod" name="reservationPaymethod">
+		<input type="hidden" id="resvPayamount" name="reservationPayamount">
+		<input type="hidden" id="resvUsingmileage" name="reservationUsingmileage" value="0">
+	</form>
 
 	<script type="text/javascript">
 		//maxlength 체크
@@ -220,21 +221,70 @@
 			}
 		}
 		
-		//마일리지 차감
+		
 		$(document).ready(function() {
+			// 초기 변수
+			var calCheck = 0;
+			
+			
+			//마일리지 차감
 			$("#mileageCal").click(function(e) {
 				e.preventDefault();
+				if ($("#useMileage").val() == '') {
+					$("#useMileage").val(0);
+				}
+				
 				if (parseInt($("#userMileage").val()) >= parseInt($("#useMileage").val())){
-				var sub = parseInt($("#userMileage").val()) - parseInt($("#useMileage").val())
-				$("#restMileage").val(sub);
-				$("#resvMileage").val($("#useMileage").val());
+					var sub = parseInt($("#userMileage").val()) - parseInt($("#useMileage").val());
+					console.log($("#paymentAfter").val());
+					$("#restMileage").val(sub);
+					$("#resvMileage").val($("#useMileage").val());
+					$("#paymentAfter").val(parseInt($("#paymentBefore").val()) - parseInt($("#useMileage").val()));
+					console.log($("#paymentAfter").val());
+					$("#resvPayamount").val($("#paymentAfter").val());
+					$("#resvUsingmileage").val($("#useMileage").val());
+					
+					calCheck = 1;
 				} else {
 					alert("사용가능한 마일리지를 초과하였습니다.")
-					$("#useMileage").val('');
-					$("#restMileage").val('');
-					$("#resvMileage").val('');
+					$("#useMileage").val(0);
+					$("#mileageCal").trigger("click");
+					
+					calCheck = 0;
 				}
 			});
+			
+			$("#paymethodSelect > li > a").click(function(e) {
+				e.preventDefault();
+				if ($(this).parent("li").hasClass("active")) {
+					$("#resvPaymethod").val("");
+				} else {
+					$("#resvPaymethod").val($(this).text());
+				}
+				$("#paymethodSelect li").each(function() {
+					$(this).removeClass("active");
+				});
+				$(this).parent("li").addClass("active");
+				
+			});
+			
+			$("#nextStep").click(function(e) {
+				e.preventDefault();
+				// 유효성 체크
+				if ($("#resvPaymethod").val() == '') {
+					alert("결제 수단을 선택해 주세요.");
+					return;
+				}
+				if (calCheck != 1) {
+					alert("사용할 마일리지를 결정해 주세요.");
+					return;
+				}
+				
+				$("#paymentForm").attr("method", "POST");
+				$("#paymentForm").attr("action", "/reservation/resvComplete");
+				$("#paymentForm").submit();
+			});
+			
 		});
 	</script>
 	

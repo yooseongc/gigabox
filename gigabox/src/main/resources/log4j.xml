@@ -14,7 +14,7 @@
 	<logger name="com.gigabox.**">
 		<level value="info" />
 	</logger>
-	<logger name="com.gigabox.user.controller">
+	<!-- <logger name="com.gigabox.user.controller">
 		<level value="info" />
 	</logger>
 	<logger name="com.gigabox.cc.controller">
@@ -31,7 +31,7 @@
 	</logger>
 	<logger name="com.gigabox.branch.controller">
 		<level value="info" />
-	</logger>
+	</logger> -->
 	<logger name="com.gigabox.reservation.controller">
 		<level value="info" />
 	</logger>
@@ -56,7 +56,7 @@
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<!-- Database Logger -->
