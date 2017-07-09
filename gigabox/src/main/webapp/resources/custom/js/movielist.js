@@ -121,7 +121,6 @@
 			},
 			success : function(data) {
 
-				console.log(data.movieNumber);
 				$("#reviewAddBtn").attr("data-num",	data.movieNumber);
 				$("input").attr("value",data.movieNumber);
 				$("div[data-id=movieTitle]").html(makeRatingTag(data.movieRating) + " " + data.movieTitle);
@@ -172,7 +171,6 @@
 							return;
 						}
 						dataArray = {arr: data, movieNumber: data[0].review.movieNumber};
-						console.log("댓글 불러오기");
 						reviewReadMoreCount = 0;
 						Handlebars.registerHelper("canReadMore", function(movieNumber, block) { 
 							var accum = '';
@@ -203,10 +201,63 @@
 					}
 				});
 				
+				// 스틸컷
+				var scBox = $("#steelcutCarousel");
+				var scThumb = $("#steelcutCarouselThumb");
+				scBox.html("");
+				scThumb.html("");
+				$.ajax({
+					url : data.movieSteelcut + "/fileList", 
+					type: "GET",
+					async: false,
+					success: function(sdata) {
+						var count = 0;
+						for (var i = 0; i < sdata.fileList.length; i++) {
+							if (sdata.fileList[i] != 'thumb') {
+								var div = $("<div></div").addClass("item");
+								var img = $("<img>").attr("src", data.movieSteelcut + "/" + sdata.fileList[i]);
+								div.append(img);
+								scBox.append(div);
+								
+								var li = $("<li></li>").attr("data-target", "#carousel-custom")
+									.attr("data-slide-to", count);
+								var img2 = $("<img>").attr("src", data.movieSteelcut + "/" + sdata.fileList[i]);
+								li.append(img2);
+								scThumb.append(li);
+								count++;
+							}
+						}
+						scBox.children("div:eq(0)").addClass("active");
+						scThumb.children("li:eq(0)").addClass("active");
+					}
+				});
+				
+				// 트레일러
+				/*<video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
+                <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
+            </video>*/
+				var tBox = $("#trailerBox");
+				tBox.html("");
+				$.ajax({
+					url : data.movieTrailer + "/fileList", 
+					type: "GET",
+					success: function(tdata) {
+						var vSrc = data.movieTrailer + "/" + tdata.fileList[0];
+						var vBox = $("<video></video>").attr("controls", "controls").attr("preload", "metadata")
+							.attr("width", "100%").attr("height", "100%");
+						var vSBox = $("<source></source>").attr("src", vSrc).attr("type", "video/mp4");
+						vBox.append(vSBox);
+						tBox.append(vBox);
+					}
+				});
+				
 				// 모달
 				$('#movieDetailModal').modal({
 					show : true,
 					keyboard : true
+				});
+				$('#movieDetailModal').on('hidden.bs.modal', function () {
+					tBox.find("video").get(0).pause();
 				});
 			}
 
@@ -218,7 +269,6 @@
 	
 	// 감상평 더보기
 	function reviewReadMore(movieNumber) {
-		console.log("감상평 더보기");
 		reviewReadMoreCount++;
 		$.ajax({
 			url : "/review/list/"
@@ -231,7 +281,6 @@
 				console.log("댓글 불러오기 오류입니다.");
 			},
 			success : function(data) {
-				console.log(data.length);
 				dataArray = {arr: data, movieNumber: data[0].review.movieNumber};
 				Handlebars.registerHelper("canReadMore", function(movieNumber, block) { 
 					var accum = '';
@@ -241,9 +290,7 @@
 					return accum;
 				});
 				$("#review").html("");
-				console.log(1);
 				printData(dataArray, $("#review"), $("#replyTemplate"));
-				console.log(2);
 				// 별점 초기화
 				$("#review .rating").rating({
 					showClear: false,
@@ -267,7 +314,6 @@
 	
 	// 감상평 쓰기
 	function reviewWrite(that) {
-		console.log("감상평 쓰기 시작");
 		var reviewContentVal = $("#newReviewContent").val();
 		var reviewStarRating = $("#reviewStarRating").val();
 		var movieNum = $(that).attr("data-num");
@@ -312,7 +358,6 @@
 			},
 			dataType : 'text',
 			success : function(result) {
-				console.log("result: " + result);
 				if (result == 'SUCCESS') {
 					alert("삭제 되었습니다.");
 					reviewReadMoreCount--;
@@ -328,7 +373,6 @@
 		var starScore = $(that).parents("div[data-id="+reviewNum+"]").find("input[data-role=reviewStarscore]").val();
 		$("#reviewUpdateContent").val(content);
 		$("#reviewUpdateStarscore").rating("update", starScore);
-		console.log(reviewNum);
 		$("#reviewUpdateBtn").attr("data-num", reviewNum);
 		// 모달
 		$("#movieDetailModal").modal("hide");
@@ -340,7 +384,6 @@
 	
 	// 감상평 수정
 	function reviewUpdateExec(that) {
-		console.log($("#reviewUpdateContent").val());
 		$.ajax({
 			type: 'PUT',
 			url: '/review/update/' + $(that).attr("data-num"),

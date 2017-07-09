@@ -32,7 +32,7 @@
 	<logger name="com.gigabox.branch.controller">
 		<level value="info" />
 	</logger> -->
-	<logger name="com.gigabox.reservation.controller">
+	<!-- <logger name="com.gigabox.reservation.controller">
 		<level value="info" />
 	</logger>
 	<logger name="com.gigabox.mypage.controller">
@@ -40,7 +40,7 @@
 	</logger>
 	<logger name="com.gigabox.interceptor">
 		<level value="info" />
-	</logger>
+	</logger> -->
 
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -76,7 +76,7 @@
 	
 	<!-- Root Logger -->
 	<root>
-		<priority value="info" />
+		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
 

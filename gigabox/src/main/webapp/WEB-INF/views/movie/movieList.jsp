@@ -17,10 +17,6 @@
 <!-- Custom Fonts -->
 <link href="/resources/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-<!-- still cut CSS -->
-<link href="/resources/custom/css/stillcut.css" rel="stylesheet">
-<!-- still cut js -->
-<script src="/resources/custom/js/stillcut.js"></script>
 <!-- jQuery -->
 <script src="/resources/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
@@ -38,8 +34,14 @@
 <script src="/resources/bootstrap-star-rating/js/star-rating.js"
 	type="text/javascript"></script>
 
+
+<link href="/resources/custom/css/stillcut.css" rel="stylesheet">
+<!-- still cut js -->
+<script src="/resources/custom/js/stillcut.js"></script>
 <!-- custom js -->
 <script src="/resources/custom/js/movielist.js" type="text/javascript"></script>
+<!-- still cut CSS -->
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,13 +64,6 @@
 	overflow-y: scroll;
 }
 </style>
-<script type="text/javascript">
-	var result = '${msg}';
-
-	if (result == 'SUCCESS') {
-		alert("처리가 완료되었습니다.");
-	}
-</script>
 </head>
 <body>
 
@@ -320,11 +315,9 @@
 					</div>
 					
 					<!-- 스틸컷 -->
-					<div class="container">
-						<div class="row" id="slider-text">
-							<div class="col-md-6">
-								<h2>Still Cut</h2>
-							</div>
+					<div class="row" id="slider-text">
+						<div class="col-md-6">
+							<h2>Still Cut</h2>
 						</div>
 					</div>
 					<div class="row">
@@ -332,54 +325,8 @@
 							data-ride='carousel'>
 							<div class='carousel-outer'>
 								<!-- me art lab slider -->
-								<div class='carousel-inner '>
-									<div class='item active'>
-										<img
-											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg'
-											alt='' id="zoom_05"
-											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg" />
-									</div>
-									<div class='item' id="zoom_05">
-										<img
-											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg" />
-									</div>
-									<div class='item'>
-										<img
-											src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg" />
-									</div>
-
-									<div class='item'>
-										<img
-											src='http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg"
-											id="zoom_05" />
-									</div>
-									<div class='item'>
-										<img
-											src='http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg"
-											id="zoom_05" />
-									</div>
-									<div class='item'>
-										<img
-											src='http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg"
-											id="zoom_05" />
-									</div>
-									<div class='item'>
-										<img
-											src='http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpgg'
-											alt=''
-											data-zoom-image="http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpg"
-											id="zoom_05" />
-									</div>
+								<div class='carousel-inner ' id="steelcutCarousel">
+									
 								</div>
 
 								<!-- sag sol -->
@@ -393,45 +340,21 @@
 							</div>
 
 							<!-- thumb -->
-							<ol class='carousel-indicators mCustomScrollbar meartlab'>
-								<li data-target='#carousel-custom' data-slide-to='0'
-									class='active'><img
-									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/print/image1xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='1'><img
-									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image2xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='2'><img
-									src='http://images.asos-media.com/inv/media/8/2/3/3/5313328/image3xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='3'><img
-									src='http://images.asos-media.com/inv/media/3/6/7/0/4850763/multi/image1xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='4'><img
-									src='http://images.asos-media.com/inv/media/5/2/1/3/4603125/gold/image1xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='5'><img
-									src='http://images.asos-media.com/inv/media/5/3/6/8/4948635/mink/image1xxl.jpg'
-									alt='' /></li>
-								<li data-target='#carousel-custom' data-slide-to='6'><img
-									src='http://images.asos-media.com/inv/media/1/3/0/8/5268031/image2xxl.jpg'
-									alt='' /></li>
-
+							<ol class='carousel-indicators mCustomScrollbar meartlab' id="steelcutCarouselThumb">
+								
 							</ol>
 						</div>
 					</div>
 					<hr>
 					<!-- 트레일러 -->
-					<div class="container">
-						<div class="row" id="slider-text">
-							<div class="col-md-6">
-								<h2>Trailer</h2>
-							</div>
+					<div class="row" id="slider-text">
+						<div class="col-md-6">
+							<h2>Trailer</h2>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="vid" style="text-align:center;">
+							<div class="vid" style="text-align:center;" id="trailerBox">
 								<!-- <iframe width="700" height="500"
 									src="http://mvod.megabox.co.kr/encodeFile/3550/2017/06/01/a021352a34ab37c5024d242758bab69e_W.mp4"></iframe> -->
 							</div>
@@ -739,8 +662,7 @@
 		
 		$("#bookmarkButton").on('click', function() {
 			var movieNum = $(this).attr("data-num");
-			console.log('${sessionScope.login.userNumber}');
-			if(${sessionScope.login == null}) {
+			if('${sessionScope.login.userId}' == '') {
 				alert("로그인 후 사용가능합니다.")	;
 				return false;
 			}
@@ -768,6 +690,8 @@
 					});
 				
 		});
+		
+		
 		
 	});
 	</script>

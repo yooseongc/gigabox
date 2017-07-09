@@ -210,7 +210,6 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 
 		    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
 		    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
-			console.log(parameter);
 			if (parameter == 'login') {
 				//alert("회원 가입 신청이 정상적으로 처리되었습니다. \n이메일 인증 후 로그인 해 주세요.");
 				$("#loginDropDown").trigger("click");
@@ -219,7 +218,6 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 			//로그인버튼 클릭
 			$("#loginButton").click(function(e) {
 				e.preventDefault();
-				console.log(!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader")));
 				if (!formCheckHeader($("#userIdHeader"), "아이디를", $("#errorMessageHeader"))) {
 					$("#errorMessageHeader").removeClass("hide");
 					return;
@@ -268,7 +266,6 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 							$("#userPwHeader").val("");
 							$("#userIdHeader").focus();
 						} else if (resultData.message == 'LOGIN-SUCCESS') {
-							console.log("login success!!!");
 							$("#loginForm").submit();
 						} else if (resultData.message == 'ERROR') {
 							$("#errorMessageHeader").text("시스템 오류입니다.");

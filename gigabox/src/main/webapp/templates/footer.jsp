@@ -178,7 +178,6 @@ footer {
 
 	    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
 	    var parameter = (url.slice(url.indexOf('?pageAction=') + 12, url.length));
-		console.log(parameter);
 		if (parameter == 'emailAuthOK') {
 			 $('#emailAuthOKModal').modal({
 		        show: true, 
