@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gigabox.admin.mapper.MovieMapper">
+	
+	<resultMap type="movie" id="movieResultMap">
+		<result property="movieNumber" column="MOVIE_NUMBER" />
+		<result property="movieTitle" column="MOVIE_TITLE" />
+		<result property="movieType" column="MOVIE_TYPE" />
+		<result property="movieRating" column="MOVIE_RATING" />
+		<result property="movieReleasedate" column="MOVIE_RELEASEDATE" />
+		<result property="movieDirector" column="MOVIE_DIRECTOR" />
+		<result property="movieCast" column="MOVIE_CAST" />
+		<result property="movieScreentime" column="MOVIE_SCREENTIME" />
+		<result property="movieGenre" column="MOVIE_GENRE" />
+		<result property="movieStoryline" column="MOVIE_STORYLINE" />
+		<result property="movieEngname" column="MOVIE_ENGNAME" />
+		<result property="moviePoster" column="MOVIE_POSTER" />
+		<result property="movieSteelcut" column="MOVIE_STEELCUT" />
+		<result property="movieTrailer" column="MOVIE_TRAILER" />
+		<result property="movieCode" column="MOVIE_CODE" />
+		<result property="movieStatus" column="MOVIE_STATUS" />
+	</resultMap>
+	
+	<select id="movieList" resultType="movie" resultMap="movieResultMap">
+	
+		SELECT * 
+		FROM 
+		(
+			SELECT LIST.*, ROWNUM AS RNUM 
+			FROM 
+			(
+				SELECT MOVIE_NUMBER, MOVIE_TITLE, MOVIE_TYPE, MOVIE_CODE, MOVIE_STATUS, 
+				MOVIE_RELEASEDATE, MOVIE_GENRE, MOVIE_RATING, MOVIE_DIRECTOR, MOVIE_CAST    
+				FROM TBL_MOVIE 
+				WHERE MOVIE_STATUS NOT IN('삭제') 
+				<if test="movieStatus != null and movieStatus != '' and movieStatus != '전체'.toString()">
+					AND MOVIE_STATUS = #{movieStatus}  
+				</if>
+				<if test="searchType == 'all'">
+					AND ( MOVIE_TITLE LIKE '%' || #{searchKeyword} || '%' 
+					OR MOVIE_DIRECTOR LIKE '%' || #{searchKeyword} || '%' 
+					OR MOVIE_CAST LIKE '%' || #{searchKeyword} || '%' )
+				</if>
+				<if test="searchType == 'title'">
+					AND MOVIE_TITLE LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'director'">
+					AND MOVIE_DIRECTOR LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'cast'">
+					AND MOVIE_CAST LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="startYear != null and startYear != ''">
+					AND TO_NUMBER(SUBSTR(MOVIE_RELEASEDATE, 0, 4)) BETWEEN TO_NUMBER(#{startYear}) AND TO_NUMBER(#{endYear})  
+				</if>
+				<if test="genre != null and genre != ''">
+					AND ( 
+					<foreach collection="genreList" item="item" separator="OR">
+				            MOVIE_GENRE LIKE '%' || #{item} || '%' 
+				    </foreach>
+				    ) 
+				</if>
+				<if test="rating != null and rating != ''">
+					AND MOVIE_RATING IN 
+					(
+	        			WITH TT AS
+						    (
+						        SELECT #{rating} TXT FROM DUAL
+						    )
+					    SELECT TRIM(REGEXP_SUBSTR(TXT, '[^,]+', 1, LEVEL)) AS TXT 
+					        FROM TT
+					        CONNECT BY INSTR(TXT, ',', 1, LEVEL - 1) > 0
+					) 
+				</if>
+				ORDER BY MOVIE_RELEASEDATE DESC, MOVIE_TITLE ASC  
+			) LIST 
+		) 
+		<where>
+			RNUM BETWEEN #{pageStart} AND #{pageEnd} 
+		</where>
+		
+	
+	</select>
+	
+	<select id="movieListCount" resultType="int">
+		SELECT NVL(COUNT(1), 0) 
+		FROM 
+		(
+			SELECT LIST.*, ROWNUM AS RNUM 
+			FROM 
+			(
+				SELECT MOVIE_NUMBER, MOVIE_TITLE, MOVIE_TYPE, MOVIE_CODE, MOVIE_STATUS, 
+				MOVIE_RELEASEDATE, MOVIE_GENRE, MOVIE_RATING, MOVIE_DIRECTOR, MOVIE_CAST    
+				FROM TBL_MOVIE 
+				WHERE MOVIE_STATUS NOT IN('삭제') 
+				<if test="movieStatus != null and movieStatus != '' and movieStatus != '전체'.toString()">
+					AND MOVIE_STATUS = #{movieStatus}  
+				</if>
+				<if test="searchType == 'all'">
+					AND ( MOVIE_TITLE LIKE '%' || #{searchKeyword} || '%' 
+					OR MOVIE_DIRECTOR LIKE '%' || #{searchKeyword} || '%' 
+					OR MOVIE_CAST LIKE '%' || #{searchKeyword} || '%' )
+				</if>
+				<if test="searchType == 'title'">
+					AND MOVIE_TITLE LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'director'">
+					AND MOVIE_DIRECTOR LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'cast'">
+					AND MOVIE_CAST LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="startYear != null and startYear != ''">
+					AND TO_NUMBER(SUBSTR(MOVIE_RELEASEDATE, 0, 4)) BETWEEN TO_NUMBER(#{startYear}) AND TO_NUMBER(#{endYear})  
+				</if>
+				<if test="genre != null and genre != ''">
+					AND ( 
+					<foreach collection="genreList" item="item" separator="OR">
+				            MOVIE_GENRE LIKE '%' || #{item} || '%' 
+				    </foreach>
+				    ) 
+				</if>
+				<if test="rating != null and rating != ''">
+					AND MOVIE_RATING IN 
+					(
+	        			WITH TT AS
+						    (
+						        SELECT #{rating} TXT FROM DUAL
+						    )
+					    SELECT TRIM(REGEXP_SUBSTR(TXT, '[^,]+', 1, LEVEL)) AS TXT 
+					        FROM TT
+					        CONNECT BY INSTR(TXT, ',', 1, LEVEL - 1) > 0
+					) 
+				</if>
+				ORDER BY MOVIE_RELEASEDATE DESC, MOVIE_TITLE ASC 
+			) LIST 
+		) 
+
+		
+	</select>
+	
+	<select id="movieDetail" parameterType="int" resultType="movie" resultMap="movieResultMap">
+		SELECT * 
+		FROM TBL_MOVIE 
+		WHERE MOVIE_NUMBER = #{movieNumber} 
+	</select>
+	
+	<insert id="movieInsert" parameterType="movie">
+		<selectKey keyProperty="movieNumber" resultType="int" order="BEFORE">
+			SELECT SEQ_MOVIE.NEXTVAL FROM DUAL 
+		</selectKey>
+		INSERT INTO TBL_MOVIE (
+		  MOVIE_NUMBER, MOVIE_TITLE, MOVIE_TYPE, MOVIE_RATING, MOVIE_RELEASEDATE, 
+		  MOVIE_DIRECTOR, MOVIE_CAST, MOVIE_SCREENTIME, MOVIE_GENRE, 
+		  MOVIE_STORYLINE, MOVIE_ENGNAME, MOVIE_POSTER, MOVIE_STEELCUT, 
+		  MOVIE_TRAILER, MOVIE_CODE, MOVIE_STATUS ) 
+		VALUES (
+		  #{movieNumber}, #{movieTitle}, #{movieType}, #{movieRating}, #{movieReleasedate},
+		  #{movieDirector}, #{movieCast}, #{movieScreentime}, #{movieGenre},
+		  #{movieStoryline}, #{movieEngname}, #{moviePoster}, #{movieSteelcut},
+		  #{movieTrailer}, #{movieCode}, #{movieStatus} 
+		  ) 
+	</insert>
+	
+	<update id="movieUpdate" parameterType="movie">
+		UPDATE TBL_MOVIE 
+		SET 
+		  MOVIE_TITLE = #{movieTitle}, MOVIE_TYPE = #{movieType}, MOVIE_RATING = #{movieRating}, MOVIE_RELEASEDATE = #{movieReleasedate}, 
+		  MOVIE_DIRECTOR = #{movieDirector}, MOVIE_CAST = #{movieCast}, MOVIE_SCREENTIME = #{movieScreentime}, 
+		  MOVIE_GENRE = #{movieGenre}, MOVIE_STORYLINE = #{movieStoryline}, MOVIE_ENGNAME = #{movieEngname}, 
+		  MOVIE_STATUS = #{movieStatus}
+		WHERE MOVIE_NUMBER = #{movieNumber} 
+	</update>
+	
+	<update id="movieDelete" parameterType="movie">
+		UPDATE TBL_MOVIE 
+		SET MOVIE_STATUS = '삭제'  
+		WHERE MOVIE_NUMBER = #{movieNumber} 
+	</update>
+	
+</mapper>

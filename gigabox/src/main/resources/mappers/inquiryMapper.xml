@@ -26,7 +26,6 @@
 		INQUIRY_GROUPNUMBER, INQUIRY_QORA
 		FROM TBL_INQUIRY
 		WHERE 1=1
-
 		<if test="searchType == 't'.toString() and searchKeyword != null">
 			AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 		</if>
@@ -59,7 +58,7 @@
 		INQUIRY_REGISTERDATE,
 		INQUIRY_GROUPNUMBER, INQUIRY_QORA
 		FROM TBL_INQUIRY
-
+		WHERE 1=1 
 		<if test="searchType == 't'.toString() and searchKeyword != null">
 			AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
 		</if>

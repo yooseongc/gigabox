@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GigaBox - 마이무비</title>
+<title>GigaBox - 마이페이지</title>
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom CSS -->
@@ -29,7 +29,6 @@
 <!-- handlebar -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js">
-	
 </script>
 
 <!-- bootstrap star rating -->
@@ -39,6 +38,9 @@
 <script src="/resources/bootstrap-star-rating/js/star-rating.js"
 	type="text/javascript"></script>
 
+<link href="/resources/custom/css/stillcut.css" rel="stylesheet">
+<!-- still cut js -->
+<script src="/resources/custom/js/stillcut.js"></script>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -327,12 +329,14 @@
 				var parameter = (url.slice(url.indexOf('?listType=') + 10,
 						url.length));
 				if (parameter == '2') {
-					$('#myTab > li:eq(1) > a').trigger("click");
+					$('#myTab > li:eq(1)').find("a").trigger("click");
+					$("#pageType, #pageType2").text("마이무비");
 				} else if (parameter == '1') {
-					$('#myTab > li:eq(0) > a').trigger("click");
-
+					$('#myTab > li:eq(0)').find("a").trigger("click");
+					$("#pageType, #pageType2").text("예매 확인/취소");
 				} else if (parameter == '3') {
-					$('#myTab > li:eq(2) > a').trigger("click");
+					$('#myTab > li:eq(2)').find("a").trigger("click");
+					$("#pageType, #pageType2").text("문의 내역");
 				}
 				
 				$("#myTab > li").click("a", function() {
@@ -501,10 +505,61 @@
 					}
 				});
 
+				// 스틸컷
+				var scBox = $("#steelcutCarousel");
+				var scThumb = $("#steelcutCarouselThumb");
+				scBox.html("");
+				scThumb.html("");
+				$.ajax({
+					url : data.movieSteelcut + "/fileList", 
+					type: "GET",
+					async: false,
+					success: function(sdata) {
+						var count = 0;
+						for (var i = 0; i < sdata.fileList.length; i++) {
+							if (sdata.fileList[i] != 'thumb') {
+								var div = $("<div></div").addClass("item");
+								var img = $("<img>").attr("src", data.movieSteelcut + "/" + sdata.fileList[i]);
+								div.append(img);
+								scBox.append(div);
+								
+								var li = $("<li></li>").attr("data-target", "#carousel-custom")
+									.attr("data-slide-to", count);
+								var img2 = $("<img>").attr("src", data.movieSteelcut + "/" + sdata.fileList[i]);
+								li.append(img2);
+								scThumb.append(li);
+								count++;
+							}
+						}
+						scBox.children("div:eq(0)").addClass("active");
+						scThumb.children("li:eq(0)").addClass("active");
+					}
+				});
+				
+				// 트레일러
+				var tBox = $("#trailerBox");
+				tBox.html("");
+				$.ajax({
+					url : data.movieTrailer + "/fileList", 
+					type: "GET",
+					success: function(tdata) {
+						var vSrc = data.movieTrailer + "/" + tdata.fileList[0];
+						var vBox = $("<video></video>").attr("controls", "controls").attr("preload", "metadata")
+							.attr("width", "100%").attr("height", "100%");
+						var vSBox = $("<source></source>").attr("src", vSrc).attr("type", "video/mp4");
+						vBox.append(vSBox);
+						tBox.append(vBox);
+					}
+				});
+				
 				// 모달
 				$('#movieDetailModal').modal({
 					show : true,
 					keyboard : true
+				});
+				
+				$('#movieDetailModal').on('hidden.bs.modal', function () {
+					tBox.find("video").get(0).pause();
 				});
 			}
 
@@ -835,6 +890,51 @@
 							</div>
 						</div>
 					</div>
+					<!-- 스틸컷 -->
+					<div class="row" id="slider-text">
+						<div class="col-md-6">
+							<h2>Still Cut</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div id='carousel-custom' class='carousel slide'
+							data-ride='carousel'>
+							<div class='carousel-outer'>
+								<!-- me art lab slider -->
+								<div class='carousel-inner ' id="steelcutCarousel">
+									
+								</div>
+
+								<!-- sag sol -->
+								<a class='left carousel-control' href='#carousel-custom'
+									data-slide='prev'> <span
+									class='glyphicon glyphicon-chevron-left'></span>
+								</a> <a class='right carousel-control' href='#carousel-custom'
+									data-slide='next'> <span
+									class='glyphicon glyphicon-chevron-right'></span>
+								</a>
+							</div>
+
+							<!-- thumb -->
+							<ol class='carousel-indicators mCustomScrollbar meartlab' id="steelcutCarouselThumb">
+								
+							</ol>
+						</div>
+					</div>
+					<hr>
+					<!-- 트레일러 -->
+					<div class="row" id="slider-text">
+						<div class="col-md-6">
+							<h2>Trailer</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="vid" style="text-align:center;" id="trailerBox">
+							</div>
+						</div>
+					</div>
+					
 					<hr>
 					<div class="row">
 						<div class="col-lg-12">
@@ -926,7 +1026,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 

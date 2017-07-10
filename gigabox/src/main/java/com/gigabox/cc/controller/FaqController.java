@@ -42,8 +42,6 @@ public class FaqController {
 
 		model.addAttribute("faqList", faqService.faqList(fsc));
 		
-		System.out.println(fsc.getSearchType()+"검색 값ㅇ ㅣ 들어가는지 확인");
-
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(fsc);
 		pageMaker.setTotalCount(faqService.faqListCount(fsc));

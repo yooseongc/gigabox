@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gigabox.admin.mapper.InquiryMapper">
+	
+	<resultMap type="inquiry" id="inquiryResultMap">
+		<result property="inquiryNumber" column="INQUIRY_NUMBER" />
+		<result property="userNumber" column="USER_NUMBER" />
+		<result property="inquiryTitle" column="INQUIRY_TITLE" />
+		<result property="inquiryContent" column="INQUIRY_CONTENT" />
+		<result property="inquiryRegisterdate" column="INQUIRY_REGISTERDATE" />
+		<result property="inquiryGroupnumber" column="INQUIRY_GROUPNUMBER" />
+		<result property="inquiryQora" column="INQUIRY_QORA" />
+	</resultMap>
+	
+	
+	<select id="inquiryList" resultType="inquiry" resultMap="inquiryResultMap">
+		SELECT * 
+		FROM 
+		(
+			SELECT LIST.*, ROWNUM AS RNUM 
+			FROM 
+			(
+				SELECT INQUIRY_NUMBER, USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_REGISTERDATE, 
+				 	INQUIRY_GROUPNUMBER, INQUIRY_QORA 
+				FROM TBL_INQUIRY 
+				WHERE INQUIRY_QORA = 'Q'  
+				
+				<!-- 답변 미완료 -->
+				<if test="inquiryType == 'Q'.toString()">
+					AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS TEMP_GROUPNUMBER
+						  FROM TBL_INQUIRY 
+						  GROUP BY INQUIRY_GROUPNUMBER 
+						  HAVING COUNT(INQUIRY_GROUPNUMBER) = 1 ) 
+				</if>
+				<!-- 답변 완료 -->
+				<if test="inquiryType == 'A'.toString()">
+					AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS TEMP_GROUPNUMBER
+						  FROM TBL_INQUIRY 
+						  GROUP BY INQUIRY_GROUPNUMBER 
+						  HAVING COUNT(INQUIRY_GROUPNUMBER) = 2 ) 
+				</if>
+				<if test="searchType == 't'.toString()">
+					AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'c'.toString()">
+					AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'tc'.toString()">
+					AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
+						OR INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )  
+				</if>
+				
+				ORDER BY INQUIRY_GROUPNUMBER DESC  
+			) LIST 
+		) 
+		<where>
+			RNUM BETWEEN #{pageStart} AND #{pageEnd} 
+		</where>
+		
+	</select>
+	
+	<select id="inquiryListCount" resultType="int">
+		SELECT NVL(COUNT(1), 0) 
+		FROM 
+		(
+			SELECT LIST.*, ROWNUM AS RNUM 
+			FROM 
+			(
+				SELECT INQUIRY_NUMBER, USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_REGISTERDATE, 
+				 	INQUIRY_GROUPNUMBER, INQUIRY_QORA 
+				FROM TBL_INQUIRY
+				
+				WHERE INQUIRY_QORA = 'Q'  
+				
+				<!-- 답변 미완료 -->
+				<if test="inquiryType == 'Q'.toString()">
+					AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS TEMP_GROUPNUMBER
+						  FROM TBL_INQUIRY 
+						  GROUP BY INQUIRY_GROUPNUMBER 
+						  HAVING COUNT(INQUIRY_GROUPNUMBER) = 1 ) 
+				</if>
+				<!-- 답변 완료 -->
+				<if test="inquiryType == 'A'.toString()">
+					AND INQUIRY_GROUPNUMBER IN ( SELECT INQUIRY_GROUPNUMBER AS TEMP_GROUPNUMBER
+						  FROM TBL_INQUIRY 
+						  GROUP BY INQUIRY_GROUPNUMBER 
+						  HAVING COUNT(INQUIRY_GROUPNUMBER) = 2 ) 
+				</if>
+				<if test="searchType == 't'.toString()">
+					AND INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'c'.toString()">
+					AND INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' 
+				</if>
+				<if test="searchType == 'tc'.toString()">
+					AND (INQUIRY_TITLE LIKE '%' || #{searchKeyword} || '%'
+						OR INQUIRY_CONTENT LIKE '%' || #{searchKeyword} || '%' )  
+				</if>
+			) LIST 
+		)
+	</select>
+	
+	<select id="inquiryDetailQ" parameterType="int" resultType="inquiry" resultMap="inquiryResultMap">
+		SELECT INQUIRY_NUMBER, USER_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_REGISTERDATE,
+			INQUIRY_GROUPNUMBER, INQUIRY_QORA 
+		FROM TBL_INQUIRY 
+		WHERE INQUIRY_NUMBER = #{inquiryNumber} AND INQUIRY_QORA = 'Q' 
+	</select>
+	
+	<select id="inquiryDetailA" parameterType="int" resultType="inquiry" resultMap="inquiryResultMap">
+		SELECT INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_REGISTERDATE, 
+			INQUIRY_GROUPNUMBER, INQUIRY_QORA 
+		FROM TBL_INQUIRY 
+		WHERE INQUIRY_GROUPNUMBER = #{inquiryGroupnumber} AND INQUIRY_QORA = 'A'   
+	</select>
+	
+	<insert id="inquiryInsertA" parameterType="inquiry">
+		INSERT INTO TBL_INQUIRY (
+		  INQUIRY_NUMBER, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_REGISTERDATE, 
+		  INQUIRY_GROUPNUMBER, INQUIRY_QORA ) 
+		VALUES (
+		  SEQ_INQUIRY.NEXTVAL, #{inquiryTitle}, #{inquiryContent}, SYSDATE, 
+		  #{inquiryGroupnumber}, 'A' )  
+	</insert>
+	
+	<update id="inquiryUpdateA" parameterType="inquiry">
+		UPDATE TBL_INQUIRY 
+		SET 
+		  INQUIRY_TITLE = #{inquiryTitle}, INQUIRY_CONTENT = #{inquiryContent} 
+		WHERE INQUIRY_NUMBER = #{inquiryNumber} 
+	</update>
+	
+	<delete id="inquiryDeleteA" parameterType="inquiry">
+		DELETE FROM TBL_INQUIRY 
+		WHERE INQUIRY_NUMBER = #{inquiryNumber}   
+	</delete>
+	
+</mapper>

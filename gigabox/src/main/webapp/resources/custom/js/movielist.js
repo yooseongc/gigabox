@@ -72,37 +72,7 @@
 		  return s;
 		}
 
-	Handlebars.registerHelper("eqReplyer", function(replyer, reviewNumber, block) { 
-		var accum = '';
-		if (replyer == '${sessionScope.login.userId}') {
-			accum += block.fn(this);
-		}
-		return accum;
-	});
 	
-	Handlebars.registerHelper('ifRowStart', function (index, options) {
-	   if(index == 0 || index == 4){
-	      return options.fn(this);
-	   } else {
-	      return options.inverse(this);
-	   }
-	});
-	Handlebars.registerHelper('ifRowEnd', function (index, options) {
-	   if(index == 3 || index == 7){
-	      return options.fn(this);
-	   } else {
-	      return options.inverse(this);
-	   }
-	});
-	
-	Handlebars.registerHelper("prettifyDate", function(timeValue) {
-		var dateObj = new Date(timeValue);
-		return getTimeStamp(dateObj);
-	});
-	
-	Handlebars.registerHelper("ratingTag", function(data) {
-		return makeRatingTag(data);
-	});
 	
 	
 	
@@ -233,9 +203,6 @@
 				});
 				
 				// 트레일러
-				/*<video controls="controls" width="100%" height="100%" poster="http://image2.megabox.co.kr/mop/home/ad/1600x600/170620_love_1600x600.jpg" preload="none">
-                <source src="http://m.mvod.megabox.co.kr/encodeFile/3550/2017/06/20/178c89d11c62230cf7c1a7847d208f4b_I.mp4" type="video/mp4" />
-            </video>*/
 				var tBox = $("#trailerBox");
 				tBox.html("");
 				$.ajax({
@@ -312,40 +279,7 @@
 		});
 	}
 	
-	// 감상평 쓰기
-	function reviewWrite(that) {
-		var reviewContentVal = $("#newReviewContent").val();
-		var reviewStarRating = $("#reviewStarRating").val();
-		var movieNum = $(that).attr("data-num");
-		var userNum = "${sessionScope.login.userNumber}";
-
-		$.ajax({
-			type : 'PUT',
-			url : '/review/write',
-			headers : {
-				"Content-Type" : "application/json",
-				"X-HTTP-Method-Override" : "PUT"
-			},
-			dataType : 'text',
-			data : JSON.stringify({
-				movieNumber: movieNum,
-				userNumber: userNum,
-				reviewContent: reviewContentVal,
-				reviewStarscore: reviewStarRating
-			}),
-			success : function(result) {
-				if (result == 'SUCCESS') {
-					$("#newReviewContent").val("");
-					$("#reviewStarRating").rating("refresh");
-					alert("등록 되었습니다.");
-					reviewReadMoreCount--;
-					reviewReadMore(movieNum);
-				} else {
-					alert("댓글 등록에 실패했습니다.");
-				}
-			}
-		});		
-	}
+	
 	
 	// 감상평 삭제
 	function deleteReply(reviewNum) {

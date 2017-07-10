@@ -347,6 +347,11 @@
 						.data('seatId', this.settings.id)
 						.appendTo($cart);
 					
+					$('#selected-seats').on('click', '.cancel-cart-item', function () {
+						//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+						sc.get($(this).parents('li:first').data('seatId')).click();
+					});
+
 					/*
 					 * Lets update the counter and total
 					 *

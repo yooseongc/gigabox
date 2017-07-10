@@ -83,7 +83,7 @@
 		<!-- 검색 종료 -->
 		<br><br>
 		<!-- Content Row -->
-		<div class="row">
+		<div class="row" style="min-height: 300px;">
 			<div class="col-lg-12">
 				<table class="table panel panel-default">
 					<thead>

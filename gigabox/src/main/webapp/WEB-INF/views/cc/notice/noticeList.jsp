@@ -52,7 +52,7 @@
 		<!-- Content Row -->
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="container">
+				<div class="container" style="min-height: 300px;">
 					<!-- 검색 시작 -->
 					<div class="pull-right">
 						<form class="form-inline">

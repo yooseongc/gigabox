@@ -46,7 +46,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					고객센터 <small>1:1 문의</small>
+					고객 센터 <small>1:1 문의</small>
 				</h1>
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li class=""><a href="/cc/faq/faqList" class="faq"
@@ -97,6 +97,7 @@
 			class="btn btn-default"> <input type="button" value="목록"
 			id="qnaListBtn" class="btn btn-default">
 	</div>
+	<br><br>
 	<!-- footer -->
 	<c:import url="/templates/footer.jsp" />
 

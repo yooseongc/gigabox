@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					공지사항 <small>GIGABOX NEWS</small>
+					고객 센터 <small>공지사항</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>
@@ -79,7 +79,7 @@
 			</div>
 			<!--/.col-lg-12 -->
 			<div class="col-lg-12">
-				<div class="container pull-right">
+				<div class="pull-right">
 					<a href="/cc/notice/noticeList"><button	class="btn btn-primary btn-sm">목록</button></a>
 				</div>
 			</div>

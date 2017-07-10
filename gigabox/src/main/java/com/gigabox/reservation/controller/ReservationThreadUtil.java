@@ -7,6 +7,7 @@ public class ReservationThreadUtil extends Thread {
 	
 	private ReservationVO resvVO;
 	private ReservationService resvService;
+	private boolean interrupted = false;
 	
 	public ReservationThreadUtil(ReservationVO resvVO, ReservationService resvService) {
 		this.resvVO = resvVO;
@@ -33,12 +34,15 @@ public class ReservationThreadUtil extends Thread {
 			try{
 				Thread.sleep(30000); // 30초
 			} catch(Exception e){
-				
+				interrupted = true;
 				e.printStackTrace();
 			}
 		}
 		// 5분이 지난 후
-		resvService.reservationDelete(resvVO);
+		if (!interrupted) {
+			resvService.reservationDelete(resvVO);
+		}
+		
 	}
 
 	

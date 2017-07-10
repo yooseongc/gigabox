@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/movieRatingTag.tld"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
@@ -99,8 +100,7 @@
 					<li class=""><a href="#service-two" data-toggle="tab"><i
 							class="fa"></i> 상영예정작</a></li>
 				</ul>
-
-
+							
 				<div id="movieDetailList" class="tab-content">
 
 					<!-- 최신 상영작 -->
@@ -110,56 +110,59 @@
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
 							</div>
-							<c:forEach items="${movieListRecent}" var="movieItem"
-								varStatus="status">
-								<c:if test="${status.index % 4 == 0}">
-									<div class="row">
-								</c:if>
-								<div class="col-md-3" data-role="movieItem">
-									<div class="panel panel-default text-center">
-										<div class="panel-heading">
-											<img
-												src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
-												class="img-responsive" width="230" height="320">
-										</div>
-										<div class="panel-body">
-											<div>
-												<h4
-													style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-													<tag:rating rating="${movieItem.movieRating}" />
-													${movieItem.movieTitle}
-												</h4>
-												<div class="rating">
-													<input id="starRating" value="${movieItem.reviewStarscore}"
-														type="number" data-show-clear="false"
-														data-show-caption="false" class="rating" min=0 max=10
-														step=0.1 data-size="xs" disabled="disabled">
-												</div>
-												<button class="btn btn-primary"
-													onclick="viewDetail('${movieItem.movieNumber}')"
-													data-id="${movieItem.movieNumber}">상세보기</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<c:if test="${status.index % 4 == 3 }">
-						</div>
-						</c:if>
-						</c:forEach>
-					</div>
-					<!-- ./row -->
-					<c:if test="${rowEnd < movieListCountRecent}">
-						<div class="row">
 							<div class="col-lg-12">
-								<button type="button"
-									class="btn btn-outline btn-primary btn-lg btn-block"
-									onclick="javascript:readMore('recent')">더보기</button>
-								<br>
+								<c:if test="${movieListRecent.size() != 0}">
+									<fmt:parseNumber var="j" integerOnly="true" value="${movieListRecent.size()/4}"/>
+									<c:forEach var="i" begin="1" end="${movieListRecent.size()%4==0?j:j+1}">
+										<div class="row">
+											<c:forEach items="${movieListRecent}" var="movieItem" begin="${4*(i-1)}" end="${4*(i-1)+3}" step="1">
+												<div class="col-md-3" data-role="movieItem">
+													<div class="panel panel-default text-center">
+														<div class="panel-heading">
+															<img
+																src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+																class="img-responsive" width="230" height="320">
+														</div>
+														<div class="panel-body">
+															<div>
+																<h4
+																	style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+																	<tag:rating rating="${movieItem.movieRating}" />
+																	${movieItem.movieTitle}
+																</h4>
+																<div class="rating">
+																	<input id="starRating"
+																		value="${movieItem.reviewStarscore}" type="number"
+																		data-show-clear="false" data-show-caption="false"
+																		class="rating" min=0 max=10 step=0.1 data-size="xs"
+																		disabled="disabled">
+																</div>
+																<button class="btn btn-primary"
+																	onclick="viewDetail('${movieItem.movieNumber}')"
+																	data-id="${movieItem.movieNumber}">상세보기</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+									</c:forEach>
+								</c:if>
 							</div>
 						</div>
 						<!-- ./row -->
-					</c:if>
-				</div>
+						<c:if test="${rowEnd < movieListCountRecent}">
+							<div class="row">
+								<div class="col-lg-12">
+									<button type="button"
+										class="btn btn-outline btn-primary btn-lg btn-block"
+										onclick="javascript:readMore('recent')">더보기</button>
+									<br>
+								</div>
+							</div>
+							<!-- ./row -->
+						</c:if>
+					</div>
 
 					<!-- 상영 예정작 -->
 					<div class="tab-pane fade" id="service-two">
@@ -167,41 +170,45 @@
 							<div class="col-lg-12">
 								<h2 class="page-header"></h2>
 							</div>
-							<c:forEach items="${movieListTobe}" var="movieItem"
-								varStatus="status">
-								<c:if test="${status.index % 4 == 0}">
-									<div class="row">
-								</c:if>
-								<div class="col-md-3" data-role="movieItem">
-									<div class="panel panel-default text-center">
-										<div class="panel-heading">
-											<img src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
-												class="img-responsive" width="270" height="376">
-										</div>
-										<div class="panel-body">
-											<div>
-												<h4
-													style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-													<tag:rating rating="${movieItem.movieRating}" />
-													${movieItem.movieTitle}
-												</h4>
-												<div class="rating">
-													<input id="starRating" value="${movieItem.reviewStarscore}"
-														type="number" data-show-clear="false"
-														data-show-caption="false" class="rating" min=0 max=10
-														step=0.1 data-size="xs" disabled="disabled">
+							<div class="col-lg-12">
+								<c:if test="${movieListTobe.size() != 0}">
+									<fmt:parseNumber var="j" integerOnly="true" value="${movieListTobe.size()/4}"/>
+									<c:forEach var="i" begin="1" end="${movieListTobe.size()%4==0?j:j+1}">
+										<div class="row">
+											<c:forEach items="${movieListTobe}" var="movieItem" begin="${4*(i-1)}" end="${4*(i-1)+3}" step="1">
+												<div class="col-md-3" data-role="movieItem">
+													<div class="panel panel-default text-center">
+														<div class="panel-heading">
+															<img
+																src="${movieItem.moviePoster}/${movieItem.movieCode}.jpg"
+																class="img-responsive" width="230" height="320">
+														</div>
+														<div class="panel-body">
+															<div>
+																<h4
+																	style="width: 100%; height: 1.35em; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+																	<tag:rating rating="${movieItem.movieRating}" />
+																	${movieItem.movieTitle}
+																</h4>
+																<div class="rating">
+																	<input id="starRating"
+																		value="${movieItem.reviewStarscore}" type="number"
+																		data-show-clear="false" data-show-caption="false"
+																		class="rating" min=0 max=10 step=0.1 data-size="xs"
+																		disabled="disabled">
+																</div>
+																<button class="btn btn-primary"
+																	onclick="viewDetail('${movieItem.movieNumber}')"
+																	data-id="${movieItem.movieNumber}">상세보기</button>
+															</div>
+														</div>
+													</div>
 												</div>
-												<button class="btn btn-primary"
-													onclick="viewDetail('${movieItem.movieNumber}')"
-													data-id="${movieItem.movieNumber}">상세보기</button>
-											</div>
+											</c:forEach>
 										</div>
-									</div>
-								</div>
-								<c:if test="${status.index % 4 == 3}">
-									</div>
+									</c:forEach>
 								</c:if>
-							</c:forEach>
+							</div>
 						</div>
 						<!-- ./row -->
 						<c:if test="${rowEnd < movieListCountTobe}">
@@ -355,8 +362,6 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="vid" style="text-align:center;" id="trailerBox">
-								<!-- <iframe width="700" height="500"
-									src="http://mvod.megabox.co.kr/encodeFile/3550/2017/06/01/a021352a34ab37c5024d242758bab69e_W.mp4"></iframe> -->
 							</div>
 						</div>
 					</div>
@@ -541,7 +546,74 @@
 	var recentReadMoreCount = 0;
 	var tobeReadMoreCount = 0;
 	var reviewReadMoreCount = 0;
-		
+	
+	Handlebars.registerHelper("eqReplyer", function(replyer, reviewNumber, block) { 
+		var accum = '';
+		if (replyer == '${sessionScope.login.userId}') {
+			accum += block.fn(this);
+		}
+		return accum;
+	});
+	
+	Handlebars.registerHelper('ifRowStart', function (index, options) {
+	   if(index == 0 || index == 4){
+	      return options.fn(this);
+	   } else {
+	      return options.inverse(this);
+	   }
+	});
+	Handlebars.registerHelper('ifRowEnd', function (index, options) {
+	   if(index == 3 || index == 7){
+	      return options.fn(this);
+	   } else {
+	      return options.inverse(this);
+	   }
+	});
+	
+	Handlebars.registerHelper("prettifyDate", function(timeValue) {
+		var dateObj = new Date(timeValue);
+		return getTimeStamp(dateObj);
+	});
+	
+	Handlebars.registerHelper("ratingTag", function(data) {
+		return makeRatingTag(data);
+	});
+	
+	// 감상평 쓰기
+	function reviewWrite(that) {
+		var reviewContentVal = $("#newReviewContent").val();
+		var reviewStarRating = $("#reviewStarRating").val();
+		var movieNum = $(that).attr("data-num");
+		var userNum = "${sessionScope.login.userNumber}";
+
+		$.ajax({
+			type : 'PUT',
+			url : '/review/write',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "PUT"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				movieNumber: movieNum,
+				userNumber: userNum,
+				reviewContent: reviewContentVal,
+				reviewStarscore: reviewStarRating
+			}),
+			success : function(result) {
+				if (result == 'SUCCESS') {
+					$("#newReviewContent").val("");
+					$("#reviewStarRating").rating("refresh");
+					alert("등록 되었습니다.");
+					reviewReadMoreCount--;
+					reviewReadMore(movieNum);
+				} else {
+					alert("댓글 등록에 실패했습니다.");
+				}
+			}
+		});		
+	}
+	
 	// 영화 목록 더보기
 	function readMore(type) {
 		if (type = 'recent') {
@@ -598,9 +670,11 @@
 	
 	$(document).ready(function() {
 		
+		var userNum = parseInt(${sessionScope.login.userNumber});
+		
 		// 현재 URL 가져오기
 	    var url = location.href;
-
+		
 	    // get 파라미터 값을 가져올 수 있는 ? 를 기점으로 slice 한 후 split 으로 나눔
 	    var parameter = (url.slice(url.indexOf('?listType=') + 10, url.length));
 		if (parameter == 'recent') {
@@ -666,28 +740,28 @@
 				alert("로그인 후 사용가능합니다.")	;
 				return false;
 			}
-					$.ajax({
-						url : "/mypage/addBookmark",
-						type : "POST",
-						headers : {
-							"Content-Type" : "application/json",
-						},
-						dataType : 'text',
-						data : JSON.stringify({
-							movieNumber: movieNum,
-							userNumber: '${sessionScope.login.userNumber}'
-						}),
-						success : function(data) {
-							if(data==0){
-								 if(confirm("마이무비에 영화가 추가 되었습니다. 마이무비 페이지로 이동하시겠습니까?")) {
-									location.href ="/mypage/mymovie?listType=2";
-								}
-								 return;
-							}else{
-								alert("이미 추가되었습니다");
-							}
+			$.ajax({
+				url : "/mypage/addBookmark",
+				type : "POST",
+				headers : {
+					"Content-Type" : "application/json",
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					movieNumber: movieNum,
+					userNumber: userNum
+				}),
+				success : function(data) {
+					if(data==0){
+						 if(confirm("마이무비에 영화가 추가 되었습니다. 마이무비 페이지로 이동하시겠습니까?")) {
+							location.href ="/mypage/mymovie?listType=2";
 						}
-					});
+						 return;
+					}else{
+						alert("이미 추가되었습니다");
+					}
+				}
+			});
 				
 		});
 		
