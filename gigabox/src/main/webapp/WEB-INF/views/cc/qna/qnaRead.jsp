@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					공지사항 <small>GIGABOX NEWS</small>
+					고객센터 <small>1:1문의</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>

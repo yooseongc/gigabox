@@ -47,16 +47,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					공지사항 <small>GIGABOX NEWS</small>
+					고객센터 <small>1:1 문의</small>
 				</h1>
-				<ul class="nav nav-tabs nav-justified" role="tablist">
-					<li class=""><a href="/cc/faq/faqList" class="faq"
-						title="자주묻는질문 바로가기"><i class="fa fa-question"></i>&nbsp;&nbsp;자주묻는질문</a></li>
-					<li><a href="/cc/notice/noticeList" class="notice"
-						title="공지사항 바로가기"><i class="fa fa-info"></i>&nbsp;&nbsp;공지사항</a></li>
-					<li><a href="/cc/qna/qnaList" class="qna" title="1:1문의 바로가기"><i
-							class="fa fa-comments-o"></i>&nbsp;&nbsp;1:1문의</a></li>
-				</ul>
 			</div>
 		</div>
 	</div>
@@ -144,7 +136,6 @@ function qnaUpdateBtn(inquiryNumber) {
 				inquiryTitle : $("#q_title").val()
 			}),
 			success : function(data) {
-				alert(data);
 				alert("수정완료");
 				location.href = "/cc/qna/qnaList";
 			}

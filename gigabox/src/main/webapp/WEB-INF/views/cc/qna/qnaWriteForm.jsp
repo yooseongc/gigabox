@@ -46,7 +46,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					공지사항 <small>GIGABOX NEWS</small>
+					고객센터 <small>1:1 문의</small>
 				</h1>
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li class=""><a href="/cc/faq/faqList" class="faq"
