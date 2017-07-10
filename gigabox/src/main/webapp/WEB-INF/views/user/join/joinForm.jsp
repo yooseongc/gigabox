@@ -88,7 +88,7 @@
 										</button>
                                     </span>
 								</div>
-								<p class="help-block">영문 소문자,숫자 6 ~ 20자</p>
+								<p class="help-block">영어 소문자,숫자 6 ~ 20자</p>
 								<p class="help-block" id="userIDCheckErrorMsg">중복 여부를 확인하세요.</p>
 							</div>
 						</div>
@@ -136,7 +136,7 @@
 							<label class="col-sm-3 control-label" for="userName">이름</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userName" type="text"
-									name="userName" placeholder="이름">
+									name="userName" placeholder="이름" maxlength="5">
 							</div>
 						</div>
 						<div class="form-group">

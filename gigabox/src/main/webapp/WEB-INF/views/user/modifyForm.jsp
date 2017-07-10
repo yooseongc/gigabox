@@ -54,12 +54,12 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">
-					회원 서비스 <small>개인정보 수정</small>
+					회원 서비스 <small>회원 정보 수정</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li>GIGABOX</li>
 					<li>회원 서비스</li>
-					<li class="active">개인정보 수정</li>
+					<li class="active">회원 정보 수정</li>
 				</ol>
 			</div>
 		</div>
