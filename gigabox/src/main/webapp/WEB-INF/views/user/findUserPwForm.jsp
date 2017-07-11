@@ -128,6 +128,15 @@
 				return true;
 			}
 		}
+	 
+	//비밀번호 유효성 검사(영문,숫자 혼합하여 6~20자리 이내)
+		function chkPwd(str){
+			var reg_pwd = /^.*(?=.{6,12})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+			if(!reg_pwd.test(str)){
+				return false;
+				}
+			return true;
+			}
 	
 		$(document).ready(function() {
 			$("#errorMessage").hide();
@@ -135,6 +144,19 @@
 		 	//변경완료 버튼 클릭시
 		 	$("#changePwSubmitBtn").click(function(e) {
 		 		e.preventDefault();
+		 		if (!formCheck($("#userPw"), "새 비밀번호를", $("#errorMessage"))) {
+					$("#errorMessage").removeClass("hide");
+					return;
+				}
+		 		
+		 		if(!chkPwd( $.trim($("#userPw").val()))){ 
+
+					alert("비밀번호를 확인하세요.\n(영문,숫자를 혼합하여 6~20자 이내)");    
+
+					$("#userPw").val('');
+					$("#userPw").focus(); 
+					return false;
+				}
 				
 				if ($("#userPw").val() != $("#newPwCheck").val()){
 					$("#errorMessage").text("새 비밀번호가 일치하지 않습니다.");

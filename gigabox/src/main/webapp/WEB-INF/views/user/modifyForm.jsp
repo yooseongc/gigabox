@@ -120,7 +120,8 @@
 							<label class="col-sm-3 control-label" for="userBirthday">생년월일</label>
 							<div class="col-sm-6">
 								<input class="form-control" id="userBirthday" type="text"
-									name="userBirthday" placeholder="생년월일" value="${userInfo.userBirthday }">
+									name="userBirthday" placeholder="생년월일" value="${userInfo.userBirthday }"
+									onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" maxlength="8"/>
 							</div>
 						</div>
 						
@@ -128,7 +129,8 @@
 							<label class="col-sm-3 control-label" for="userTel">휴대폰번호</label>
 							<div class="col-sm-6">
 								<input type="tel" class="form-control" id="userTel"
-									name="userTel" placeholder="- 없이 입력해 주세요" maxlength="11" value="${userInfo.userTel }"/>
+									name="userTel" placeholder="- 없이 입력해 주세요" maxlength="11" value="${userInfo.userTel }"
+									onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)"/>
 							</div>
 						</div>
 						
@@ -260,6 +262,24 @@
 			} else {
 				return true;
 			}
+		}
+	 	
+	 	//숫자만 입력
+		function onlyNumber(event){
+			event = event || window.event;
+			var keyID = (event.which) ? event.which : event.keyCode;
+			if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+				return;
+			else
+				return false;
+		}
+		function removeChar(event) {
+			event = event || window.event;
+			var keyID = (event.which) ? event.which : event.keyCode;
+			if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+				return;
+			else
+				event.target.value = event.target.value.replace(/[^0-9]/g, "");
 		}
 	 	
 	 	function selectPagination(a) {
