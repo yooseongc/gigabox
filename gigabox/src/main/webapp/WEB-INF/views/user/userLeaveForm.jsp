@@ -149,7 +149,7 @@
 	}
 		$(document).ready(function() {
 			$("#errorMessage").hide();
-			//탈퇴버튼 클릭시 모달
+			//탈퇴버튼 클릭 시 모달
 			$('#leaveBtn').click(function(e) {
 				e.preventDefault();
 				$('#leaveOK').modal({
@@ -158,7 +158,7 @@
 					keyboard : true
 				});
 			});
-			
+		//탈퇴버튼(모달) 클릭 시	
 		$('#leaveOKBtn').click(function(e){
 			e.preventDefault();
 			$.ajax({

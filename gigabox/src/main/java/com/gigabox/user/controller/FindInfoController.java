@@ -72,7 +72,7 @@ public class FindInfoController {
 		return "/user/findInfoForm";
 	}
 	
-	// 비밀번호 변경 구현
+	// 비밀번호 변경(찾기) 구현
 	@RequestMapping(value = "/findUserPwForm", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> findUserPwFormPOST(@ModelAttribute UserVO userVO){
 		logger.info("FINDUSERPW_FORM LOADING...");

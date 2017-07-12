@@ -132,7 +132,7 @@ ol.inline, ol.unstyled, ul.inline, ul.unstyled {
 			                                <button class="btn btn-lg btn-success btn-block" id="loginButton">로그인</button>
 										</div>
 										<div class="form-group">
-											<a href="/user/findInfoForm" class="btn btn-default col-lg-6 m-t-md"> 비밀번호 찾기</a>
+											<a href="/user/findInfoForm" class="btn btn-default col-lg-6 m-t-md">아이디/비밀번호 찾기</a>
 											<a href="/user/joinAgreeForm" class="btn btn-default col-lg-6 m-t-md"> 회원가입</a>
 										</div>
 									</fieldset>
