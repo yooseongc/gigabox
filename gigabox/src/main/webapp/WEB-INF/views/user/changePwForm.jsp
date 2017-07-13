@@ -126,7 +126,7 @@
 	 function formCheck(v_item, v_name, e_item) {
 			if (v_item.val().replace(/\s/g, "") == "") {
 				
-				e_item.text(v_name + " 확인해 주세요.");
+				e_item.text(v_name + " 입력해 주세요.");
 				e_item.show();
 				v_item.val("");
 				v_item.focus();
@@ -149,7 +149,10 @@
 		 	$("#changePwSubmitBtn").click(function(e) {
 		 		e.preventDefault();
 				
-				if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+		 		if (!formCheck($("#userPw"), "비밀번호를", $("#errorMessage"))) {
+					return;
+				}
+		 		if (!formCheck($("#newPw"), "새 비밀번호를", $("#errorMessage"))) {
 					return;
 				}
 				if ($("#newPw").val() != $("#newPwCheck").val()){

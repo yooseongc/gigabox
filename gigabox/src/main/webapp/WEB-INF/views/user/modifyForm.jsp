@@ -453,6 +453,7 @@
 					},
 					success: function(resultData) {
 						if (resultData.message == 'PW-WRONG') {
+							$("#errorMessage").removeClass("hide");
 							$("#errorMessage").text("비밀번호가 일치하지 않습니다.");
 							$("#errorMessage").show();
 							$("#userPw").val("");
